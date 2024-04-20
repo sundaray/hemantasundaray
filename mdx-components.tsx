@@ -1,8 +1,11 @@
 import { CopyCode } from "@/components/copy-code";
 import type { MDXComponents } from "mdx/types";
 import Image, { ImageProps } from "next/image";
-import Link from "next/link";
+import Link, { LinkProps } from "next/link";
 import React from "react";
+
+type CustomLinkProps = React.AnchorHTMLAttributes<HTMLAnchorElement> &
+  Partial<LinkProps>;
 
 function MDXImage(props: ImageProps) {
   return <Image {...props} alt={props.alt} className="rounded-lg" />;
@@ -53,25 +56,31 @@ function Pre({
   );
 }
 
-function CustomLink(props) {
-  let href = props.href;
+function CustomLink(props: CustomLinkProps) {
+  const { href, ...rest } = props;
 
-  if (href.startsWith("/")) {
+  if (typeof href === "string") {
+    if (href.startsWith("/")) {
+      return (
+        <Link href={href} {...rest}>
+          {props.children}
+        </Link>
+      );
+    }
+
+    if (href.startsWith("#")) {
+      return <a href={href} {...rest} />;
+    }
+
     return (
-      <Link href={href} {...props}>
-        {props.children}
-      </Link>
+      <a href={href} target="_blank" rel="noopener noreferrer" {...rest} />
     );
   }
 
-  if (href.startsWith("#")) {
-    return <a {...props} />;
-  }
-
-  return <a target="_blank" rel="noopener noreferrer" {...props} />;
+  return null;
 }
 
-function slugify(str) {
+function slugify(str: string) {
   return str
     .toString()
     .toLowerCase()
@@ -82,7 +91,7 @@ function slugify(str) {
     .replace(/\-\-+/g, "-"); // Replace multiple - with single -
 }
 
-function createHeading(level) {
+function createHeading(level: 1 | 2 | 3 | 4 | 5 | 6) {
   const Heading = ({ children }) => {
     let slug = slugify(children);
     return React.createElement(
@@ -104,7 +113,7 @@ function createHeading(level) {
   return Heading;
 }
 
-const styles = {
+const defaultComponents = {
   h1: createHeading(1),
   h2: createHeading(2),
   h3: createHeading(3),
@@ -118,7 +127,7 @@ const styles = {
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
-    ...styles,
+    ...defaultComponents,
     ...components,
   };
 }
