@@ -7,18 +7,22 @@ export function useTags(searchParams: SearchParams) {
   const currentTag = searchParams?.tag || "";
 
   // Fetch all tags
-  const postsDirectory = path.join(process.cwd(), "app", "blog", "posts");
-  const postFiles = fs
-    .readdirSync(postsDirectory)
-    .filter((file) => file.endsWith(".mdx"));
+  const postsDirectory = path.join(process.cwd(), "app", "blog", "(posts)");
+
+  const dirs = fs
+    .readdirSync(postsDirectory, { withFileTypes: true })
+    .filter((dirent) => dirent.isDirectory())
+    .map((dirent) => dirent.name);
 
   const allTags = new Set<string>();
 
-  postFiles.forEach((filename) => {
-    const filePath = path.join(postsDirectory, filename);
+  dirs.forEach((dirName) => {
+    const filePath = path.join(postsDirectory, dirName, "page.mdx");
     const fileContents = fs.readFileSync(filePath, "utf8");
     const { data } = matter(fileContents);
-    data.tags?.forEach((tag: string) => allTags.add(tag));
+    if (data.tags) {
+      data.tags.forEach((tag: string) => allTags.add(tag));
+    }
   });
 
   const uniqueTags = Array.from(allTags);

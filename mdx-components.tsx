@@ -92,8 +92,18 @@ function slugify(str: string) {
 }
 
 function createHeading(level: 1 | 2 | 3 | 4 | 5 | 6) {
-  const Heading = ({ children }) => {
-    let slug = slugify(children);
+  const Heading = ({ children }: { children: React.ReactNode }) => {
+    // Convert ReactNode to string, handling non-string cases
+    const contentString = React.Children.toArray(children)
+      .map((child) => {
+        if (typeof child === "string") {
+          return child;
+        }
+        return "";
+      })
+      .join("");
+
+    let slug = slugify(contentString);
     return React.createElement(
       `h${level}`,
       { id: slug },

@@ -11,13 +11,15 @@ export function usePosts(searchParams: SearchParams) {
 
   const postsPerPage = 5;
 
-  const postsDirectory = path.join(process.cwd(), "app", "blog", "posts");
-  const postFiles = fs
-    .readdirSync(postsDirectory)
-    .filter((file) => file.endsWith(".mdx"));
+  const postsDirectory = path.join(process.cwd(), "app", "blog", "(posts)");
 
-  let posts: Post[] = postFiles.map((filename) => {
-    const filePath = path.join(postsDirectory, filename);
+  const dirs = fs
+    .readdirSync(postsDirectory, { withFileTypes: true })
+    .filter((dirent) => dirent.isDirectory())
+    .map((dirent) => dirent.name);
+
+  let posts: Post[] = dirs.map((dirName) => {
+    const filePath = path.join(postsDirectory, dirName, "page.mdx");
     const fileContents = fs.readFileSync(filePath, "utf8");
     const {
       data: {
@@ -32,7 +34,7 @@ export function usePosts(searchParams: SearchParams) {
     } = matter(fileContents);
 
     return {
-      slug: filename.replace(/\.mdx$/, ""),
+      slug: dirName,
       title,
       description,
       author,
