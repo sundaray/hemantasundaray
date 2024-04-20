@@ -3,6 +3,7 @@ import {
   Check,
   ChevronRight,
   Copy,
+  Info,
   LucideProps,
   Search,
   Tags,
@@ -13,6 +14,7 @@ export const Icons = {
   check: Check,
   chevronRight: ChevronRight,
   copy: Copy,
+  info: Info,
   search: Search,
   tags: Tags,
   google: ({ ...props }: LucideProps) => (
