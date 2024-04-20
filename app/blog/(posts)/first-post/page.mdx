@@ -1,0 +1,25 @@
+---
+title: My First Blog
+description: "Check out my first blog post."
+author: Hemanta Sundaray
+publishedAt: 18-04-2022
+tags: ["React", "Node"]
+published: true
+---
+
+import { BlogPostLayout } from "@/components/blog-post-layout";
+
+<BlogPostLayout frontmatter={frontmatter}>
+
+This is my first post. Hooray!
+
+## Header
+
+```js title="blog.ts"
+export async function getPost(slug: string) {
+    const posts = await getPosts();
+    return posts.find((post) => post.slug === slug);
+}
+```
+
+</BlogPostLayout>

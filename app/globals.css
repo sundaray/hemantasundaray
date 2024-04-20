@@ -2,32 +2,174 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 221.2 83.2% 53.3%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 221.2 83.2% 53.3%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 217.2 91.2% 59.8%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 224.3 76.3% 48%;
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+input {
+  -webkit-appearance: none;
+}
+
+@layer components {
+  .prose a {
+    @apply text-blue-600 underline decoration-blue-100 underline-offset-4 transition-colors hover:decoration-blue-600;
   }
+
+  .prose .anchor {
+    @apply invisible absolute right-4 top-1/2 w-full -translate-y-1/2 text-lg text-slate-300 no-underline after:content-['#'];
+  }
+
+  .prose .anchor:hover {
+    @apply visible no-underline;
+  }
+
+  .prose :where(h2, h3):hover > .anchor {
+    @apply visible;
+  }
+
+  .prose h2 {
+    @apply mb-4 mt-12 text-xl font-bold tracking-tight lg:text-2xl;
+  }
+
+  .prose h3 {
+    @apply mb-4 mt-12 text-lg font-bold tracking-tight lg:text-xl;
+  }
+
+  .prose :where(h2, h3) {
+    scroll-margin-top: 80px;
+    position: relative;
+  }
+
+  .prose p {
+    @apply mb-8 leading-7 text-slate-700;
+  }
+
+  .prose p code {
+    @apply text-sm;
+  }
+
+  .prose strong {
+    @apply font-semibold;
+  }
+
+  .prose ul {
+    @apply mb-8 list-disc pl-8 leading-7;
+  }
+
+  .prose ol {
+    @apply mb-8 list-decimal pl-8 leading-7;
+  }
+
+  /* Code block */
+  .prose figure {
+    @apply mb-8 rounded-lg border shadow-sm;
+  }
+
+  /* Code block title */
+  .prose figure figcaption {
+    @apply border-b p-3 text-sm text-muted-foreground;
+  }
+
+  .prose figure pre {
+    position: relative;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    counter-reset: line; /* Reset counter for each code block */
+  }
+
+  [data-line]::before {
+    counter-increment: line; /* Increment counter for each line */
+    content: counter(line); /* Display the counter value */
+    display: inline-block; /* Make line numbers appear inline */
+    width: 1rem; /* Adjust width as needed */
+    margin-right: 1rem; /* Adjust spacing between numbers and code */
+    margin-left: 1rem; /* Adjust spacing between numbers and code */
+    text-align: right; /* Align numbers to the right */
+    color: #a1a1aa; /* Set line number color (adjust if needed) */
+  }
+
+  [data-line-numbers-max-digits="2"] > [data-line]::before {
+    width: 2rem; /* Adjust width for codes with max 2 digits */
+  }
+
+  [data-line-numbers-max-digits="3"] > [data-line]::before {
+    width: 3rem; /* Adjust width for codes with max 3 digits */
+  }
+
+  .prose figure pre code {
+    @apply text-sm;
+  }
+
+  [data-line] {
+    @apply border-l-2 border-l-transparent;
+  }
+
+  [data-highlighted-line] {
+    @apply border-l-2 border-blue-600 bg-blue-50;
+  }
+
+  [data-rehype-pretty-code-figure] > code > span {
+    @apply rounded-md border bg-slate-100 px-1 py-0.5;
+  }
+}
+
+input[type="search"]::-webkit-search-cancel-button {
+  @apply pointer-events-none absolute right-4 top-1/2 size-5 -translate-y-1/2 bg-[url('https://pro.fontawesome.com/releases/v5.10.0/svgs/solid/times-circle.svg')] opacity-0;
+  -webkit-appearance: none;
+}
+
+input[type="search"]:focus::-webkit-search-cancel-button {
+  @apply pointer-events-auto opacity-40;
 }
