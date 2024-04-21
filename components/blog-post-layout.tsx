@@ -14,15 +14,13 @@ type BlogPostLayoutProps = {
 };
 
 export function BlogPostLayout({ children, frontmatter }: BlogPostLayoutProps) {
-  console.log("Frontmatter: ", frontmatter);
-
   const { title, description, author, publishedAt, updatedAt, tags } =
     frontmatter;
 
   return (
-    <div className="container flex max-w-6xl flex-col gap-16">
-      <header className="border-b py-16">
-        <div className="flex items-center gap-2 text-sm font-medium">
+    <div className="grid-cols-16 container grid max-w-6xl gap-8">
+      <header className="col-span-full border-b py-16">
+        <div className="mb-8 flex items-center gap-2 text-sm font-medium">
           <Link
             href="/"
             className="text-primary hover:underline hover:underline-offset-4"
@@ -38,8 +36,10 @@ export function BlogPostLayout({ children, frontmatter }: BlogPostLayoutProps) {
           </Link>
           <Icons.chevronRight className="size-4 text-muted-foreground" />
         </div>
-        <h1 className="text-balance text-3xl font-bold lg:text-4xl">{title}</h1>
-        <p className="text-lg text-slate-700">{description}</p>
+        <h1 className="mb-4 text-balance text-3xl font-bold lg:text-4xl">
+          {title}
+        </h1>
+        <p className="mb-8 text-lg text-slate-700">{description}</p>
         <div className="flex items-center gap-4">
           {/* <Image
             src={Avatar}
@@ -52,8 +52,8 @@ export function BlogPostLayout({ children, frontmatter }: BlogPostLayoutProps) {
           </div>
         </div>
       </header>
-      <section className="flex justify-center gap-8 lg:justify-between">
-        <article className="prose max-w-[720px]">
+      <section className="col-span-full grid grid-cols-subgrid gap-8">
+        <article className="prose col-span-full lg:col-span-10">
           {children}
           <div className="mb-4 flex items-center gap-2">
             <Icons.tags className="size-5 text-slate-700" />
@@ -75,7 +75,7 @@ export function BlogPostLayout({ children, frontmatter }: BlogPostLayoutProps) {
             </p>
           )}
         </article>
-        <aside className="sticky top-24 hidden max-w-[250px] self-start lg:block">
+        <aside className="sticky top-24 col-span-full col-start-13 hidden max-w-[250px] self-start lg:block">
           <TOC />
         </aside>
       </section>
