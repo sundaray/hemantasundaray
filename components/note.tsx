@@ -1,4 +1,3 @@
-import { Icons } from "@/components/icons";
 import React, { ReactNode } from "react";
 
 export function Note({ children }: { children: ReactNode }) {
@@ -8,4 +7,3 @@ export function Note({ children }: { children: ReactNode }) {
     </div>
   );
 }
-s;
