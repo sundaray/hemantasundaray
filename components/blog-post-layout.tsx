@@ -23,14 +23,14 @@ export function BlogPostLayout({ children, frontmatter }: BlogPostLayoutProps) {
         <div className="mb-8 flex items-center gap-2 text-sm font-medium">
           <Link
             href="/"
-            className="text-primary hover:underline hover:underline-offset-4"
+            className="text-primary transition-all hover:underline hover:underline-offset-2"
           >
             Home
           </Link>
           <Icons.chevronRight className="size-4 text-muted-foreground" />
           <Link
             href="/blog"
-            className="text-primary hover:underline hover:underline-offset-2"
+            className="text-primary transition-all hover:underline hover:underline-offset-2"
           >
             Blog
           </Link>

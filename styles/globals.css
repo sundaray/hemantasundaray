@@ -64,7 +64,7 @@ input {
 
 @layer components {
   .prose a {
-    @apply text-primary underline decoration-primary underline-offset-2 transition-all hover:bg-blue-100 hover:no-underline;
+    @apply text-primary underline decoration-primary underline-offset-2 transition-all hover:no-underline;
   }
 
   .prose .anchor {
@@ -161,7 +161,7 @@ input {
   }
 
   [data-rehype-pretty-code-figure] > code > span {
-    @apply rounded-md border bg-slate-100 px-1 py-0.5;
+    @apply rounded-md border bg-secondary px-1 py-0.5;
   }
 }
 

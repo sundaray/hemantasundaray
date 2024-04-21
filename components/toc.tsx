@@ -5,7 +5,7 @@ import { useScrollSpy } from "@/hooks/use-scrollspy";
 import { cn } from "@/lib/utils";
 
 export function TOC() {
-  const { headings } = useScrollSpy();
+  const { headings, activeId } = useScrollSpy();
 
   const handleClick = (
     event: React.MouseEvent<HTMLAnchorElement>,
@@ -36,13 +36,14 @@ export function TOC() {
             key={id}
             className={cn(
               `ml-${(level - 2) * 4}`,
-              "group text-sm font-medium text-muted-foreground hover:text-slate-700",
+              "group text-sm font-medium hover:text-slate-700",
+              id === activeId ? "text-primary" : "text-muted-foreground",
               level === 2 ? "py-2" : "py-1",
             )}
           >
             <a href={`#${id}`} onClick={(e) => handleClick(e, id)}>
               {level === 3 ? (
-                <Icons.chevronRight className="inline-block size-3.5 text-slate-400 group-hover:text-muted-foreground" />
+                <Icons.chevronRight className="inline-block size-3.5 text-muted-foreground group-hover:text-secondary-foreground" />
               ) : null}
               {text}
             </a>
