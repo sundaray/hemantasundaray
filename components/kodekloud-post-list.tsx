@@ -12,7 +12,8 @@ interface KodeKloudPostListProps {
 }
 
 export function KodeKloudPostList({ posts }: KodeKloudPostListProps) {
-  const sortedPosts = posts.sort((a, b) => {
+  
+    const sortedPosts = posts.sort((a, b) => {
     return compareDesc(new Date(a.date), new Date(b.date));
   });
   return (
@@ -32,7 +33,9 @@ export function KodeKloudPostList({ posts }: KodeKloudPostListProps) {
               blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9IiNmOGZhZmMiLz48L3N2Zz4="
             />
           )}
-          {post.date && <p className="text-sm">{formatDate(post.date)}</p>}
+          {post.date && (
+            <p className="text-sm text-slate-700">{formatDate(post.date)}</p>
+          )}
           <a
             href={post.href}
             target="_blank"

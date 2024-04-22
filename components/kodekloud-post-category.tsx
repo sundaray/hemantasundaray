@@ -1,4 +1,3 @@
-import { Icons } from "@/components/icons";
 import {
   Select,
   SelectValue,
@@ -29,9 +28,7 @@ export function KodeKloudPostCategory({
         key={selectedCategory}
       >
         <SelectTrigger className="w-[180px]">
-          <SelectValue>
-            {(selectedCategory && selectedCategory) || "Select a category..."}
-          </SelectValue>
+          <SelectValue placeholder="Select a category" />
         </SelectTrigger>
         <SelectContent>
           {categories.map((category) => (

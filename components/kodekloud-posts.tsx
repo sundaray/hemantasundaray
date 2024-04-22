@@ -18,7 +18,7 @@ export function KodeKloudPosts() {
   } = useKodeKloudPosts();
 
   return (
-    <div className="mt-12">
+    <div className="space-y-8">
       <KodeKloudPostCategory
         categories={categories}
         selectedCategory={selectedCategory}
@@ -26,7 +26,6 @@ export function KodeKloudPosts() {
         onClear={onClearCategory}
       />{" "}
       <KodeKloudPostList posts={posts} />
-      <hr className="mb-4 mt-8" />
       {/* <Pagination
         currentPage={currentPage}
         totalPages={totalPages}

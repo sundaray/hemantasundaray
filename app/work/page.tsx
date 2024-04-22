@@ -4,7 +4,7 @@ export default function WorkPage() {
   return (
     <div className="container max-w-3xl">
       <h1 className="mb-4">Work</h1>
-      <p className="text-slate-700">
+      <p className="text-slate-700 leading-7 mb-8">
         Since November 2022, I have been working with{" "}
         <a
           className="link-kodekloud-posts"
