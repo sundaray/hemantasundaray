@@ -5,6 +5,7 @@ import {
   Copy,
   Info,
   LucideProps,
+  MoonStar,
   Search,
   Tags,
 } from "lucide-react";
@@ -15,6 +16,7 @@ export const Icons = {
   chevronRight: ChevronRight,
   copy: Copy,
   info: Info,
+  moonStar: MoonStar,
   search: Search,
   tags: Tags,
   google: ({ ...props }: LucideProps) => (
