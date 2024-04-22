@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import {
   Select,
   SelectValue,
@@ -5,15 +6,13 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
 
-
-interface KodeKloudPostCategoryProps {
+type KodeKloudPostCategoryProps = {
   categories: string[];
   selectedCategory: string | null;
   onSelect: (category: string) => void;
   onClear: () => void;
-}
+};
 
 export function KodeKloudPostCategory({
   categories,

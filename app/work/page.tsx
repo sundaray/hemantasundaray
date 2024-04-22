@@ -1,10 +1,10 @@
-import {KodeKloudPosts} from "@/components/kodekloud-posts"
+import { KodeKloudPosts } from "@/components/kodekloud-posts";
 
 export default function WorkPage() {
   return (
     <div className="container max-w-3xl">
       <h1 className="mb-4">Work</h1>
-      <p className="text-slate-700 leading-7 mb-8">
+      <p className="mb-8 leading-7 text-slate-700">
         Since November 2022, I have been working with{" "}
         <a
           className="link-kodekloud-posts"
@@ -15,8 +15,8 @@ export default function WorkPage() {
           KodeKloud
         </a>{" "}
         as a freelance technical writer. My writing primarily covers topics such
-        as Bash scripting, Docker, Kubernetes and Linux. So far, I've written x
-        posts on these subjects.
+        as Bash scripting, Docker, Kubernetes and Linux. So far, I&apos;ve
+        written x posts on these subjects.
       </p>
       <KodeKloudPosts />
     </div>

@@ -13,12 +13,9 @@ interface KodeKloudPostListProps {
 }
 
 export function KodeKloudPostList({ posts }: KodeKloudPostListProps) {
-  const sortedPosts = posts.sort((a, b) => {
-    return compareDesc(new Date(a.date), new Date(b.date));
-  });
   return (
     <div className="grid gap-10 sm:grid-cols-2">
-      {sortedPosts.map((post, index) => (
+      {posts.map((post, index) => (
         <article
           key={post.href}
           className="group relative z-0 rounded-lg border bg-secondary"
