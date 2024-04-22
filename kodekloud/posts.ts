@@ -1,4 +1,4 @@
-type BlogPost = {
+type Post = {
   id: number;
   image: string;
   category: string;
@@ -6,7 +6,7 @@ type BlogPost = {
   date: string;
 };
 
-export const BlogPosts: BlogPost[] = [
+export const posts: Post[] = [
   {
     id: 1,
     image:
@@ -483,7 +483,7 @@ export const BlogPosts: BlogPost[] = [
     id: 59,
     image:
       "https://firebasestorage.googleapis.com/v0/b/blog-bc1c7.appspot.com/o/kodekloud-blog-post-images%2FDocker%20Compose%20Command%20Not%20Found_%203%20Possible%20Causes%20%26%20Fixes.png?alt=media&token=a5cd90b2-1baf-49c5-bf11-f019e38a7cd8",
-    category: "CI/CD",
+    category: "Docker",
     href: "https://kodekloud.com/blog/docker-compose-command-not-found/",
     date: "2024-03-25",
   },
@@ -491,7 +491,7 @@ export const BlogPosts: BlogPost[] = [
     id: 60,
     image:
       "https://firebasestorage.googleapis.com/v0/b/blog-bc1c7.appspot.com/o/kodekloud-blog-post-images%2FWhere%20Docker%20Images%20are%20Stored.png?alt=media&token=29207260-76c2-435c-9bfb-23df5cefa50c",
-    category: "CI/CD",
+    category: "Docker",
     href: "https://kodekloud.com/blog/where-docker-images-are-stored/",
     date: "2024-03-27",
   },
@@ -499,7 +499,7 @@ export const BlogPosts: BlogPost[] = [
     id: 61,
     image:
       "https://firebasestorage.googleapis.com/v0/b/blog-bc1c7.appspot.com/o/kodekloud-blog-post-images%2FHow%20Dockerfile%20Works.png?alt=media&token=4f442c75-a4ef-4622-8a13-ba5d33b513f3",
-    category: "CI/CD",
+    category: "Docker",
     href: "https://kodekloud.com/blog/how-dockerfile-works/",
     date: "2024-03-27",
   },

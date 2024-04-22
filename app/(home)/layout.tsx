@@ -8,7 +8,7 @@ type HomeLayoutProps = {
 export default async function HomeLayout({ children }: HomeLayoutProps) {
   return (
     <div className="relative flex min-h-screen flex-col">
-      <header className="sticky top-0 z-50 border border-blue-600 bg-background/90 backdrop-blur-sm transition-all">
+      <header className="z-50 sticky top-0s bg-background/90 backdrop-blur-sm transition-all">
         <MainNav items={homeConfig.mainNav} />
       </header>
       <main className="flex-1">{children}</main>

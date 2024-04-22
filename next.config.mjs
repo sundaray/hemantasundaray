@@ -7,6 +7,9 @@ import { visit } from "unist-util-visit";
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
+  images: {
+    domains: ["firebasestorage.googleapis.com"],
+  },
 };
 
 const options = {
