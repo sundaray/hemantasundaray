@@ -67,6 +67,14 @@ input {
 }
 
 @layer components {
+  .kodekloud a {
+    @apply text-primary underline decoration-primary underline-offset-2 transition-all hover:no-underline;
+  }
+
+  .kodekloud p {
+    @apply leading-7 text-slate-700;
+  }
+
   .prose a {
     @apply text-primary underline decoration-primary underline-offset-2 transition-all hover:no-underline;
   }

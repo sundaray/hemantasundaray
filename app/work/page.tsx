@@ -2,12 +2,11 @@ import { KodeKloudPosts } from "@/components/kodekloud-posts";
 
 export default function WorkPage() {
   return (
-    <div className="container max-w-3xl">
+    <div className="kodekloud container max-w-3xl">
       <h1 className="mb-4">Work</h1>
-      <p className="mb-8 leading-7 text-slate-700">
+      <p className="mb-8">
         Since November 2022, I have been working with{" "}
         <a
-          className="link-kodekloud-posts"
           href="https://kodekloud.com/"
           target="_blank"
           rel="noopener noreferrer"
