@@ -27,7 +27,7 @@ export function KodeKloudPostCategory({
         value={selectedCategory || undefined}
         key={selectedCategory}
       >
-        <SelectTrigger className="w-[180px]">
+        <SelectTrigger className="w-[220px]">
           <SelectValue placeholder="Select a category" />
         </SelectTrigger>
         <SelectContent>

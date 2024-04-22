@@ -1,7 +1,8 @@
 "use client";
 
 import { KodeKloudPostCategory } from "@/components/kodekloud-post-category";
-import {KodeKloudPostList} from "@/components/kodekloud-post-list";
+import { KodeKloudPostList } from "@/components/kodekloud-post-list";
+import { KodeKloudPostPagination } from "@/components/kodekloud-post-pagination";
 import { useKodeKloudPosts } from "@/hooks/use-kodekloud-posts";
 
 export function KodeKloudPosts() {
@@ -26,12 +27,12 @@ export function KodeKloudPosts() {
         onClear={onClearCategory}
       />{" "}
       <KodeKloudPostList posts={posts} />
-      {/* <Pagination
+      <KodeKloudPostPagination
         currentPage={currentPage}
         totalPages={totalPages}
         onNext={onNextPage}
         onPrev={onPrevPage}
-      /> */}
+      />
     </div>
   );
 }

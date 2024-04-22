@@ -1,6 +1,7 @@
 import {
   ArrowRight,
   Check,
+  ChevronLeft,
   ChevronRight,
   Copy,
   Info,
@@ -13,6 +14,7 @@ import {
 export const Icons = {
   arrowRight: ArrowRight,
   check: Check,
+  chevronLeft: ChevronLeft,
   chevronRight: ChevronRight,
   copy: Copy,
   info: Info,
