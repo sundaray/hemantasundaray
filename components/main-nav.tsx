@@ -3,7 +3,7 @@
 import { cn } from "@/lib/utils";
 import { MainNavItem } from "@/types";
 import Link from "next/link";
-import { useSelectedLayoutSegment } from "next/navigation";
+import { usePathname } from "next/navigation";
 import React from "react";
 
 interface MainNavProps {
@@ -12,7 +12,7 @@ interface MainNavProps {
 }
 
 export function MainNav({ items }: MainNavProps) {
-  const segment = useSelectedLayoutSegment();
+  const pathname = usePathname();
 
   return (
     <div className="container flex h-16 items-center justify-between">
@@ -29,9 +29,7 @@ export function MainNav({ items }: MainNavProps) {
                 key={item.title}
                 className={cn(
                   "cursor-pointer font-medium text-muted-foreground transition-all hover:text-secondary-foreground sm:text-sm",
-                  item.href.startsWith(`/${segment}`)
-                    ? "text-primary"
-                    : "text-muted-foreground",
+                  item.href === pathname && "text-secondary-foreground",
                 )}
               >
                 <Link href={item.href}>{item.title}</Link>

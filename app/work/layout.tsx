@@ -5,13 +5,15 @@ type ProjectsLayoutProps = {
   children: React.ReactNode;
 };
 
-export default async function ProjectsLayout({ children }: ProjectsLayoutProps) {
+export default async function ProjectsLayout({
+  children,
+}: ProjectsLayoutProps) {
   return (
     <div className="relative flex min-h-screen flex-col">
       <header>
         <MainNav items={homeConfig.mainNav} />
       </header>
-      <main className="flex-1">{children}</main>
+      <main className="flex-1 py-16">{children}</main>
     </div>
   );
 }
