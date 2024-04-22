@@ -1,3 +1,6 @@
+import { MainNav } from "@/components/main-nav";
+import { homeConfig } from "@/config/home";
+
 type HomeLayoutProps = {
   children: React.ReactNode;
 };
@@ -5,6 +8,9 @@ type HomeLayoutProps = {
 export default async function HomeLayout({ children }: HomeLayoutProps) {
   return (
     <div className="relative flex min-h-screen flex-col">
+      <header className="sticky top-0 z-50 bg-background/90 backdrop-blur-sm transition-all">
+        <MainNav items={homeConfig.mainNav} />
+      </header>
       <main className="flex-1">{children}</main>
     </div>
   );

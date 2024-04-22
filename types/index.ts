@@ -23,3 +23,12 @@ export type SearchParams = {
   page?: string;
   query?: string;
 };
+
+export type MainNavItem = {
+  title: string;
+  href: string;
+};
+
+export type HomeConfig = {
+  mainNav: MainNavItem[];
+};
