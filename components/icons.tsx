@@ -8,6 +8,7 @@ import {
   LucideProps,
   MoonStar,
   Search,
+  SquareArrowOutUpRight,
   Tags,
 } from "lucide-react";
 
@@ -17,6 +18,7 @@ export const Icons = {
   chevronLeft: ChevronLeft,
   chevronRight: ChevronRight,
   copy: Copy,
+  externalLink: SquareArrowOutUpRight,
   info: Info,
   moonStar: MoonStar,
   search: Search,

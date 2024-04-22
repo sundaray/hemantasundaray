@@ -5,7 +5,8 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
-import React from "react";
+import { Button } from "@/components/ui/button";
+
 
 interface KodeKloudPostCategoryProps {
   categories: string[];
@@ -39,12 +40,13 @@ export function KodeKloudPostCategory({
         </SelectContent>
       </Select>
       {selectedCategory && (
-        <button onClick={onClear} className="group flex items-center space-x-1">
-          <span className="sr-only">Clear category</span>
-          <span className="text-sm text-neutral-500 group-hover:text-neutral-700">
-            Clear category
-          </span>
-        </button>
+        <Button
+          size="sm"
+          onClick={onClear}
+          className="border border-lime-200 bg-lime-100 text-lime-800 hover:bg-lime-200"
+        >
+          Clear filter
+        </Button>
       )}
     </div>
   );
