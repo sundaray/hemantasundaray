@@ -168,7 +168,7 @@ export default function WorkPage() {
         learners, allowing them to experiment with various cloud and DevOps
         technologies.
       </p>
-      <ul className="ml-10 list-decimal leading-7 marker:text-slate-700 mb-8">
+      <ul className="mb-8 ml-10 list-decimal leading-7 marker:text-slate-700">
         {playgroundItems.map((item) => (
           <li key={item.href}>
             <CustomLink href={item.href}>{item.label}</CustomLink>
@@ -183,12 +183,10 @@ export default function WorkPage() {
         these rewritten articles are credited under the original author&apos;
         name to acknowledge their initial contribution.
       </p>
-      <ul className="ml-10 list-decimal leading-7 marker:text-slate-700 mb-8">
+      <ul className="mb-16 ml-10 list-decimal leading-7 marker:text-slate-700">
         {revisedBlogItems.map((item) => (
           <li key={item.href}>
-            <CustomLink href={item.href}>
-              {item.label}
-            </CustomLink>
+            <CustomLink href={item.href}>{item.label}</CustomLink>
           </li>
         ))}
       </ul>
