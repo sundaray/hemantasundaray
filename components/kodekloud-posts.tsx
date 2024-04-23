@@ -25,13 +25,12 @@ export function KodeKloudPosts() {
       <KodeKloudPostCategory
         categories={categories}
         selectedCategory={selectedCategory}
-        onSelect={onSelectCategory}
-        onClear={onClearCategory}
+        onSelectCategory={onSelectCategory}
       />
       <KodeKloudPostCategoryFilterDisplay
+        selectedCategory={selectedCategory}
         totalCategoryPosts={totalCategoryPosts}
         onClearCategory={onClearCategory}
-        selectedCategory={selectedCategory}
       />
       <KodeKloudPostList posts={posts} />
       <KodeKloudPostPagination

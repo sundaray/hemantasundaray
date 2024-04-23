@@ -7,23 +7,20 @@ import {
 } from "@/components/ui/select";
 import { KodeKloudPostsHook } from "@/types";
 
-type KodeKloudPostCategoryProps = {
-  categories: string[];
-  selectedCategory: string | null;
-  onSelect: (category: string) => void;
-  onClear: () => void;
-};
+type KodeKloudPostCategoryProps = Pick<
+  KodeKloudPostsHook,
+  "categories" | "selectedCategory" | "onSelectCategory"
+>;
 
 export function KodeKloudPostCategory({
   categories,
   selectedCategory,
-  onSelect,
-  onClear,
+  onSelectCategory,
 }: KodeKloudPostCategoryProps) {
   return (
     <div className="flex items-center justify-between">
       <Select
-        onValueChange={onSelect}
+        onValueChange={onSelectCategory}
         value={selectedCategory || undefined}
         key={selectedCategory}
       >
