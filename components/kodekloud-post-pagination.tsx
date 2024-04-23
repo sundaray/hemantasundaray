@@ -29,9 +29,11 @@ export function KodeKloudPostPagination({
           <span className="sr-only">Previous</span>
         </Button>
       )}
-      <span className="text-primary">
-        Page {currentPage} of {totalPages}
-      </span>
+      {totalPages > 1 && (
+        <span className="text-primary">
+          Page {currentPage} of {totalPages}
+        </span>
+      )}
       {currentPage < totalPages && (
         <Button
           size="sm"

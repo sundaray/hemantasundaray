@@ -1,11 +1,12 @@
 import { Icons } from "@/components/icons";
 import { formatDate } from "@/lib/utils";
 import { KodeKloudPost } from "@/types";
+import { motion } from "framer-motion";
 import Image from "next/image";
 
 export function KodeKloudPostList({ posts }: { posts: KodeKloudPost[] }) {
   return (
-    <div className="grid gap-10 sm:grid-cols-2">
+    <motion.div layout="position" className="grid gap-10 sm:grid-cols-2">
       {posts.map((post, index) => (
         <article
           key={post.href}
@@ -40,6 +41,6 @@ export function KodeKloudPostList({ posts }: { posts: KodeKloudPost[] }) {
           </a>
         </article>
       ))}
-    </div>
+    </motion.div>
   );
 }

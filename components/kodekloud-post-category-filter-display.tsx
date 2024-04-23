@@ -6,22 +6,22 @@ export function KodeKloudPostCategoryFilterDisplay({
   onClearCategory,
 }) {
   return (
-    <div className="flex items-center justify-between">
+    <>
       {selectedCategory && (
-        <p className="text-sm text-muted-foreground">
-          Showing {totalCategoryPosts} posts categorized under{" "}
-          {selectedCategory}
-        </p>
+        <div className="flex items-center justify-between">
+          <p className="text-sm text-muted-foreground">
+            Showing {totalCategoryPosts} posts categorized under{" "}
+            {selectedCategory}
+          </p>
+          <Button
+            size="sm"
+            onClick={onClearCategory}
+            className="border border-lime-200 bg-lime-100 text-lime-800 hover:bg-lime-200"
+          >
+            Clear filter
+          </Button>
+        </div>
       )}
-      {selectedCategory && (
-        <Button
-          size="sm"
-          onClick={onClearCategory}
-          className="border border-lime-200 bg-lime-100 text-lime-800 hover:bg-lime-200"
-        >
-          Clear filter
-        </Button>
-      )}
-    </div>
+    </>
   );
 }
