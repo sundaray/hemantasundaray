@@ -1,12 +1,11 @@
 import { playfair_display } from "@/fonts";
-import { cn } from "@/lib/utils";
 
 export function KodeKloudTestimonial() {
   return (
     <>
       <h1 className="mb-4">Testimonial</h1>
       <figure className="rounded-lg bg-secondary p-8">
-        <blockquote className={cn(playfair_display.className)}>
+        <blockquote className={playfair_display.className}>
           <svg
             className="mb-4 size-6 text-slate-300"
             aria-hidden="true"
