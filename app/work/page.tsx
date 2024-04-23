@@ -2,7 +2,7 @@ import { CustomLink } from "@/components/custom-link";
 import { KodeKloudPosts } from "@/components/kodekloud-posts";
 import { posts as kodekloudPosts } from "@/kodekloud/posts";
 
-const linkItems = [
+const playgroundItems = [
   { href: "https://kodekloud.com/playgrounds/playground-chef", label: "Chef" },
   {
     href: "https://kodekloud.com/playgrounds/playground-saltstack",
@@ -114,29 +114,80 @@ const linkItems = [
   },
 ];
 
+const revisedBlogItems = [
+  {
+    href: "https://kodekloud.com/blog/containerization/",
+    label: "What Is Containerization?",
+  },
+  {
+    href: "https://kodekloud.com/blog/top-developer-tools/",
+    label: "Top 10 Developer Tools",
+  },
+  {
+    href: "https://kodekloud.com/blog/devops-cloud-coding/",
+    label: "Does DevOps or Cloud Engineer Need Coding?",
+  },
+  {
+    href: "https://kodekloud.com/blog/how-to-become-a-devops-engineer/",
+    label: "How to Become a DevOps Engineer: Your 6-Step Guide",
+  },
+  {
+    href: "https://kodekloud.com/blog/gitops-deployment-advantages/",
+    label: "What Is GitOps? Deployment Strategies and Advantages Explained",
+  },
+  {
+    href: "https://kodekloud.com/blog/cloud-computing/",
+    label: "What Is Cloud Computing?",
+  },
+];
+
 export default function WorkPage() {
   return (
     <div className="kodekloud container max-w-3xl">
       <h1 className="mb-4">Work</h1>
       <p className="mb-8 leading-7 text-slate-700">
-        I have been working with{" "}
-        <CustomLink href="https://kodekloud.com/">KodeKloud</CustomLink> as a
-        freelance technical writer since November 2022. In this role, I
-        primarily write about Linux, Bash scripting, Docker, and Kubernetes. To
-        date, I&apos;ve written {kodekloudPosts.length} blog posts on these
-        subjects, which you can explore below:
+        Since November 2022, I have been working as a freelance technical writer
+        for <CustomLink href="https://kodekloud.com/">KodeKloud</CustomLink>, a
+        leading platform for learning cloud and DevOps technologies. In this
+        role, I primarily write about Linux, Bash scripting, Docker, and
+        Kubernetes. To date, I&apos;ve written{" "}
+        <span className="font-semibold">
+          {kodekloudPosts.length} blog posts
+        </span>{" "}
+        on these subjects, which you can explore below:
       </p>
       <KodeKloudPosts />
       <p className="mb-8 leading-7 text-slate-700">
         In addition to the blog posts, I&apos;ve created write-ups for the
-        following KodeKloud playgrounds. These interactive sandboxes
-        provide hands-on practice for thousands of learners, allowing them to
-        experiment with various cloud and DevOps technologies.
+        following{" "}
+        <CustomLink href="https://kodekloud.com/playgrounds/">
+          KodeKloud playgrounds
+        </CustomLink>
+        . These interactive sandboxes provide hands-on practice for thousands of
+        learners, allowing them to experiment with various cloud and DevOps
+        technologies.
       </p>
-      <ul className="ml-10 list-decimal leading-7">
-        {linkItems.map((item) => (
+      <ul className="ml-10 list-decimal leading-7 marker:text-slate-700 mb-8">
+        {playgroundItems.map((item) => (
           <li key={item.href}>
             <CustomLink href={item.href}>{item.label}</CustomLink>
+          </li>
+        ))}
+      </ul>
+      <p className="mb-8 leading-7 text-slate-700">
+        Furthermore, I have rewritten the following blog posts that were
+        initially written by another technical writer. These revised articles
+        aim to improve clarity, readability, and technical accuracy while
+        maintaining the original author&apos; voice and intent. Please note that
+        these rewritten articles are credited under the original author&apos;
+        name to acknowledge their initial contribution.
+      </p>
+      <ul className="ml-10 list-decimal leading-7 marker:text-slate-700">
+        {revisedBlogItems.map((item) => (
+          <li key={item.href}>
+            <CustomLink href={item.href}>
+              {item.label}
+            </CustomLink>
           </li>
         ))}
       </ul>
