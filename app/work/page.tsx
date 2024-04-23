@@ -148,10 +148,10 @@ export default function WorkPage() {
       <h1 className="mb-4">Work</h1>
       <p className="mb-8 leading-7 text-slate-700">
         Since November 2022, I have been working as a freelance technical writer
-        for <CustomLink href="https://kodekloud.com/">KodeKloud</CustomLink>, a
-        leading platform for learning cloud and DevOps technologies. In this
-        role, I primarily write about Linux, Bash scripting, Docker, and
-        Kubernetes. To date, I&apos;ve written{" "}
+        for <CustomLink href="https://kodekloud.com/">KodeKloud</CustomLink>, an
+        online DevOps learning platform. In this role, I primarily write about
+        Linux, Bash scripting, Docker, and Kubernetes. To date, I&apos;ve
+        written{" "}
         <span className="font-semibold">
           {kodekloudPosts.length} blog posts
         </span>{" "}
@@ -176,12 +176,12 @@ export default function WorkPage() {
         ))}
       </ul>
       <p className="mb-8 leading-7 text-slate-700">
-        Furthermore, I have rewritten the following blog posts that were
+        Furthermore, I&apos;ve rewritten the following blog posts that were
         initially written by another technical writer. These revised articles
         aim to improve clarity, readability, and technical accuracy while
-        maintaining the original author&apos; voice and intent. Please note that
-        these rewritten articles are credited under the original author&apos;
-        name to acknowledge their initial contribution.
+        maintaining the original author&apos;s voice and intent. Please note
+        that these rewritten articles are credited under the original
+        author&apos;s name to acknowledge his initial contribution.
       </p>
       <ul className="mb-16 ml-10 list-decimal leading-7 marker:text-slate-700">
         {revisedBlogItems.map((item) => (

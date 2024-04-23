@@ -16,8 +16,8 @@ export function KodeKloudPostCategoryFilterDisplay({
       {selectedCategory && (
         <div className="flex items-center justify-between">
           <p className="text-sm text-muted-foreground">
-            Showing {totalCategoryPosts} posts categorized under{" "}
-            {selectedCategory}
+            Showing {totalCategoryPosts} posts categorized under
+            "{selectedCategory}"
           </p>
           <Button
             size="sm"

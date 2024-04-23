@@ -4,28 +4,23 @@ import { KodeKloudPostsHook } from "@/types";
 import { motion } from "framer-motion";
 import Image from "next/image";
 
-type KodeKloudPostListProps = Pick<
-  KodeKloudPostsHook,
-  "posts"
->;  
+type KodeKloudPostListProps = Pick<KodeKloudPostsHook, "posts">;
 
 export function KodeKloudPostList({ posts }: KodeKloudPostListProps) {
   return (
     <motion.div layout="position" className="grid gap-10 sm:grid-cols-2">
-      {posts.map((post, index) => (
+      {posts.map((post) => (
         <article
           key={post.href}
-          className="group relative z-0 rounded-lg border bg-secondary"
+          className="group relative overflow-hidden rounded-lg border bg-secondary"
         >
           {post.image && (
             <Image
               src={post.image}
-              alt="Blog post image"
-              width={804}
-              height={452}
-              sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              className="rounded-t-lg"
-              priority={index <= 1}
+              alt="Blog post cover image"
+              width={1000}
+              height={500}
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
               placeholder="blur"
               blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9IiNmOGZhZmMiLz48L3N2Zz4="
             />
