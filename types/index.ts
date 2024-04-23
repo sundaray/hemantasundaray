@@ -12,6 +12,13 @@ export type Post = Frontmatter & {
   slug: string;
 };
 
+export type KodeKloudPost = {
+  id: number;
+  image: string;
+  date: string;
+  href: string;
+};
+
 export type PostHeading = {
   id: string;
   text: string | null;

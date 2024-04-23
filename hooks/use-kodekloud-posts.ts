@@ -3,16 +3,16 @@ import { compareDesc } from "date-fns";
 import { useState } from "react";
 
 function parseDateString(dateStr: string): Date {
-    const parts = dateStr.split("-");
-    
-    const day = parseInt(parts[0], 10);
-    const month = parseInt(parts[1], 10);
-    const year = parseInt(parts[2], 10);
-    
-    const date = new Date(year, month - 1, day);
-  
-    return date;
-  }
+  const parts = dateStr.split("-");
+
+  const day = parseInt(parts[0], 10);
+  const month = parseInt(parts[1], 10);
+  const year = parseInt(parts[2], 10);
+
+  const date = new Date(year, month - 1, day);
+
+  return date;
+}
 
 export function useKodeKloudPosts() {
   const posts_per_page = 10;
@@ -28,6 +28,7 @@ export function useKodeKloudPosts() {
     : allPosts;
 
   const totalPages = Math.ceil(filteredPosts.length / posts_per_page);
+  const totalCategoryPosts = filteredPosts.length;
 
   const posts = filteredPosts.slice(
     (currentPage - 1) * posts_per_page,
@@ -40,6 +41,7 @@ export function useKodeKloudPosts() {
     currentPage,
     setCurrentPage,
     totalPages,
+    totalCategoryPosts,
     selectedCategory,
     setSelectedCategory,
     onSelectCategory: (category: string) => {

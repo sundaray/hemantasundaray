@@ -1,18 +1,9 @@
 import { Icons } from "@/components/icons";
 import { formatDate } from "@/lib/utils";
-import { compareDesc } from "date-fns";
+import { KodeKloudPost } from "@/types";
 import Image from "next/image";
 
-interface KodeKloudPostListProps {
-  posts: {
-    id: number;
-    image: string;
-    date: string;
-    href: string;
-  }[];
-}
-
-export function KodeKloudPostList({ posts }: KodeKloudPostListProps) {
+export function KodeKloudPostList({ posts }: { posts: KodeKloudPost[] }) {
   return (
     <div className="grid gap-10 sm:grid-cols-2">
       {posts.map((post, index) => (
@@ -45,7 +36,7 @@ export function KodeKloudPostList({ posts }: KodeKloudPostListProps) {
             className="group-hover:background-blur-md absolute inset-0 flex items-center justify-center text-sm font-medium text-primary opacity-0 transition-all group-hover:bg-white/90 group-hover:opacity-100"
           >
             Read
-            <Icons.externalLink className="inline-block size-4 ml-1" />
+            <Icons.externalLink className="ml-1 inline-block size-4" />
           </a>
         </article>
       ))}

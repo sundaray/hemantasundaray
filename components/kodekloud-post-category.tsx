@@ -38,15 +38,6 @@ export function KodeKloudPostCategory({
           ))}
         </SelectContent>
       </Select>
-      {selectedCategory && (
-        <Button
-          size="sm"
-          onClick={onClear}
-          className="border border-lime-200 bg-lime-100 text-lime-800 hover:bg-lime-200"
-        >
-          Clear filter
-        </Button>
-      )}
     </div>
   );
 }
