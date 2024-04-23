@@ -37,8 +37,8 @@ export function KodeKloudPosts() {
       <KodeKloudPostPagination
         currentPage={currentPage}
         totalPages={totalPages}
-        onNext={onNextPage}
-        onPrev={onPrevPage}
+        onNextPage={onNextPage}
+        onPrevPage={onPrevPage}
       />
     </div>
   );

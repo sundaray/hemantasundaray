@@ -1,10 +1,15 @@
 import { Icons } from "@/components/icons";
 import { formatDate } from "@/lib/utils";
-import { KodeKloudPost } from "@/types";
+import { KodeKloudPostsHook } from "@/types";
 import { motion } from "framer-motion";
 import Image from "next/image";
 
-export function KodeKloudPostList({ posts }: { posts: KodeKloudPost[] }) {
+type KodeKloudPostListProps = Pick<
+  KodeKloudPostsHook,
+  "posts"
+>;  
+
+export function KodeKloudPostList({ posts }: KodeKloudPostListProps) {
   return (
     <motion.div layout="position" className="grid gap-10 sm:grid-cols-2">
       {posts.map((post, index) => (

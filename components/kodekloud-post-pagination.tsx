@@ -1,19 +1,18 @@
 import { Icons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
+import { KodeKloudPostsHook } from "@/types";
 
-interface PaginationProps {
-  currentPage: number;
-  totalPages: number;
-  onNext: () => void;
-  onPrev: () => void;
-}
+type KodeKloudPostPaginationProps = Pick<
+  KodeKloudPostsHook,
+  "currentPage" | "totalPages" | "onNextPage" | "onPrevPage"
+>;
 
 export function KodeKloudPostPagination({
   currentPage,
   totalPages,
-  onNext,
-  onPrev,
-}: PaginationProps) {
+  onNextPage,
+  onPrevPage,
+}: KodeKloudPostPaginationProps) {
   return (
     <nav
       className="mx-auto flex w-fit items-center space-x-4"
@@ -22,7 +21,7 @@ export function KodeKloudPostPagination({
       {currentPage > 1 && (
         <Button
           size="sm"
-          onClick={onPrev}
+          onClick={onPrevPage}
           className="size-8 rounded-full bg-blue-100 p-0 hover:bg-blue-200"
         >
           <Icons.chevronLeft className="size-5 text-primary" />
@@ -37,7 +36,7 @@ export function KodeKloudPostPagination({
       {currentPage < totalPages && (
         <Button
           size="sm"
-          onClick={onNext}
+          onClick={onNextPage}
           className="size-8 rounded-full bg-blue-100 p-0 hover:bg-blue-200"
         >
           <Icons.chevronRight className="size-5 text-primary" />

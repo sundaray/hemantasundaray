@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import {
   Select,
   SelectValue,
@@ -6,6 +5,7 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
+import { KodeKloudPostsHook } from "@/types";
 
 type KodeKloudPostCategoryProps = {
   categories: string[];

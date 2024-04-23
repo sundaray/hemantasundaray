@@ -1,10 +1,16 @@
 import { Button } from "@/components/ui/button";
+import { KodeKloudPostsHook } from "@/types";
+
+type KodeKloudPostCategoryFilterDisplayProps = Pick<
+  KodeKloudPostsHook,
+  "selectedCategory" | "totalCategoryPosts" | "onClearCategory"
+>;
 
 export function KodeKloudPostCategoryFilterDisplay({
   selectedCategory,
   totalCategoryPosts,
   onClearCategory,
-}) {
+}: KodeKloudPostCategoryFilterDisplayProps) {
   return (
     <>
       {selectedCategory && (

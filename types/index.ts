@@ -19,6 +19,19 @@ export type KodeKloudPost = {
   href: string;
 };
 
+export type KodeKloudPostsHook = {
+  posts: KodeKloudPost[];
+  categories: string[];
+  currentPage: number;
+  totalPages: number;
+  totalCategoryPosts: number;
+  selectedCategory: string | null;
+  onSelectCategory: (category: string) => void;
+  onClearCategory: () => void;
+  onNextPage: () => void;
+  onPrevPage: () => void;
+};
+
 export type PostHeading = {
   id: string;
   text: string | null;
