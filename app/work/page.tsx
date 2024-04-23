@@ -1,5 +1,6 @@
 import { CustomLink } from "@/components/custom-link";
 import { KodeKloudPosts } from "@/components/kodekloud-posts";
+import { KodeKloudTestimonial } from "@/components/kodekloud-testimonial";
 import { posts as kodekloudPosts } from "@/kodekloud/posts";
 
 const playgroundItems = [
@@ -182,7 +183,7 @@ export default function WorkPage() {
         these rewritten articles are credited under the original author&apos;
         name to acknowledge their initial contribution.
       </p>
-      <ul className="ml-10 list-decimal leading-7 marker:text-slate-700">
+      <ul className="ml-10 list-decimal leading-7 marker:text-slate-700 mb-8">
         {revisedBlogItems.map((item) => (
           <li key={item.href}>
             <CustomLink href={item.href}>
@@ -191,6 +192,7 @@ export default function WorkPage() {
           </li>
         ))}
       </ul>
+      <KodeKloudTestimonial />
     </div>
   );
 }
