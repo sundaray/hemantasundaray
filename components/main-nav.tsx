@@ -1,6 +1,5 @@
 "use client";
 
-import { protest_guerrilla } from "@/fonts";
 import { cn } from "@/lib/utils";
 import { MainNavItem } from "@/types";
 import Link from "next/link";
@@ -18,7 +17,10 @@ export function MainNav({ items }: MainNavProps) {
   return (
     <div className="container flex h-16 items-center justify-between">
       <div className="flex items-center space-x-2">
-        <Link href="/" className={cn(protest_guerrilla.className, "flex items-center text-xl text-secondary-foreground")}>
+        <Link
+          href="/"
+          className="flex font-semibold items-center text-secondary-foreground"
+        >
           HKS
         </Link>
       </div>

@@ -30,11 +30,12 @@ export default function BlogPage({
       {tag && (
         <div className="mb-8 flex items-center justify-between">
           <p className="text-muted-foreground">
-            {totalPosts} post{totalPosts !== 1 ? "s" : ""} tagged with {tag}
+            {totalPosts} post{totalPosts !== 1 ? "s" : ""} tagged with &quot;
+            {tag}&quot;
           </p>
           <Link
             href="/blog"
-            className="rounded-md border border-lime-200 bg-lime-100 px-2 py-1 text-sm font-medium text-lime-800 hover:bg-lime-200"
+            className="rounded-md border border-lime-200 bg-lime-100 px-2 py-1 text-sm font-medium text-lime-900 hover:bg-lime-200"
           >
             Clear tag
           </Link>
