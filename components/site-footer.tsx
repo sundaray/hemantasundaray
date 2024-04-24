@@ -5,10 +5,11 @@ export function SiteFooter() {
 
   return (
     <footer className="container h-16 max-w-6xl border-t">
-      <p className="mb-6 md:mb-0">
+        <p className="text-sm text-muted-foreground">Source Code</p>
+      <p className="text-sm text-muted-foreground flex gap-2">
         &copy;
-        <span className="font-medium text-primary">Hemanta Sundaray</span>
         {currentYear}{" "}
+        <span>Hemanta Sundaray</span>
       </p>
     </footer>
   );
