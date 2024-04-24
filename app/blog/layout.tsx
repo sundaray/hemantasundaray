@@ -1,4 +1,5 @@
 import { MainNav } from "@/components/main-nav";
+import { SiteFooter } from "@/components/site-footer";
 import { homeConfig } from "@/config/home";
 
 type BlogLayoutProps = {
@@ -11,7 +12,8 @@ export default async function BlogLayout({ children }: BlogLayoutProps) {
       <header>
         <MainNav items={homeConfig.mainNav} />
       </header>
-      <main className="flex-1">{children}</main>
+      <main className="flex-1 py-16">{children}</main>
+      <SiteFooter />
     </div>
   );
 }

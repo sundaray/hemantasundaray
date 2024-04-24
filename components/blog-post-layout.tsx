@@ -21,7 +21,7 @@ export function BlogPostLayout({ children, frontmatter }: BlogPostLayoutProps) {
   return (
     <>
       <div className="container grid max-w-6xl grid-cols-16 gap-16">
-        <header className="col-span-full border-b py-16">
+        <header className="col-span-full">
           <div className="mb-8 flex items-center gap-2 text-sm font-medium">
             <Link
               href="/"
@@ -54,6 +54,7 @@ export function BlogPostLayout({ children, frontmatter }: BlogPostLayoutProps) {
             </div>
           </div>
         </header>
+        <span className="col-span-full border-t" />
         <section className="col-span-full grid grid-cols-subgrid gap-8">
           <article className="prose col-span-full lg:col-span-10">
             {children}
