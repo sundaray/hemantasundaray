@@ -9,7 +9,7 @@ type BlogLayoutProps = {
 export default async function BlogLayout({ children }: BlogLayoutProps) {
   return (
     <div className="relative flex min-h-screen flex-col">
-      <header className="background-blur-md sticky top-0 z-10 bg-white/90">
+      <header className="sticky top-0 z-10 bg-white">
         <MainNav items={homeConfig.mainNav} />
       </header>
       <main className="flex-1 py-16">{children}</main>
