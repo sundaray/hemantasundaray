@@ -25,7 +25,9 @@ export default function BlogPage({
       <SearchBar />
       <TagList searchParams={searchParams} />
       {!tag && totalPosts === 0 && (
-        <p className="text-red-600">No posts found.</p>
+        <p className="text-red-600 duration-500 ease-in-out animate-in fade-in slide-in-from-left-2">
+          No posts found.
+        </p>
       )}
       {tag && (
         <div className="mb-8 flex items-center justify-between">
