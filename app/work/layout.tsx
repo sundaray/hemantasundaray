@@ -1,4 +1,5 @@
 import { MainNav } from "@/components/main-nav";
+import { ScrollToTop } from "@/components/scroll-to-top";
 import { SiteFooter } from "@/components/site-footer";
 import { homeConfig } from "@/config/home";
 
@@ -14,6 +15,7 @@ export default async function WorkLayout({ children }: WorkLayoutProps) {
       </header>
       <main className="flex-1 py-16">{children}</main>
       <SiteFooter />
+      <ScrollToTop />
     </div>
   );
 }
