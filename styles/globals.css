@@ -84,11 +84,11 @@ input {
   }
 
   .prose h2 {
-    @apply mb-4 mt-12 text-xl font-bold tracking-tight lg:text-2xl;
+    @apply mb-4 mt-16 text-xl font-bold tracking-tight lg:text-2xl;
   }
 
   .prose h3 {
-    @apply mb-4 mt-12 text-lg font-bold tracking-tight lg:text-xl;
+    @apply mb-4 mt-16 text-lg font-bold tracking-tight lg:text-xl;
   }
 
   .prose :where(h2, h3) {

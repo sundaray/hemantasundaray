@@ -20,7 +20,7 @@ export function BlogPostLayout({ children, frontmatter }: BlogPostLayoutProps) {
 
   return (
     <>
-      <div className="container grid max-w-6xl grid-cols-16 gap-8">
+      <div className="container grid max-w-6xl grid-cols-16 gap-16">
         <header className="col-span-full border-b py-16">
           <div className="mb-8 flex items-center gap-2 text-sm font-medium">
             <Link
@@ -81,10 +81,10 @@ export function BlogPostLayout({ children, frontmatter }: BlogPostLayoutProps) {
             <TOC />
           </aside>
         </section>
+        <section className="col-span-full rounded-lg bg-secondary py-16">
+          <Comments />
+        </section>
       </div>
-      <section className="bg-secondary py-16">
-        <Comments />
-      </section>
     </>
   );
 }
