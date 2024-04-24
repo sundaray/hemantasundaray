@@ -2,6 +2,7 @@
 
 import { Comments } from "@/components/comments";
 import { Icons } from "@/components/icons";
+import { PageScrollProgress } from "@/components/page-scroll-progress";
 import { TOC } from "@/components/toc";
 // import Avatar from "@/app/(blog)/blog/images/avatar.jpg";
 import { formatDate } from "@/lib/utils";
@@ -20,6 +21,7 @@ export function BlogPostLayout({ children, frontmatter }: BlogPostLayoutProps) {
 
   return (
     <>
+      <PageScrollProgress />
       <div className="container grid max-w-6xl grid-cols-16 gap-16">
         <header className="col-span-full">
           <div className="mb-8 flex items-center gap-2 text-sm font-medium">
