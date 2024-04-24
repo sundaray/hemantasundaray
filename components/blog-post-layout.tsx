@@ -1,5 +1,6 @@
 "use client";
 
+import { Comments } from "@/components/comments";
 import { Icons } from "@/components/icons";
 import { TOC } from "@/components/toc";
 // import Avatar from "@/app/(blog)/blog/images/avatar.jpg";
@@ -18,67 +19,72 @@ export function BlogPostLayout({ children, frontmatter }: BlogPostLayoutProps) {
     frontmatter;
 
   return (
-    <div className="grid-cols-16 container grid max-w-6xl gap-8">
-      <header className="col-span-full border-b py-16">
-        <div className="mb-8 flex items-center gap-2 text-sm font-medium">
-          <Link
-            href="/"
-            className="text-primary transition-all hover:underline hover:underline-offset-2"
-          >
-            Home
-          </Link>
-          <Icons.chevronRight className="size-4 text-muted-foreground" />
-          <Link
-            href="/blog"
-            className="text-primary transition-all hover:underline hover:underline-offset-2"
-          >
-            Blog
-          </Link>
-          <Icons.chevronRight className="size-4 text-muted-foreground" />
-        </div>
-        <h1 className="mb-4 text-balance text-3xl font-bold lg:text-4xl">
-          {title}
-        </h1>
-        <p className="mb-8 text-lg text-slate-700">{description}</p>
-        <div className="flex items-center gap-4">
-          {/* <Image
+    <>
+      <div className="container grid max-w-6xl grid-cols-16 gap-8">
+        <header className="col-span-full border-b py-16">
+          <div className="mb-8 flex items-center gap-2 text-sm font-medium">
+            <Link
+              href="/"
+              className="text-primary transition-all hover:underline hover:underline-offset-2"
+            >
+              Home
+            </Link>
+            <Icons.chevronRight className="size-4 text-muted-foreground" />
+            <Link
+              href="/blog"
+              className="text-primary transition-all hover:underline hover:underline-offset-2"
+            >
+              Blog
+            </Link>
+            <Icons.chevronRight className="size-4 text-muted-foreground" />
+          </div>
+          <h1 className="mb-4 text-balance text-3xl font-bold lg:text-4xl">
+            {title}
+          </h1>
+          <p className="mb-8 text-lg text-slate-700">{description}</p>
+          <div className="flex items-center gap-4">
+            {/* <Image
             src={Avatar}
             className="size-10 rounded-full object-cover object-center"
             alt="Author avatar"
           /> */}
-          <div className="flex flex-col text-sm font-medium text-muted-foreground">
-            <p>{author}</p>
-            <p>Published on {formatDate(publishedAt)}</p>
-          </div>
-        </div>
-      </header>
-      <section className="col-span-full grid grid-cols-subgrid gap-8">
-        <article className="prose col-span-full lg:col-span-10">
-          {children}
-          <div className="mb-4 flex items-center gap-2">
-            <Icons.tags className="size-5 text-slate-700" />
-            <div className="flex gap-2 text-sm font-medium">
-              {tags.map((tag: string) => (
-                <Link
-                  key={tag}
-                  href={`/blog?tag=${encodeURIComponent(tag)}`}
-                  className="text-blue-600 hover:underline hover:underline-offset-2"
-                >
-                  #{tag}
-                </Link>
-              ))}
+            <div className="flex flex-col text-sm font-medium text-muted-foreground">
+              <p>{author}</p>
+              <p>Published on {formatDate(publishedAt)}</p>
             </div>
           </div>
-          {updatedAt && (
-            <p className="w-fit rounded bg-blue-100 px-2 py-1 text-sm font-medium">
-              Last updated on {formatDate(updatedAt)}
-            </p>
-          )}
-        </article>
-        <aside className="sticky top-24 col-span-full col-start-13 hidden max-w-[250px] self-start lg:block">
-          <TOC />
-        </aside>
+        </header>
+        <section className="col-span-full grid grid-cols-subgrid gap-8">
+          <article className="prose col-span-full lg:col-span-10">
+            {children}
+            <div className="mb-4 flex items-center gap-2">
+              <Icons.tags className="size-5 text-slate-700" />
+              <div className="flex gap-2 text-sm font-medium">
+                {tags.map((tag: string) => (
+                  <Link
+                    key={tag}
+                    href={`/blog?tag=${encodeURIComponent(tag)}`}
+                    className="text-blue-600 hover:underline hover:underline-offset-2"
+                  >
+                    #{tag}
+                  </Link>
+                ))}
+              </div>
+            </div>
+            {updatedAt && (
+              <p className="w-fit rounded bg-blue-100 px-2 py-1 text-sm font-medium">
+                Last updated on {formatDate(updatedAt)}
+              </p>
+            )}
+          </article>
+          <aside className="sticky top-24 col-span-full col-start-13 hidden max-w-[250px] self-start lg:block">
+            <TOC />
+          </aside>
+        </section>
+      </div>
+      <section className="bg-secondary py-16">
+        <Comments />
       </section>
-    </div>
+    </>
   );
 }
