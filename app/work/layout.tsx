@@ -10,7 +10,7 @@ type WorkLayoutProps = {
 export default async function WorkLayout({ children }: WorkLayoutProps) {
   return (
     <div className="relative flex min-h-screen flex-col">
-      <header className="sticky top-0 z-10 bg-white">
+      <header className="sticky top-0 z-10">
         <MainNav items={homeConfig.mainNav} />
       </header>
       <main className="flex-1 py-16">{children}</main>

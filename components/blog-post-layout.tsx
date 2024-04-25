@@ -21,7 +21,7 @@ export function BlogPostLayout({ children, frontmatter }: BlogPostLayoutProps) {
 
   return (
     <>
-      <PageScrollProgress />
+      {/* <PageScrollProgress /> */}
       <div className="container grid max-w-6xl grid-cols-16 gap-16">
         <header className="col-span-full">
           <div className="mb-8 flex items-center gap-2 text-sm font-medium">

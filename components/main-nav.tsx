@@ -2,9 +2,10 @@
 
 import { cn } from "@/lib/utils";
 import { MainNavItem } from "@/types";
+import { useScroll, useMotionValueEvent } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React from "react";
+import React, {useState} from "react";
 
 interface MainNavProps {
   items?: MainNavItem[];
@@ -12,14 +13,27 @@ interface MainNavProps {
 }
 
 export function MainNav({ items }: MainNavProps) {
+
+  const [isScrolled, setIsScrolled] = useState(false);
+
   const pathname = usePathname();
 
+  const { scrollY } = useScroll();
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    if (latest > 50 && !isScrolled) {
+      setIsScrolled(true);
+    } else if (latest <= 50 && isScrolled) {
+      setIsScrolled(false);
+    }
+  });
+
   return (
-    <div className="container flex h-16 items-center justify-between">
+    <div className={cn("container flex h-16 items-center justify-between transition-all", isScrolled ? "border-b bg-white/50 backdrop-blur-xl" : "bg-white/0")}>
       <div className="flex items-center space-x-2">
         <Link
           href="/"
-          className="flex font-semibold items-center text-secondary-foreground"
+          className="flex items-center font-semibold text-secondary-foreground"
         >
           HKS
         </Link>
