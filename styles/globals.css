@@ -126,15 +126,15 @@ input {
   }
 
   figure[data-rehype-pretty-code-figure] {
-    @apply mb-8 overflow-x-auto rounded-lg border shadow-sm;
+    @apply relative mb-8 overflow-x-auto rounded-lg border shadow-sm;
   }
 
   figcaption[data-rehype-pretty-code-title] {
-    @apply pl-4 pt-4 text-sm text-slate-700;
+    @apply border-b py-4 pl-4 text-sm text-slate-700;
   }
 
   figure pre {
-    @apply relative py-4 text-sm;
+    @apply py-4 text-sm;
     counter-reset: line;
   }
 
@@ -153,11 +153,11 @@ input {
   }
 
   [data-line-numbers-max-digits="2"] > [data-line]::before {
-    width: 2rem;
+    @apply w-8;
   }
 
   [data-line-numbers-max-digits="3"] > [data-line]::before {
-    width: 3rem;
+    @apply w-12;
   }
 }
 

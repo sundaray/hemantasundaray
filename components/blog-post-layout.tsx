@@ -23,8 +23,8 @@ export function BlogPostLayout({ children, frontmatter }: BlogPostLayoutProps) {
   return (
     <>
       {/* <PageScrollProgress /> */}
-      <div className="container">
-        <article>{children}</article>
+      <div className="container max-w-6xl">
+        <article className="prose">{children}</article>
         {/* <header>
           <div className="mb-8 flex items-center gap-2 text-sm font-medium">
             <Link

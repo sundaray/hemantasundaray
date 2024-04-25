@@ -26,7 +26,7 @@ export function CopyCode({ text }: { text: string }) {
       size="sm"
       variant="ghost"
       onClick={copyToClipboard}
-      className="absolute right-1 top-1 size-7 bg-white text-slate-400 hover:bg-slate-100 hover:text-slate-600"
+      className="absolute right-2 top-3 size-7 bg-white text-slate-400 hover:bg-slate-100 hover:text-muted-foreground"
     >
       <AnimatePresence mode="wait">
         {isCopied ? (
