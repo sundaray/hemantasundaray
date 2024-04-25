@@ -2,6 +2,8 @@ import { MainNav } from "@/components/main-nav";
 import { ScrollToTop } from "@/components/scroll-to-top";
 import { SiteFooter } from "@/components/site-footer";
 import { homeConfig } from "@/config/home";
+import { Toaster } from "@/components/ui/toaster"
+
 
 type BlogLayoutProps = {
   children: React.ReactNode;
@@ -14,6 +16,7 @@ export default async function BlogLayout({ children }: BlogLayoutProps) {
         <MainNav items={homeConfig.mainNav} />
       </header>
       <main className="flex-1 py-16">{children}</main>
+      <Toaster />
       <SiteFooter />
       <ScrollToTop />
     </div>

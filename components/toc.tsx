@@ -26,7 +26,7 @@ export function TOC() {
   };
 
   return (
-    <nav className="space-y-4">
+    <nav className="scrollbar scrollbar-thin scrollbar-thumb-muted-foreground scrollbar-track-slate-200 h-auto max-h-96 space-y-4 overflow-y-auto">
       <header>
         <h2 className="font-semibold text-slate-700">CONTENTS</h2>
       </header>

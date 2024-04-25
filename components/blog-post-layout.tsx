@@ -3,6 +3,7 @@
 import { Comments } from "@/components/comments";
 import { Icons } from "@/components/icons";
 import { PageScrollProgress } from "@/components/page-scroll-progress";
+import { SubscribeForm } from "@/components/subscribe-form";
 import { TOC } from "@/components/toc";
 // import Avatar from "@/app/(blog)/blog/images/avatar.jpg";
 import { formatDate } from "@/lib/utils";
@@ -80,8 +81,17 @@ export function BlogPostLayout({ children, frontmatter }: BlogPostLayoutProps) {
               </p>
             )}
           </article>
-          <aside className="sticky top-24 col-span-full col-start-13 hidden max-w-[250px] self-start lg:block">
+          <aside className="sticky top-24 col-span-full col-start-12 hidden self-start lg:block">
             <TOC />
+            <div className="mt-8 rounded-lg bg-secondary p-4">
+              <h2 className="text-xl font-semibold text-secondary-foreground">
+                Subscribe
+              </h2>
+              <p className="mb-4 text-sm text-muted-foreground">
+                Get notified when I publish a post.
+              </p>
+              <SubscribeForm />
+            </div>
           </aside>
         </section>
         <section className="col-span-full rounded-lg bg-secondary py-16">
