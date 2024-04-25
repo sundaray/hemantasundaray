@@ -23,8 +23,8 @@ export function BlogPostLayout({ children, frontmatter }: BlogPostLayoutProps) {
   return (
     <>
       {/* <PageScrollProgress /> */}
-      <div className="container grid max-w-6xl grid-cols-16 gap-16">
-        <header className="col-span-full">
+      <div className="container flex grid max-w-6xl flex-col gap-16">
+        <header>
           <div className="mb-8 flex items-center gap-2 text-sm font-medium">
             <Link
               href="/"
@@ -57,9 +57,9 @@ export function BlogPostLayout({ children, frontmatter }: BlogPostLayoutProps) {
             </div>
           </div>
         </header>
-        <span className="col-span-full border-t" />
-        <section className="col-span-full grid grid-cols-subgrid gap-8">
-          <article className="prose col-span-full lg:col-span-10">
+        <span className="w-full border-t" />
+        <section className="flex self-center lg:justify-between">
+          <article className="prose max-w-[700px]">
             {children}
             <div className="mb-4 flex items-center gap-2">
               <Icons.tags className="size-5 text-slate-700" />
@@ -81,22 +81,22 @@ export function BlogPostLayout({ children, frontmatter }: BlogPostLayoutProps) {
               </p>
             )}
           </article>
-          <aside className="sticky top-24 col-span-full col-start-12 hidden self-start lg:block">
+          <aside className="sticky top-24 hidden self-start lg:block">
             <TOC />
             <div className="mt-8 rounded-lg bg-secondary p-4">
-              <h2 className="text-xl font-semibold text-secondary-foreground">
+              <h2 className="text-2xl font-semibold text-secondary-foreground">
                 Subscribe
               </h2>
               <p className="mb-4 text-sm text-muted-foreground">
-                Get notified when I publish a post.
+                Get notified when I publish a blog post.
               </p>
               <SubscribeForm />
             </div>
           </aside>
         </section>
-        <section className="col-span-full rounded-lg bg-secondary py-16">
+        {/* <section className="rounded-lg bg-secondary py-8 lg:py-16">
           <Comments />
-        </section>
+        </section> */}
       </div>
     </>
   );

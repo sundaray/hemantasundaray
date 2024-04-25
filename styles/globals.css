@@ -61,12 +61,13 @@
     @apply text-4xl font-bold text-secondary-foreground;
   }
 
-  h1, h2 {
-    @apply text-secondary-foreground
+  h1,
+  h2 {
+    @apply text-secondary-foreground;
   }
 
   h3 {
-    @apply text-slate-700
+    @apply text-slate-700;
   }
 }
 
@@ -135,10 +136,12 @@ input {
   }
 
   .prose figure pre {
-    position: relative;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-    counter-reset: line; /* Reset counter for each code block */
+    @apply relative max-w-full overflow-x-auto overflow-x-auto py-4;
+    counter-reset: line;
+  }
+
+  [data-line] {
+    @apply border-l-2 border-l-transparent;
   }
 
   [data-line]::before {
@@ -164,16 +167,8 @@ input {
     @apply text-sm;
   }
 
-  [data-line] {
-    @apply border-l-2 border-l-transparent;
-  }
-
   [data-highlighted-line] {
     @apply border-l-2 border-blue-600 bg-blue-50;
-  }
-
-  [data-rehype-pretty-code-figure] > code > span {
-    @apply rounded-md border bg-secondary px-1 py-0.5;
   }
 }
 
