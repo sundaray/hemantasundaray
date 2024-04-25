@@ -126,35 +126,29 @@ input {
   }
 
   figure[data-rehype-pretty-code-figure] {
-    @apply mb-8 rounded-lg border shadow-sm overflow-x-auto;
+    @apply mb-8 overflow-x-auto rounded-lg border shadow-sm;
   }
 
-  /*.prose figure figcaption {
-    @apply border-b p-3 text-sm text-muted-foreground;
+  figcaption[data-rehype-pretty-code-title] {
+    @apply pl-4 pt-4 text-sm text-slate-700;
   }
 
-  .prose figure pre {
-    @apply relative overflow-x-auto py-4;
+  figure pre {
+    @apply relative py-4 text-sm;
     counter-reset: line;
   }
 
-  .prose figure pre code {
-    @apply text-sm;
-  }
-
-  [data-line] {
+  span[data-line] {
     @apply border-l-2 border-l-transparent;
-  } */
-
-  /* [data-line]::before {
-    @apply mx-4 inline-block text-right;
-    counter-increment: line; 
-    content: counter(line);
-    width: 1rem; 
-    color: #a1a1aa; 
   }
- */
-  /* [data-highlighted-line] {
+
+  span[data-line]::before {
+    @apply mx-4 inline-block w-4 text-right text-muted-foreground;
+    counter-increment: line;
+    content: counter(line);
+  }
+
+  span[data-highlighted-line] {
     @apply border-l-2 border-blue-600 bg-blue-50;
   }
 
@@ -164,7 +158,7 @@ input {
 
   [data-line-numbers-max-digits="3"] > [data-line]::before {
     width: 3rem;
-  } */
+  }
 }
 
 input[type="search"]::-webkit-search-cancel-button {
@@ -179,9 +173,3 @@ input[type="search"]:focus::-webkit-search-cancel-button {
 .note-component p:last-child {
   margin-bottom: 0 !important;
 }
- 
-
-/* figure pre {
-  padding: 1rem 0;
-  border: 0.1rem solid yellow;
-} */ 
