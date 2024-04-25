@@ -23,8 +23,9 @@ export function BlogPostLayout({ children, frontmatter }: BlogPostLayoutProps) {
   return (
     <>
       {/* <PageScrollProgress /> */}
-      <div className="container flex grid max-w-6xl flex-col gap-16">
-        <header>
+      <div className="container">
+        <article>{children}</article>
+        {/* <header>
           <div className="mb-8 flex items-center gap-2 text-sm font-medium">
             <Link
               href="/"
@@ -46,11 +47,11 @@ export function BlogPostLayout({ children, frontmatter }: BlogPostLayoutProps) {
           </h1>
           <p className="mb-8 text-lg text-slate-700">{description}</p>
           <div className="flex items-center gap-4">
-            {/* <Image
+            <Image
             src={Avatar}
             className="size-10 rounded-full object-cover object-center"
             alt="Author avatar"
-          /> */}
+          />
             <div className="flex flex-col text-sm font-medium text-muted-foreground">
               <p>{author}</p>
               <p>Published on {formatDate(publishedAt)}</p>
@@ -94,7 +95,7 @@ export function BlogPostLayout({ children, frontmatter }: BlogPostLayoutProps) {
             </div>
           </aside>
         </section>
-        {/* <section className="rounded-lg bg-secondary py-8 lg:py-16">
+        <section className="rounded-lg bg-secondary py-8 lg:py-16">
           <Comments />
         </section> */}
       </div>
