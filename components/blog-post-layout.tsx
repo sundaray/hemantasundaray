@@ -23,7 +23,7 @@ export function BlogPostLayout({ children, frontmatter }: BlogPostLayoutProps) {
   return (
     <>
       {/* <PageScrollProgress /> */}
-      <div className="container max-w-6xl">
+      <div className="container max-w-6xl flex flex-col gap-16">
         <header>
           <div className="mb-8 flex items-center gap-2 text-sm font-medium">
             <Link
@@ -57,44 +57,9 @@ export function BlogPostLayout({ children, frontmatter }: BlogPostLayoutProps) {
             </div>
           </div>
         </header>
-
-        <article className="prose max-w-[700px]">{children}</article>
-        {/* <header>
-          <div className="mb-8 flex items-center gap-2 text-sm font-medium">
-            <Link
-              href="/"
-              className="text-primary transition-all hover:underline hover:underline-offset-2"
-            >
-              Home
-            </Link>
-            <Icons.chevronRight className="size-4 text-muted-foreground" />
-            <Link
-              href="/blog"
-              className="text-primary transition-all hover:underline hover:underline-offset-2"
-            >
-              Blog
-            </Link>
-            <Icons.chevronRight className="size-4 text-muted-foreground" />
-          </div>
-          <h1 className="mb-4 text-balance text-3xl font-bold lg:text-4xl">
-            {title}
-          </h1>
-          <p className="mb-8 text-lg text-slate-700">{description}</p>
-          <div className="flex items-center gap-4">
-            <Image
-            src={Avatar}
-            className="size-10 rounded-full object-cover object-center"
-            alt="Author avatar"
-          />
-            <div className="flex flex-col text-sm font-medium text-muted-foreground">
-              <p>{author}</p>
-              <p>Published on {formatDate(publishedAt)}</p>
-            </div>
-          </div>
-        </header>
-        <span className="w-full border-t" /> */}
-        {/* <section className="flex self-center lg:justify-between">
-          <article className="prose max-w-[700px]">
+        <span className="w-full border-t" />
+        <section className="grid grid-cols-16">
+          <article className="prose col-span-full col-start-1 lg:col-end-10">
             {children}
             <div className="mb-4 flex items-center gap-2">
               <Icons.tags className="size-5 text-slate-700" />
@@ -116,7 +81,7 @@ export function BlogPostLayout({ children, frontmatter }: BlogPostLayoutProps) {
               </p>
             )}
           </article>
-          <aside className="sticky top-24 hidden self-start lg:block">
+          <aside className="sticky top-24 col-span-full col-start-12 hidden self-start lg:block">
             <TOC />
             <div className="mt-8 rounded-lg bg-secondary p-4">
               <h2 className="text-2xl font-semibold text-secondary-foreground">
@@ -128,10 +93,10 @@ export function BlogPostLayout({ children, frontmatter }: BlogPostLayoutProps) {
               <SubscribeForm />
             </div>
           </aside>
-        </section> */}
-        {/* <section className="rounded-lg bg-secondary py-8 lg:py-16">
+        </section>
+        <section className="rounded-lg bg-secondary p-4 lg:p-16">
           <Comments />
-        </section> */}
+        </section>
       </div>
     </>
   );
