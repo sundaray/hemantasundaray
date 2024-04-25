@@ -76,6 +76,12 @@ input {
 }
 
 @layer components {
+  /*
+ * *********************************************
+ * **** BLOG POST STYLES START ****
+ * *********************************************
+ */
+
   .prose a {
     @apply text-primary underline decoration-primary underline-offset-2 transition-all hover:no-underline;
   }
@@ -125,10 +131,24 @@ input {
     @apply mb-8 list-decimal pl-8 leading-7;
   }
 
+  /*
+ * *********************************************
+ * **** BLOG POST STYLES END ****
+ * *********************************************
+ */
+
+  /*
+ * *********************************************
+ * **** CODE BLOCK STYLES START ****
+ * *********************************************
+ */
+
+  /* Code block is wrapped by figure element */
   figure[data-rehype-pretty-code-figure] {
     @apply relative mb-8 overflow-x-auto rounded-lg border shadow-sm;
   }
 
+  /* Code block title */
   figcaption[data-rehype-pretty-code-title] {
     @apply border-b py-4 pl-4 text-sm text-slate-700;
   }
@@ -159,8 +179,15 @@ input {
   [data-line-numbers-max-digits="3"] > [data-line]::before {
     @apply w-12;
   }
+
+  /*
+ * *********************************************
+ * **** CODE BLOCK STYLES END ****
+ * *********************************************
+ */
 }
 
+/* Search input cancel button styles */
 input[type="search"]::-webkit-search-cancel-button {
   @apply pointer-events-none absolute right-4 top-1/2 size-5 -translate-y-1/2 bg-[url('https://pro.fontawesome.com/releases/v5.10.0/svgs/solid/times-circle.svg')] opacity-0;
   -webkit-appearance: none;

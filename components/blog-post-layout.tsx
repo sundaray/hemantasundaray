@@ -23,7 +23,7 @@ export function BlogPostLayout({ children, frontmatter }: BlogPostLayoutProps) {
   return (
     <>
       {/* <PageScrollProgress /> */}
-      <div className="container max-w-6xl flex flex-col gap-16">
+      <div className="container flex max-w-6xl flex-col gap-16">
         <header>
           <div className="mb-8 flex items-center gap-2 text-sm font-medium">
             <Link
@@ -83,7 +83,7 @@ export function BlogPostLayout({ children, frontmatter }: BlogPostLayoutProps) {
           </article>
           <aside className="sticky top-24 col-span-full col-start-12 hidden self-start lg:block">
             <TOC />
-            <div className="mt-8 rounded-lg bg-secondary p-4">
+            <div className="mt-8 rounded-lg bg-secondary p-6">
               <h2 className="text-2xl font-semibold text-secondary-foreground">
                 Subscribe
               </h2>
