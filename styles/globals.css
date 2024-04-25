@@ -136,8 +136,12 @@ input {
   }
 
   .prose figure pre {
-    @apply relative max-w-full overflow-x-auto overflow-x-auto py-4;
+    @apply relative overflow-x-auto py-4;
     counter-reset: line;
+  }
+
+  .prose figure pre code {
+    @apply text-sm;
   }
 
   [data-line] {
@@ -145,31 +149,25 @@ input {
   }
 
   [data-line]::before {
+    @apply mx-4 inline-block text-right;
     counter-increment: line; /* Increment counter for each line */
     content: counter(line); /* Display the counter value */
-    display: inline-block; /* Make line numbers appear inline */
     width: 1rem; /* Adjust width as needed */
-    margin-right: 1rem; /* Adjust spacing between numbers and code */
-    margin-left: 1rem; /* Adjust spacing between numbers and code */
-    text-align: right; /* Align numbers to the right */
     color: #a1a1aa; /* Set line number color (adjust if needed) */
-  }
-
-  [data-line-numbers-max-digits="2"] > [data-line]::before {
-    width: 2rem; /* Adjust width for codes with max 2 digits */
-  }
-
-  [data-line-numbers-max-digits="3"] > [data-line]::before {
-    width: 3rem; /* Adjust width for codes with max 3 digits */
-  }
-
-  .prose figure pre code {
-    @apply text-sm;
   }
 
   [data-highlighted-line] {
     @apply border-l-2 border-blue-600 bg-blue-50;
   }
+
+  [data-line-numbers-max-digits="2"] > [data-line]::before {
+    width: 2rem; 
+  }
+
+  [data-line-numbers-max-digits="3"] > [data-line]::before {
+    width: 3rem; 
+  }
+
 }
 
 input[type="search"]::-webkit-search-cancel-button {
