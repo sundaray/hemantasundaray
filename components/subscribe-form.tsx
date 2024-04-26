@@ -3,7 +3,7 @@
 import { Icons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { toast } from "@/components/ui/use-toast";
+import { useToast } from "@/components/ui/use-toast";
 import { createSubscriber } from "@/lib/create-subscriber";
 import { subscribeSchema } from "@/lib/validations";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -26,6 +26,7 @@ export function SubscribeForm() {
   const [error, setError] = React.useState<string | null>(null);
 
   const router = useRouter();
+  const { toast } = useToast();
 
   async function onSubmit(data: FormData) {
     await createSubscriber({
@@ -34,6 +35,7 @@ export function SubscribeForm() {
       router,
       setIsLoading,
       reset,
+      toast,
     });
   }
 

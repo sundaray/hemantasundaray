@@ -1,4 +1,5 @@
 import type { FormData } from "@/components/subscribe-form";
+import { useToast } from "@/components/ui/use-toast";
 import "client-only";
 import { useRouter } from "next/navigation";
 
@@ -11,13 +12,14 @@ const RESPONSE_MESSAGES = {
   SUBSCRIPTION_FAILED: "Subscription failed. Please try again.",
 };
 
-interface createSubscriberProps {
+type createSubscriberProps = {
   data: FormData;
   setError: React.Dispatch<React.SetStateAction<string | null>>;
   reset: () => void;
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
   router: ReturnType<typeof useRouter>;
-}
+  toast: ReturnType<typeof useToast>["toast"];
+};
 
 export async function createSubscriber({
   data,
@@ -25,13 +27,14 @@ export async function createSubscriber({
   reset,
   setIsLoading,
   router,
+  toast,
 }: createSubscriberProps) {
   setIsLoading(true);
   setError(null);
 
   try {
     // Attempt to subscribe the user
-    const subscribeResponse = await fetch("/api/subscribe", {
+    const subscribeResponse = await fetch("/api/create-subscriber", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
