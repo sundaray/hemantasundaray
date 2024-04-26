@@ -1,64 +1,82 @@
-"use client";
+import { SUBSCRIPTION_STATUS_RESPONSE } from "@/lib/constants";
+import { fetchSubscriptionStatus } from "@/lib/fetch-subscription-status";
+import { SearchParams } from "@/types";
+import Link from "next/link";
 
-import { Icons } from "@/components/icons";
-import {
-  subscriptionStatus,
-  RESPONSE_MESSAGES,
-} from "@/lib/subscription-status";
-import clsx from "clsx";
-import { useSearchParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+export async function SubscriptionStatusPage({
+  searchParams,
+}: {
+  searchParams: SearchParams;
+}) {
+  const email = searchParams.email;
+  const token = searchParams.token;
 
-export default function StatusPage() {
-  const [message, setMessage] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(true); // Initializing as true since we want the spinner to show on component mount.
-  const searchParams = useSearchParams();
+  const { message } = await fetchSubscriptionStatus(email!, token!);
 
-  const email = searchParams.get("email");
-  const token = searchParams.get("token");
-
-  useEffect(() => {
-    const fetchSubscriptionStatus = async () => {
-      if (email && token) {
-        await subscriptionStatus({ setMessage, setIsLoading, email, token });
-      }
-    };
-    fetchSubscriptionStatus();
-  }, [email, token]);
-
-  const messageClass = clsx({
-    "text-red-600": message !== RESPONSE_MESSAGES.SUBSCRIPTION_COMPLETE,
-  });
-
-  if (message === RESPONSE_MESSAGES.SUBSCRIPTION_COMPLETE) {
+  if (message === SUBSCRIPTION_STATUS_RESPONSE.INVALID_EMAIL.title) {
     return (
-      <div className="auth-page-message-layout">
-        <div className="mx-auto flex items-center justify-center space-x-2">
-          <Icons.subscribed className="h-6 w-6 text-neutral-900" />
-          <h2>Subscribed</h2>
-        </div>
-        <div>
-          <p className="text-center">Thanks for subscribing.</p>
-          <p className="text-center">
-            I'll keep you updated on the course progress.
-          </p>
-        </div>
+      <div className="container mx-auto space-y-4">
+        <h1 className="text-center text-red-600">
+          {SUBSCRIPTION_STATUS_RESPONSE.INVALID_EMAIL.title}
+        </h1>
+        <p className="text-center">Please subscribe again</p>
+      </div>
+    );
+  }
+
+  if (
+    message ===
+    SUBSCRIPTION_STATUS_RESPONSE.INVALID_EMAIL_VERIFICATION_LINK.title
+  ) {
+    return (
+      <div className="container mx-auto space-y-4">
+        <h1 className="text-center text-red-600">
+          {SUBSCRIPTION_STATUS_RESPONSE.INVALID_EMAIL_VERIFICATION_LINK.title}
+        </h1>
+        <p className="text-center">Please subscribe again</p>
+      </div>
+    );
+  }
+
+  if (
+    message ===
+    SUBSCRIPTION_STATUS_RESPONSE.INVALID_EMAIL_VERIFICATION_TOKEN.title
+  ) {
+    return (
+      <div className="container mx-auto space-y-4">
+        <h1 className="text-center text-red-600">
+          {SUBSCRIPTION_STATUS_RESPONSE.INVALID_EMAIL_VERIFICATION_TOKEN.title}
+        </h1>
+        <p className="text-center">Please subscribe again</p>
+      </div>
+    );
+  }
+
+  if (
+    message ===
+    SUBSCRIPTION_STATUS_RESPONSE.SUBSCRIPTION_STATUS_CHECK_FAILED.title
+  ) {
+    return (
+      <div className="container mx-auto space-y-4">
+        <h1 className="text-center text-red-600">
+          {SUBSCRIPTION_STATUS_RESPONSE.SUBSCRIPTION_STATUS_CHECK_FAILED.title}
+        </h1>
+        <p className="text-center">Please subscribe again</p>
       </div>
     );
   }
 
   return (
-    <div className="mb-12 mt-32 flex justify-center">
-      {isLoading ? (
-        <Icons.spinner className="h-4 w-4 animate-spin text-neutral-700" />
-      ) : (
-        <div className="mx-auto flex items-center justify-center space-x-2">
-          {message !== RESPONSE_MESSAGES.SUBSCRIPTION_COMPLETE && (
-            <Icons.alertTriangle className="h-4 w-4 text-red-600" />
-          )}
-          <p className={clsx("text-center", messageClass)}>{message}</p>
-        </div>
-      )}
+    <div className="container mx-auto space-y-4">
+      <h1 className="text-center">
+        {SUBSCRIPTION_STATUS_RESPONSE.SUBSCRIPTION_SUCCESS.title}
+      </h1>
+      <Link
+        href="/blog"
+        className="rounded-md bg-secondary px-2 py-1 text-secondary-foreground hover:bg-border"
+      >
+        Back to blog
+      </Link>
     </div>
   );
 }

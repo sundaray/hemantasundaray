@@ -42,6 +42,8 @@ export type SearchParams = {
   tag?: string;
   page?: string;
   query?: string;
+  token?: string;
+  email?: string;
 };
 
 export type MainNavItem = {

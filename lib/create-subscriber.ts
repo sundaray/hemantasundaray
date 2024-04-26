@@ -1,4 +1,3 @@
-import { RESPONSE_MESSAGES } from "./subscription-status";
 import type { FormData } from "@/components/subscribe-form";
 import { useToast } from "@/components/ui/use-toast";
 import { SUBSCRIPTION_RESPONSE } from "@/lib/constants";
@@ -74,7 +73,7 @@ export async function createSubscriber({
     // Subscriber created, send an email verification link
     if (
       createSubscriberResponseData.message ===
-      SUBSCRIPTION_RESPONSE.SUBSCRIBER_CREATED
+      SUBSCRIPTION_RESPONSE.SUBSCRIBER_DOCUMENT_CREATED.title
     ) {
       const { email, emailVerificationToken } = createSubscriberResponseData;
 
@@ -141,7 +140,7 @@ export async function createSubscriber({
 
       if (
         emailResponseTwoData.message ===
-        SUBSCRIPTION_RESPONSE.EMAIL_VERIFICATION_LINK_SENT
+        SUBSCRIPTION_RESPONSE.EMAIL_VERIFICATION_LINK_SENT.title
       ) {
         toast({
           title: SUBSCRIPTION_RESPONSE.EMAIL_VERIFICATION_LINK_SENT.title,

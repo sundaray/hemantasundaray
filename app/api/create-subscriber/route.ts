@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
       const { email, emailVerificationToken } =
         await createSubscriberDocumentInFirestore(registrationEmail, userRef);
       return NextResponse.json({
-        message: SUBSCRIPTION_RESPONSE.SUBSCRIBER_CREATED.title,
+        message: SUBSCRIPTION_RESPONSE.SUBSCRIBER_DOCUMENT_CREATED.title,
         email,
         emailVerificationToken,
       });
