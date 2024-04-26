@@ -20,6 +20,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "date-fns": "^3.6.0",
+    "firebase-admin": "^12.1.0",
     "framer-motion": "^11.1.5",
     "gray-matter": "^4.0.3",
     "lucide-react": "^0.372.0",
