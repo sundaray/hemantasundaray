@@ -1,3 +1,4 @@
+import { RESPONSE_MESSAGES } from "./subscription-status";
 import type { FormData } from "@/components/subscribe-form";
 import { useToast } from "@/components/ui/use-toast";
 import { SUBSCRIPTION_RESPONSE } from "@/lib/constants";
@@ -42,36 +43,45 @@ export async function createSubscriber({
       });
     }
 
-    const subscribeResponseData = await createSubscriberResponse.json();
+    const createSubscriberResponseData = await createSubscriberResponse.json();
 
     // User already subscribed
     if (
-      subscribeResponseData.message ===
-      RESPONSE_MESSAGES.USER_ALREADY_SUBSCRIBED
+      createSubscriberResponseData.message ===
+      SUBSCRIPTION_RESPONSE.USER_ALREADY_SUBSCRIBED.title
     ) {
-      setError(RESPONSE_MESSAGES.USER_ALREADY_SUBSCRIBED);
+      toast({
+        title: SUBSCRIPTION_RESPONSE.USER_ALREADY_SUBSCRIBED.title,
+        description: SUBSCRIPTION_RESPONSE.USER_ALREADY_SUBSCRIBED.description,
+      });
+
       reset();
       return;
     }
 
     // Email verification link was already sent
     if (
-      subscribeResponseData.message ===
-      RESPONSE_MESSAGES.EMAIL_VERIFICATION_LINK_ALREADY_SENT
+      createSubscriberResponseData.message ===
+      SUBSCRIPTION_RESPONSE.EMAIL_VERIFICATION_LINK_ALREADY_SENT.title
     ) {
-      setError(RESPONSE_MESSAGES.EMAIL_VERIFICATION_LINK_ALREADY_SENT);
+      toast({
+        title: SUBSCRIPTION_RESPONSE.EMAIL_VERIFICATION_LINK_ALREADY_SENT.title,
+        description:
+          SUBSCRIPTION_RESPONSE.EMAIL_VERIFICATION_LINK_ALREADY_SENT
+            .description,
+      });
       reset();
       return;
     }
 
     // New user or link has expired. Send email verification link
     if (
-      subscribeResponseData.message ===
-        RESPONSE_MESSAGES.NEW_SUBSCRIBE_USER_CREATED ||
+      createSubscriberResponseData.message ===
+        SUBSCRIPTION_RESPONSE.EMAIL_VERIFICATION_LINK_SENT.title ||
       subscribeResponseData.message ===
         RESPONSE_MESSAGES.NEW_EMAIL_VERIFICATION_LINK_SENT
     ) {
-      const { email, emailVerificationToken } = subscribeResponseData;
+      const { email, emailVerificationToken } = createSubscriberResponseData;
 
       const emailResponse = await fetch(
         "/api/send-subscription-email-verification-link",
