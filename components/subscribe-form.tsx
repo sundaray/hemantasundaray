@@ -23,7 +23,6 @@ export function SubscribeForm() {
   } = useForm<FormData>({ resolver: zodResolver(subscribeSchema) });
 
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  const [error, setError] = React.useState<string | null>(null);
 
   const router = useRouter();
   const { toast } = useToast();
@@ -31,7 +30,6 @@ export function SubscribeForm() {
   async function onSubmit(data: FormData) {
     await createSubscriber({
       data,
-      setError,
       router,
       setIsLoading,
       reset,

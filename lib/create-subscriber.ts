@@ -7,7 +7,6 @@ import { useRouter } from "next/navigation";
 
 type createSubscriberProps = {
   data: FormData;
-  setError: React.Dispatch<React.SetStateAction<string | null>>;
   reset: () => void;
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
   router: ReturnType<typeof useRouter>;
@@ -16,14 +15,12 @@ type createSubscriberProps = {
 
 export async function createSubscriber({
   data,
-  setError,
   reset,
   setIsLoading,
   router,
   toast,
 }: createSubscriberProps) {
   setIsLoading(true);
-  setError(null);
 
   try {
     // Attempt to subscribe the user
@@ -74,17 +71,15 @@ export async function createSubscriber({
       return;
     }
 
-    // New user or link has expired. Send email verification link
+    // Subscriber created, send an email verification link
     if (
       createSubscriberResponseData.message ===
-        SUBSCRIPTION_RESPONSE.EMAIL_VERIFICATION_LINK_SENT.title ||
-      subscribeResponseData.message ===
-        RESPONSE_MESSAGES.NEW_EMAIL_VERIFICATION_LINK_SENT
+      SUBSCRIPTION_RESPONSE.SUBSCRIBER_CREATED
     ) {
       const { email, emailVerificationToken } = createSubscriberResponseData;
 
-      const emailResponse = await fetch(
-        "/api/send-subscription-email-verification-link",
+      const emailResponseOne = await fetch(
+        "/api/send-subscriber-email-verification-link",
         {
           method: "POST",
           headers: {
@@ -94,23 +89,74 @@ export async function createSubscriber({
         },
       );
 
-      // Check if email was successfully sent
-      if (!emailResponse.ok) {
-        throw new Error(RESPONSE_MESSAGES.SUBSCRIPTION_FAILED);
+      if (!emailResponseOne.ok) {
+        toast({
+          title: SUBSCRIPTION_RESPONSE.SUBSCRIPTION_FAILED.title,
+          description: SUBSCRIPTION_RESPONSE.SUBSCRIPTION_FAILED.description,
+        });
       }
 
-      const emailResponseData = await emailResponse.json();
+      const emailResponseData = await emailResponseOne.json();
 
       if (
         emailResponseData.message ===
-        RESPONSE_MESSAGES.NEW_EMAIL_VERIFICATION_LINK_SENT
+        SUBSCRIPTION_RESPONSE.EMAIL_VERIFICATION_LINK_SENT.title
       ) {
+        toast({
+          title: SUBSCRIPTION_RESPONSE.EMAIL_VERIFICATION_LINK_SENT.title,
+          description:
+            SUBSCRIPTION_RESPONSE.EMAIL_VERIFICATION_LINK_SENT.description,
+        });
         reset();
-        router.replace("/subscribe/verify-email");
+        return;
+      }
+    }
+
+    // Verification link expired, send an email verification link
+    if (
+      createSubscriberResponseData.message ===
+      SUBSCRIPTION_RESPONSE.EMAIL_VERIFICATION_LINK_SENT.title
+    ) {
+      const { email, emailVerificationToken } = createSubscriberResponseData;
+
+      const emailResponseTwo = await fetch(
+        "/api/send-subscriber-email-verification-link",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, emailVerificationToken }),
+        },
+      );
+
+      if (!emailResponseTwo.ok) {
+        toast({
+          title: SUBSCRIPTION_RESPONSE.SUBSCRIPTION_FAILED.title,
+          description: SUBSCRIPTION_RESPONSE.SUBSCRIPTION_FAILED.description,
+        });
+      }
+
+      const emailResponseTwoData = await emailResponseTwo.json();
+
+      if (
+        emailResponseTwoData.message ===
+        SUBSCRIPTION_RESPONSE.EMAIL_VERIFICATION_LINK_SENT
+      ) {
+        toast({
+          title: SUBSCRIPTION_RESPONSE.EMAIL_VERIFICATION_LINK_SENT.title,
+          description:
+            SUBSCRIPTION_RESPONSE.EMAIL_VERIFICATION_LINK_SENT.description,
+        });
+        reset();
+        return;
       }
     }
   } catch (error) {
-    setError((error as Error).message);
+    toast({
+      title: SUBSCRIPTION_RESPONSE.SUBSCRIPTION_FAILED.title,
+      description: SUBSCRIPTION_RESPONSE.SUBSCRIPTION_FAILED.description,
+    });
   } finally {
     setIsLoading(false);
   }
