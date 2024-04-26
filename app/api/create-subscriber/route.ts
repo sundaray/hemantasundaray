@@ -62,7 +62,7 @@ export async function POST(request: NextRequest) {
     });
 
     return NextResponse.json({
-      message: SUBSCRIPTION_RESPONSE.EMAIL_VERIFICATION_LINK_SENT.title,
+      message: SUBSCRIPTION_RESPONSE.SEND_EMAIL_VERIFICATION_LINK.title,
       email,
       emailVerificationToken: newEmailVerificationToken,
     });

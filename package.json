@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@aws-sdk/client-ses": "^3.563.0",
     "@hookform/resolvers": "^3.3.4",
     "@mdx-js/loader": "^3.0.1",
     "@mdx-js/react": "^3.0.1",
@@ -16,6 +17,12 @@
     "@radix-ui/react-select": "^2.0.0",
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-toast": "^1.1.5",
+    "@react-email/button": "0.0.14",
+    "@react-email/html": "0.0.7",
+    "@react-email/link": "0.0.7",
+    "@react-email/render": "^0.0.12",
+    "@react-email/tailwind": "0.0.15",
+    "@react-email/text": "0.0.7",
     "@types/mdx": "^2.0.13",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",

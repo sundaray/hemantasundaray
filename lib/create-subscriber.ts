@@ -115,7 +115,7 @@ export async function createSubscriber({
     // Verification link expired, send an email verification link
     if (
       createSubscriberResponseData.message ===
-      SUBSCRIPTION_RESPONSE.EMAIL_VERIFICATION_LINK_SENT.title
+      SUBSCRIPTION_RESPONSE.SEND_EMAIL_VERIFICATION_LINK.title
     ) {
       const { email, emailVerificationToken } = createSubscriberResponseData;
 
