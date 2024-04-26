@@ -1,15 +1,8 @@
-import { createSubscribeUserDocumentInFirestore } from "@/lib/create-subscriber";
+import { SUBSCRIPTION_RESPONSE } from "@/lib/constants";
+import { createSubscriberDocumentInFirestore } from "@/lib/create-subscriber-document-in-firestore";
 import { db } from "@/lib/firebase-admin";
 import crypto from "crypto";
 import { NextRequest, NextResponse } from "next/server";
-
-const RESPONSE_MESSAGES = {
-  NEW_SUBSCRIBE_USER_CREATED: "New subscribe user document created",
-  USER_ALREADY_SUBSCRIBED: "User already subscribed",
-  EMAIL_VERIFICATION_LINK_ALREADY_SENT:
-    "Email verification link already sent. Please check your inbox and verify your email.",
-  NEW_EMAIL_VERIFICATION_LINK_SENT: "New email verification link sent",
-};
 
 const ONE_HOUR_IN_MS = 3600000; // 60 minutes * 60 seconds * 1000 ms
 
@@ -24,12 +17,9 @@ export async function POST(request: NextRequest) {
 
     if (snapshot.empty) {
       const { email, emailVerificationToken } =
-        await createSubscribeUserDocumentInFirestore(
-          registrationEmail,
-          userRef,
-        );
+        await createSubscriberDocumentInFirestore(registrationEmail, userRef);
       return NextResponse.json({
-        message: RESPONSE_MESSAGES.NEW_SUBSCRIBE_USER_CREATED,
+        message: SUBSCRIPTION_RESPONSE.SUBSCRIBER_CREATED.title,
         email,
         emailVerificationToken,
       });
@@ -40,13 +30,14 @@ export async function POST(request: NextRequest) {
 
     if (email === registrationEmail && emailVerified === true) {
       return NextResponse.json({
-        message: RESPONSE_MESSAGES.USER_ALREADY_SUBSCRIBED,
+        message: SUBSCRIPTION_RESPONSE.USER_ALREADY_SUBSCRIBED.title,
       });
     }
 
     if (emailVerificationLinkExpiry > Date.now()) {
       return NextResponse.json({
-        message: RESPONSE_MESSAGES.EMAIL_VERIFICATION_LINK_ALREADY_SENT,
+        message:
+          SUBSCRIPTION_RESPONSE.EMAIL_VERIFICATION_LINK_ALREADY_SENT.title,
       });
     }
 
@@ -60,7 +51,7 @@ export async function POST(request: NextRequest) {
     });
 
     return NextResponse.json({
-      message: RESPONSE_MESSAGES.NEW_EMAIL_VERIFICATION_LINK_SENT,
+      message: SUBSCRIPTION_RESPONSE.EMAIL_VERIFICATION_LINK_SENT.title,
       email,
       emailVerificationToken: newEmailVerificationToken,
     });

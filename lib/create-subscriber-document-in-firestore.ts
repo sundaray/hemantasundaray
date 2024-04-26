@@ -1,6 +1,6 @@
 const ONE_HOUR_IN_MS = 3600000; // 60 minutes * 60 seconds * 1000 ms
 
-export async function createSubscribeUserDocumentInFirestore(
+export async function createSubscriberDocumentInFirestore(
   email: string,
   userRef: any,
 ) {

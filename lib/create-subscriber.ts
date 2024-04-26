@@ -1,16 +1,8 @@
 import type { FormData } from "@/components/subscribe-form";
 import { useToast } from "@/components/ui/use-toast";
+import { SUBSCRIPTION_RESPONSE } from "@/lib/constants";
 import "client-only";
 import { useRouter } from "next/navigation";
-
-const RESPONSE_MESSAGES = {
-  NEW_SUBSCRIBE_USER_CREATED: "New subscribe user document created",
-  USER_ALREADY_SUBSCRIBED: "User already subscribed",
-  EMAIL_VERIFICATION_LINK_ALREADY_SENT:
-    "Email verification link already sent. Please check your inbox and verify your email.",
-  NEW_EMAIL_VERIFICATION_LINK_SENT: "New email verification link sent",
-  SUBSCRIPTION_FAILED: "Subscription failed. Please try again.",
-};
 
 type createSubscriberProps = {
   data: FormData;
@@ -34,7 +26,7 @@ export async function createSubscriber({
 
   try {
     // Attempt to subscribe the user
-    const subscribeResponse = await fetch("/api/create-subscriber", {
+    const createSubscriberResponse = await fetch("/api/create-subscriber", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -43,11 +35,14 @@ export async function createSubscriber({
     });
 
     // Subscription failed
-    if (!subscribeResponse.ok) {
-      throw new Error(RESPONSE_MESSAGES.SUBSCRIPTION_FAILED);
+    if (!createSubscriberResponse.ok) {
+      toast({
+        title: SUBSCRIPTION_RESPONSE.SUBSCRIPTION_FAILED.title,
+        description: SUBSCRIPTION_RESPONSE.SUBSCRIPTION_FAILED.description,
+      });
     }
 
-    const subscribeResponseData = await subscribeResponse.json();
+    const subscribeResponseData = await createSubscriberResponse.json();
 
     // User already subscribed
     if (
