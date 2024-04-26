@@ -34,6 +34,7 @@ export async function createSubscriber({
     // Subscription failed
     if (!createSubscriberResponse.ok) {
       toast({
+        variant: "destructive",
         title: SUBSCRIPTION_RESPONSE.SUBSCRIPTION_FAILED.title,
         description: SUBSCRIPTION_RESPONSE.SUBSCRIPTION_FAILED.description,
       });
@@ -47,6 +48,7 @@ export async function createSubscriber({
       SUBSCRIPTION_RESPONSE.USER_ALREADY_SUBSCRIBED.title
     ) {
       toast({
+        variant: "destructive",
         title: SUBSCRIPTION_RESPONSE.USER_ALREADY_SUBSCRIBED.title,
         description: SUBSCRIPTION_RESPONSE.USER_ALREADY_SUBSCRIBED.description,
       });
@@ -61,6 +63,7 @@ export async function createSubscriber({
       SUBSCRIPTION_RESPONSE.EMAIL_VERIFICATION_LINK_ALREADY_SENT.title
     ) {
       toast({
+        variant: "destructive",
         title: SUBSCRIPTION_RESPONSE.EMAIL_VERIFICATION_LINK_ALREADY_SENT.title,
         description:
           SUBSCRIPTION_RESPONSE.EMAIL_VERIFICATION_LINK_ALREADY_SENT
@@ -90,6 +93,7 @@ export async function createSubscriber({
 
       if (!emailResponseOne.ok) {
         toast({
+          variant: "destructive",
           title: SUBSCRIPTION_RESPONSE.SUBSCRIPTION_FAILED.title,
           description: SUBSCRIPTION_RESPONSE.SUBSCRIPTION_FAILED.description,
         });
@@ -131,6 +135,7 @@ export async function createSubscriber({
 
       if (!emailResponseTwo.ok) {
         toast({
+          variant: "destructive",
           title: SUBSCRIPTION_RESPONSE.SUBSCRIPTION_FAILED.title,
           description: SUBSCRIPTION_RESPONSE.SUBSCRIPTION_FAILED.description,
         });
@@ -153,6 +158,7 @@ export async function createSubscriber({
     }
   } catch (error) {
     toast({
+      variant: "destructive",
       title: SUBSCRIPTION_RESPONSE.SUBSCRIPTION_FAILED.title,
       description: SUBSCRIPTION_RESPONSE.SUBSCRIPTION_FAILED.description,
     });
