@@ -3,8 +3,9 @@ import { SearchParams } from "@/types";
 import fs from "fs";
 import matter from "gray-matter";
 import path from "path";
+import "server-only";
 
-export function usePosts(searchParams: SearchParams) {
+export function getPosts(searchParams: SearchParams) {
   const tag = searchParams?.tag || "";
   const currentPage = Number(searchParams?.page) || 1;
   const query = searchParams?.query || "";

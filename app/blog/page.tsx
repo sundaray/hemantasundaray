@@ -3,7 +3,7 @@ import { MotionSection } from "@/components/motion-section";
 import { Pagination } from "@/components/pagination";
 import { SearchBar } from "@/components/search-bar";
 import { TagList } from "@/components/tag-list";
-import { usePosts } from "@/hooks/use-posts";
+import { getPosts } from "@/lib/get-posts";
 import { formatDate } from "@/lib/utils";
 import { SearchParams } from "@/types";
 import Link from "next/link";
@@ -14,7 +14,7 @@ export default function BlogPage({
   searchParams: SearchParams;
 }) {
   const { tag, currentPosts, totalPosts, currentPage, totalPages } =
-    usePosts(searchParams);
+    getPosts(searchParams);
 
   return (
     <div className="container my-16 max-w-2xl">

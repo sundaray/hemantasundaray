@@ -1,10 +1,10 @@
-import { useTags } from "@/hooks/use-tags";
+import { getTags } from "@/lib/get-tags";
 import { cn } from "@/lib/utils";
 import { SearchParams } from "@/types";
 import Link from "next/link";
 
 export function TagList({ searchParams }: { searchParams: SearchParams }) {
-  const { currentTag, uniqueTags } = useTags(searchParams);
+  const { currentTag, uniqueTags } = getTags(searchParams);
 
   return (
     <div className="scrollbar scrollbar-thin scrollbar-thumb-muted-foreground scrollbar-track-slate-200 mb-4 flex h-12 gap-4 overflow-x-auto p-1">

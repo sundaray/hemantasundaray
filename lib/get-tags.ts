@@ -2,8 +2,9 @@ import { SearchParams } from "@/types";
 import fs from "fs";
 import matter from "gray-matter";
 import path from "path";
+import "server-only";
 
-export function useTags(searchParams: SearchParams) {
+export function getTags(searchParams: SearchParams) {
   const currentTag = searchParams?.tag || "";
 
   // Fetch all tags
