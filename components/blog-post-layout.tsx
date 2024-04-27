@@ -44,14 +44,14 @@ export function BlogPostLayout({ children, frontmatter }: BlogPostLayoutProps) {
           <h1 className="mb-4 text-balance text-3xl font-bold lg:text-4xl">
             {title}
           </h1>
-          <p className="mb-8 text-lg text-slate-700">{description}</p>
+          <p className="mb-8 text-lg font-medium">{description}</p>
           <div className="flex items-center gap-4">
             {/* <Image
               src={Avatar}
               className="size-10 rounded-full object-cover object-center"
               alt="Author avatar"
             /> */}
-            <div className="flex flex-col text-sm font-medium text-muted-foreground">
+            <div className="flex flex-col text-sm text-muted-foreground">
               <p>{author}</p>
               <p>Published on {formatDate(publishedAt)}</p>
             </div>
