@@ -7,27 +7,9 @@ import { cn } from "@/lib/utils";
 export function TOC() {
   const { headings, activeId } = useScrollSpy();
 
-  const handleClick = (
-    event: React.MouseEvent<HTMLAnchorElement>,
-    id: string,
-  ) => {
-    event.preventDefault();
-
-    const element = document.getElementById(id);
-
-    if (element) {
-      const targetScrollPosition =
-        element.getBoundingClientRect().top + window.scrollY - 80;
-      window.scrollTo({
-        top: targetScrollPosition,
-        behavior: "smooth",
-      });
-    }
-  };
-
   return (
     <nav className="scrollbar scrollbar-thin scrollbar-thumb-muted-foreground scrollbar-track-slate-200 h-auto max-h-96 space-y-4 overflow-y-auto">
-        <p className="font-semibold text-slate-700">CONTENTS</p>
+      <p className="font-semibold text-slate-700">CONTENTS</p>
       <ul>
         {headings.map(({ id, level, text }) => (
           <li
@@ -39,7 +21,7 @@ export function TOC() {
               level === 2 ? "py-2" : "py-1",
             )}
           >
-            <a href={`#${id}`} onClick={(e) => handleClick(e, id)}>
+            <a href={`#${id}`}>
               {level === 3 ? (
                 <Icons.chevronRight className="inline-block size-3.5 text-muted-foreground group-hover:text-secondary-foreground" />
               ) : null}
