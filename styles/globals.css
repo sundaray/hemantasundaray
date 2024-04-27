@@ -150,7 +150,7 @@ input {
 
   /* Code block is wrapped by figure element */
   [data-rehype-pretty-code-figure] {
-    @apply relative;
+    @apply relative mb-8;
   }
 
   /* Code block title */

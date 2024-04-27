@@ -30,7 +30,7 @@ export function CopyButton({ text }: { text: string }) {
     >
       <AnimatePresence mode="wait">
         {isCopied ? (
-          <motion.div
+          <motion.span
             key="check"
             variants={iconVariants}
             initial="initial"
@@ -39,9 +39,9 @@ export function CopyButton({ text }: { text: string }) {
             transition={{ duration: 0.2 }}
           >
             <Icons.check className="size-4" />
-          </motion.div>
+          </motion.span>
         ) : (
-          <motion.div
+          <motion.span
             key="copy"
             variants={iconVariants}
             initial="initial"
@@ -50,7 +50,7 @@ export function CopyButton({ text }: { text: string }) {
             transition={{ duration: 0.2 }}
           >
             <Icons.copy className="size-4" />
-          </motion.div>
+          </motion.span>
         )}
       </AnimatePresence>
     </Button>
