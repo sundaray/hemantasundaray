@@ -1,4 +1,4 @@
-import { CopyCode } from "@/components/copy-code";
+import { CopyButton } from "@/components/copy-button";
 import type { MDXComponents } from "mdx/types";
 import Image, { ImageProps } from "next/image";
 import Link, { LinkProps } from "next/link";
@@ -45,12 +45,12 @@ function Pre({
     return "";
   };
 
-  // Use raw if available, otherwise extract text from children
+  // // Use raw if available, otherwise extract text from children
   const textToCopy = raw ?? extractTextFromChildren(children);
 
   return (
     <pre {...props}>
-      <CopyCode text={textToCopy} />
+      <CopyButton text={textToCopy} />
       {children}
     </pre>
   );

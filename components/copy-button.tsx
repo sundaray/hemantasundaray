@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 import React, { useState } from "react";
 
-export function CopyCode({ text }: { text: string }) {
+export function CopyButton({ text }: { text: string }) {
   const [isCopied, setIsCopied] = useState<boolean>(false);
 
   async function copyToClipboard() {

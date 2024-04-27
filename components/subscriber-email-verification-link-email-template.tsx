@@ -33,7 +33,7 @@ export function SubscriberEmailVerificationLinkEmailTemplate({
         >
           Verify
         </Button>
-        <Text className="text-base font-medium">
+        <Text className="text-base font-medium text-slate-500">
           If you didn&apos;t request to subscribe to{" "}
           <Link
             href="https://www.hemantasundaray.com"
