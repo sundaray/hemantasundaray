@@ -63,13 +63,12 @@
 
   h1,
   h2 {
-    @apply text-secondary-foreground font-bold tracking-tight;
+    @apply font-bold tracking-tight text-secondary-foreground;
   }
 
   h2 {
     @apply text-xl lg:text-2xl;
   }
-
 
   h3,
   p {
@@ -150,17 +149,17 @@ input {
  */
 
   /* Code block is wrapped by figure element */
-  figure[data-rehype-pretty-code-figure] {
-    @apply relative mb-8 overflow-x-auto rounded-lg border shadow-sm;
+  [data-rehype-pretty-code-figure] {
+    @apply relative mb-8 rounded-lg border shadow-sm;
   }
 
   /* Code block title */
-  figcaption[data-rehype-pretty-code-title] {
+  [data-rehype-pretty-code-title] {
     @apply border-b py-4 pl-4 text-sm text-slate-700;
   }
 
   figure pre {
-    @apply py-4 text-sm;
+    @apply relative overflow-x-auto py-4 text-sm;
     counter-reset: line;
   }
 

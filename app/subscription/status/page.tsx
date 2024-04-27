@@ -58,12 +58,9 @@ export default async function SubscriptionStatusPage({
     SUBSCRIPTION_STATUS_RESPONSE.SUBSCRIPTION_STATUS_CHECK_FAILED.title
   ) {
     return (
-      <div className="container mx-auto grid place-items-center space-y-4">
-        <h2 className="text-center text-red-600">
-          {SUBSCRIPTION_STATUS_RESPONSE.SUBSCRIPTION_STATUS_CHECK_FAILED.title}
-        </h2>
-        <p className="text-center">Please subscribe again</p>
-      </div>
+      <h2 className="text-center text-red-600">
+        {SUBSCRIPTION_STATUS_RESPONSE.SUBSCRIPTION_STATUS_CHECK_FAILED.title}
+      </h2>
     );
   }
 

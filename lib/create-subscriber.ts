@@ -16,6 +16,8 @@ export async function createSubscriber({
   setIsLoading,
   toast,
 }: createSubscriberProps) {
+
+  console.log("Toast: ", toast)
   setIsLoading(true);
 
   try {
@@ -38,13 +40,6 @@ export async function createSubscriber({
     }
 
     const createSubscriberResponseData = await createSubscriberResponse.json();
-
-    console.log("Create Subscriber Response: ", createSubscriberResponseData);
-
-    console.log(
-      createSubscriberResponseData.message ===
-        SUBSCRIPTION_RESPONSE.USER_ALREADY_SUBSCRIBED.title,
-    );
 
     // User already subscribed
     if (

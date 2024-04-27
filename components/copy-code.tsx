@@ -23,10 +23,10 @@ export function CopyCode({ text }: { text: string }) {
 
   return (
     <Button
-      size="sm"
+      size="icon"
       variant="ghost"
       onClick={copyToClipboard}
-      className="absolute right-2 top-3 size-7 bg-white text-slate-400 hover:bg-slate-100 hover:text-muted-foreground"
+      className="absolute right-2 top-2 size-7 bg-white text-slate-400 hover:bg-slate-100 hover:text-muted-foreground"
     >
       <AnimatePresence mode="wait">
         {isCopied ? (
