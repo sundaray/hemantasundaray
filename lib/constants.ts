@@ -68,15 +68,15 @@ export const SUBSCRIPTION_STATUS_RESPONSE: Record<
     title: "Invalid Email",
   },
   [SubscriptionStatusResponseKey.INVALID_EMAIL_VERIFICATION_TOKEN]: {
-    title: "Invalid Email Verification Token.",
+    title: "Invalid Token",
   },
   [SubscriptionStatusResponseKey.INVALID_EMAIL_VERIFICATION_LINK]: {
-    title: "Invalid Email Verification Link.",
+    title: "Invalid Link",
   },
   [SubscriptionStatusResponseKey.SUBSCRIPTION_STATUS_CHECK_FAILED]: {
-    title: "Subscription Failed.",
+    title: "Subscription Failed",
   },
   [SubscriptionStatusResponseKey.SUBSCRIPTION_SUCCESS]: {
-    title: "Subscription Successful.",
+    title: "Subscription Successful",
   },
 };

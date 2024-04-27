@@ -30,7 +30,6 @@ export function SubscribeForm() {
   async function onSubmit(data: FormData) {
     await createSubscriber({
       data,
-      router,
       setIsLoading,
       reset,
       toast,

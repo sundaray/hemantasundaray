@@ -2,13 +2,11 @@ import type { FormData } from "@/components/subscribe-form";
 import { useToast } from "@/components/ui/use-toast";
 import { SUBSCRIPTION_RESPONSE } from "@/lib/constants";
 import "client-only";
-import { useRouter } from "next/navigation";
 
 type createSubscriberProps = {
   data: FormData;
   reset: () => void;
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
-  router: ReturnType<typeof useRouter>;
   toast: ReturnType<typeof useToast>["toast"];
 };
 
@@ -16,7 +14,6 @@ export async function createSubscriber({
   data,
   reset,
   setIsLoading,
-  router,
   toast,
 }: createSubscriberProps) {
   setIsLoading(true);
@@ -41,6 +38,13 @@ export async function createSubscriber({
     }
 
     const createSubscriberResponseData = await createSubscriberResponse.json();
+
+    console.log("Create Subscriber Response: ", createSubscriberResponseData);
+
+    console.log(
+      createSubscriberResponseData.message ===
+        SUBSCRIPTION_RESPONSE.USER_ALREADY_SUBSCRIBED.title,
+    );
 
     // User already subscribed
     if (
