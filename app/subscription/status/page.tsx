@@ -1,6 +1,6 @@
 import { buttonVariants } from "@/components/ui/button";
 import { SUBSCRIPTION_STATUS_RESPONSE } from "@/lib/constants";
-import { fetchSubscriptionStatus } from "@/lib/fetch-subscription-status";
+import { getSubscriptionStatus } from "@/lib/get-subscription-status";
 import { cn } from "@/lib/utils";
 import { SearchParams } from "@/types";
 import Link from "next/link";
@@ -21,7 +21,7 @@ export default async function SubscriptionStatusPage({
     );
   }
 
-  const { message } = await fetchSubscriptionStatus(email!, token!);
+  const { message } = await getSubscriptionStatus(email!, token!);
 
   if (message === SUBSCRIPTION_STATUS_RESPONSE.INVALID_EMAIL.title) {
     return (

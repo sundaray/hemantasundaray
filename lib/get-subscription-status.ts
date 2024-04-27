@@ -3,7 +3,7 @@ import { db } from "@/lib/firebase-admin";
 import { FieldValue } from "firebase-admin/firestore";
 import "server-only";
 
-export async function fetchSubscriptionStatus(email: string, token: string) {
+export async function getSubscriptionStatus(email: string, token: string) {
   try {
     const userRef = db.collection("subscribeUsers");
     const snapshot = await userRef.where("email", "==", email).get();
