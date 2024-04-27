@@ -4,7 +4,7 @@ import Image, { ImageProps } from "next/image";
 import Link, { LinkProps } from "next/link";
 import React from "react";
 
-type CustomLinkProps = React.AnchorHTMLAttributes<HTMLAnchorElement> &
+type CustomLinkProps = React.HTMLAttributes<HTMLAnchorElement> &
   Partial<LinkProps>;
 
 function MDXImage(props: ImageProps) {

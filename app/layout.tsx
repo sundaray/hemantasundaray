@@ -1,7 +1,9 @@
+import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
 import "@/styles/globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { TailwindIndicator } from "@/components/tailwind-indicator"
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,8 +19,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.className} scroll-smooth`}>
-      <body className={inter.className}>{children}</body>
-      <Toaster />
+      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <body className={inter.className}>{children}</body>
+        <Toaster />
+        <TailwindIndicator />
+      </ThemeProvider>
     </html>
   );
 }

@@ -6,6 +6,7 @@ import { useScroll, useMotionValueEvent } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, {useState} from "react";
+import {ModeToggle} from "@/components/mode-toggle"
 
 interface MainNavProps {
   items?: MainNavItem[];
@@ -55,12 +56,7 @@ export function MainNav({ items }: MainNavProps) {
           </ul>
         </nav>
       ) : null}
-      <Link
-        href="/contact"
-        className="text-sm font-medium text-muted-foreground"
-      >
-        Contact
-      </Link>
+      <ModeToggle />
     </div>
   );
 }

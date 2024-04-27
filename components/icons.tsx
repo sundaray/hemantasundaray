@@ -6,11 +6,14 @@ import {
   CircleArrowUp,
   Copy,
   Info,
+  Laptop,
   LoaderCircle,
   LucideProps,
+  Moon,
   MoonStar,
   Search,
   SquareArrowOutUpRight,
+  Sun,
   Tags,
 } from "lucide-react";
 
@@ -23,9 +26,12 @@ export const Icons = {
   copy: Copy,
   externalLink: SquareArrowOutUpRight,
   info: Info,
+  laptop: Laptop,
   loaderCircle: LoaderCircle,
+  moon: Moon,
   moonStar: MoonStar,
   search: Search,
+  sun: Sun,
   tags: Tags,
   google: ({ ...props }: LucideProps) => (
     <svg
