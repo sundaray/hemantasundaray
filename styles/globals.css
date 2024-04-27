@@ -150,16 +150,16 @@ input {
 
   /* Code block is wrapped by figure element */
   [data-rehype-pretty-code-figure] {
-    @apply relative mb-8 rounded-lg border shadow-sm;
+    @apply relative;
   }
 
   /* Code block title */
   [data-rehype-pretty-code-title] {
-    @apply border-b py-4 pl-4 text-sm text-slate-700;
+    @apply rounded-t-lg border border-b-0 p-3 text-sm text-slate-700;
   }
 
   figure pre {
-    @apply relative overflow-x-auto py-4 text-sm;
+    @apply overflow-x-auto rounded-b-lg border py-4 text-sm;
     counter-reset: line;
   }
 
