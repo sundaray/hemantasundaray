@@ -31,7 +31,7 @@ export function useScrollSpy() {
           }
         });
       },
-      { rootMargin: "-50% 0px -50% 0px" },
+      { rootMargin: "0% 0% -80% 0%" },
     );
 
     headings.forEach((heading) => {

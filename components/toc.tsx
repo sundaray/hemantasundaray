@@ -27,16 +27,14 @@ export function TOC() {
 
   return (
     <nav className="scrollbar scrollbar-thin scrollbar-thumb-muted-foreground scrollbar-track-slate-200 h-auto max-h-96 space-y-4 overflow-y-auto">
-      <header>
-        <h2 className="font-semibold text-slate-700">CONTENTS</h2>
-      </header>
+        <p className="font-semibold text-slate-700">CONTENTS</p>
       <ul>
         {headings.map(({ id, level, text }) => (
           <li
             key={id}
             className={cn(
               `ml-${(level - 2) * 4}`,
-              "group text-sm font-medium hover:text-secondary-foreground",
+              "group text-sm hover:text-secondary-foreground",
               id === activeId ? "text-primary" : "text-muted-foreground",
               level === 2 ? "py-2" : "py-1",
             )}
