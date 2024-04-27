@@ -36,7 +36,7 @@ export function TOC() {
             key={id}
             className={cn(
               `ml-${(level - 2) * 4}`,
-              "group text-sm font-medium hover:text-slate-700",
+              "group text-sm font-medium hover:text-secondary-foreground",
               id === activeId ? "text-primary" : "text-muted-foreground",
               level === 2 ? "py-2" : "py-1",
             )}

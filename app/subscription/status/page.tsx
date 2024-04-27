@@ -1,9 +1,10 @@
+import { Button } from "@/components/ui/button";
 import { SUBSCRIPTION_STATUS_RESPONSE } from "@/lib/constants";
 import { fetchSubscriptionStatus } from "@/lib/fetch-subscription-status";
 import { SearchParams } from "@/types";
 import Link from "next/link";
 
-export async function SubscriptionStatusPage({
+export default async function SubscriptionStatusPage({
   searchParams,
 }: {
   searchParams: SearchParams;
@@ -15,11 +16,10 @@ export async function SubscriptionStatusPage({
 
   if (message === SUBSCRIPTION_STATUS_RESPONSE.INVALID_EMAIL.title) {
     return (
-      <div className="container mx-auto space-y-4">
-        <h1 className="text-center text-red-600">
+      <div className="container mx-auto grid place-items-center space-y-4">
+        <h2 className="text-center text-red-600">
           {SUBSCRIPTION_STATUS_RESPONSE.INVALID_EMAIL.title}
-        </h1>
-        <p className="text-center">Please subscribe again</p>
+        </h2>
       </div>
     );
   }
@@ -29,11 +29,10 @@ export async function SubscriptionStatusPage({
     SUBSCRIPTION_STATUS_RESPONSE.INVALID_EMAIL_VERIFICATION_LINK.title
   ) {
     return (
-      <div className="container mx-auto space-y-4">
-        <h1 className="text-center text-red-600">
+      <div className="container mx-auto grid place-items-center space-y-4">
+        <h2 className="text-center text-red-600">
           {SUBSCRIPTION_STATUS_RESPONSE.INVALID_EMAIL_VERIFICATION_LINK.title}
-        </h1>
-        <p className="text-center">Please subscribe again</p>
+        </h2>
       </div>
     );
   }
@@ -43,10 +42,10 @@ export async function SubscriptionStatusPage({
     SUBSCRIPTION_STATUS_RESPONSE.INVALID_EMAIL_VERIFICATION_TOKEN.title
   ) {
     return (
-      <div className="container mx-auto space-y-4">
-        <h1 className="text-center text-red-600">
+      <div className="container mx-auto grid place-items-center space-y-4">
+        <h2 className="text-center text-red-600">
           {SUBSCRIPTION_STATUS_RESPONSE.INVALID_EMAIL_VERIFICATION_TOKEN.title}
-        </h1>
+        </h2>
         <p className="text-center">Please subscribe again</p>
       </div>
     );
@@ -57,26 +56,23 @@ export async function SubscriptionStatusPage({
     SUBSCRIPTION_STATUS_RESPONSE.SUBSCRIPTION_STATUS_CHECK_FAILED.title
   ) {
     return (
-      <div className="container mx-auto space-y-4">
-        <h1 className="text-center text-red-600">
+      <div className="container mx-auto grid place-items-center space-y-4">
+        <h2 className="text-center text-red-600">
           {SUBSCRIPTION_STATUS_RESPONSE.SUBSCRIPTION_STATUS_CHECK_FAILED.title}
-        </h1>
+        </h2>
         <p className="text-center">Please subscribe again</p>
       </div>
     );
   }
 
   return (
-    <div className="container mx-auto space-y-4">
-      <h1 className="text-center">
+    <div className="container mx-auto grid place-items-center space-y-4">
+      <h2 className="text-center">
         {SUBSCRIPTION_STATUS_RESPONSE.SUBSCRIPTION_SUCCESS.title}
-      </h1>
-      <Link
-        href="/blog"
-        className="rounded-md bg-secondary px-2 py-1 text-secondary-foreground hover:bg-border"
-      >
+      </h2>
+      <Button href="/blog" variant="link">
         Back to blog
-      </Link>
+      </Button>
     </div>
   );
 }

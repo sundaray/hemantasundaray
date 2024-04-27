@@ -56,7 +56,9 @@ export function SubscribeForm() {
       </div>
 
       <Button type="submit" className="w-full" disabled={isLoading}>
-        {isLoading && <Icons.loaderCircle className="size-4 animate-spin" />}
+        {isLoading && (
+          <Icons.loaderCircle className="mr-2 size-4 animate-spin" />
+        )}
         Subscribe
       </Button>
     </form>

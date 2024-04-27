@@ -63,8 +63,13 @@
 
   h1,
   h2 {
-    @apply text-secondary-foreground;
+    @apply text-secondary-foreground font-bold tracking-tight;
   }
+
+  h2 {
+    @apply text-xl lg:text-2xl;
+  }
+
 
   h3,
   p {

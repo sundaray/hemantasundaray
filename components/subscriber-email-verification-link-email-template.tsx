@@ -27,7 +27,12 @@ export function SubscriberEmailVerificationLinkEmailTemplate({
         <Text className="text-base font-medium">
           Please click on the link below to verify your email.
         </Text>
-        <Button href={fullLink}>Verify</Button>
+        <Button
+          href={fullLink}
+          className="rounded-md bg-primary px-4 py-2 text-primary-foreground hover:bg-primary/90"
+        >
+          Verify
+        </Button>
         <Text className="text-base font-medium">
           If you didn&apos;t request to subscribe to{" "}
           <Link
