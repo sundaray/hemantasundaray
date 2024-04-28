@@ -1,4 +1,5 @@
 import { CopyButton } from "@/components/copy-button";
+import { cn } from "@/lib/utils";
 import type { MDXComponents } from "mdx/types";
 import Image, { ImageProps } from "next/image";
 import Link, { LinkProps } from "next/link";

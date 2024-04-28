@@ -132,6 +132,14 @@
     @apply mb-8 list-decimal pl-8 leading-7;
   }
 
+  code[data-language="plaintext"] {
+    @apply rounded bg-secondary border px-1 py-0.5 font-mono text-sm;
+  }
+
+  code[data-language="plaintext"] > [data-line]::before {
+    content: none;
+  }
+
   /*
  * *********************************************
  * **** BLOG POST STYLES END ****
@@ -159,25 +167,25 @@
     counter-reset: line;
   }
 
-  span[data-line] {
+  code > [data-line] {
     @apply border-l-2 border-l-transparent;
   }
 
-  span[data-line]::before {
+  code > [data-line]::before {
     @apply mx-4 inline-block w-4 text-right text-muted-foreground;
     counter-increment: line;
     content: counter(line);
   }
 
-  span[data-highlighted-line] {
+  code > [data-highlighted-line] {
     @apply border-l-2 border-primary bg-blue-50;
   }
 
-  [data-line-numbers-max-digits="2"] > [data-line]::before {
+  code[data-line-numbers-max-digits="2"] > [data-line]::before {
     @apply w-8;
   }
 
-  [data-line-numbers-max-digits="3"] > [data-line]::before {
+  code[data-line-numbers-max-digits="3"] > [data-line]::before {
     @apply w-12;
   }
 
