@@ -40,7 +40,6 @@ export function SubscribeForm() {
     <form onSubmit={handleSubmit(onSubmit)} className="grid gap-6">
       <div className="grid gap-1">
         <Input
-          className="bg-transparent"
           type="email"
           placeholder="name@example.com"
           autoComplete="email"

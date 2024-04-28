@@ -76,10 +76,6 @@
   }
 }
 
-input {
-  -webkit-appearance: none;
-}
-
 @layer components {
   /*
  * *********************************************
@@ -117,7 +113,7 @@ input {
   }
 
   .prose p {
-    @apply mb-8 leading-7 text-slate-700 dark:text-slate-500;
+    @apply mb-8 leading-7 text-slate-700 dark:text-slate-400;
   }
 
   .prose p code {
@@ -155,7 +151,7 @@ input {
 
   /* Code block title */
   [data-rehype-pretty-code-title] {
-    @apply rounded-t-lg border border-b-0 p-3 text-sm text-slate-700;
+    @apply rounded-t-lg border border-b-0 p-3 text-sm text-slate-700 dark:text-slate-400;
   }
 
   figure pre {
@@ -174,7 +170,7 @@ input {
   }
 
   span[data-highlighted-line] {
-    @apply border-l-2 border-blue-600 bg-blue-50;
+    @apply border-l-2 border-primary bg-blue-50;
   }
 
   [data-line-numbers-max-digits="2"] > [data-line]::before {
@@ -204,4 +200,8 @@ input[type="search"]:focus::-webkit-search-cancel-button {
 
 .note-component p:last-child {
   margin-bottom: 0 !important;
+}
+
+input {
+  -webkit-appearance: none;
 }
