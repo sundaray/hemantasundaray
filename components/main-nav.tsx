@@ -1,12 +1,12 @@
 "use client";
 
+import { ModeToggle } from "@/components/mode-toggle";
 import { cn } from "@/lib/utils";
 import { MainNavItem } from "@/types";
 import { useScroll, useMotionValueEvent } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React, {useState} from "react";
-import {ModeToggle} from "@/components/mode-toggle"
+import React, { useState } from "react";
 
 interface MainNavProps {
   items?: MainNavItem[];
@@ -14,7 +14,6 @@ interface MainNavProps {
 }
 
 export function MainNav({ items }: MainNavProps) {
-
   const [isScrolled, setIsScrolled] = useState(false);
 
   const pathname = usePathname();
@@ -30,7 +29,14 @@ export function MainNav({ items }: MainNavProps) {
   });
 
   return (
-    <div className={cn("container flex h-16 items-center justify-between transition-all", isScrolled ? "border-b bg-white/50 backdrop-blur-xl" : "bg-white/0")}>
+    <div
+      className={cn(
+        "container flex h-16 items-center justify-between transition-all",
+        isScrolled
+          ? "border-b bg-background/50 backdrop-blur-xl"
+          : "bg-background/0",
+      )}
+    >
       <div className="flex items-center space-x-2">
         <Link
           href="/"

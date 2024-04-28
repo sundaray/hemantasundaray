@@ -72,7 +72,7 @@
 
   h3,
   p {
-    @apply text-slate-700 dark:text-slate-500;
+    @apply text-slate-700 dark:text-slate-400;
   }
 }
 

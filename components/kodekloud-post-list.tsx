@@ -12,7 +12,7 @@ export function KodeKloudPostList({ posts }: KodeKloudPostListProps) {
       {posts.map((post) => (
         <article
           key={post.href}
-          className="group relative overflow-hidden rounded-lg border bg-secondary"
+          className="group relative overflow-hidden rounded-lg border"
         >
           {post.image && (
             <Image
@@ -25,11 +25,7 @@ export function KodeKloudPostList({ posts }: KodeKloudPostListProps) {
               blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9IiNmOGZhZmMiLz48L3N2Zz4="
             />
           )}
-          {post.date && (
-            <p className="p-4 text-sm text-slate-700">
-              {formatDate(post.date)}
-            </p>
-          )}
+          {post.date && <p className="p-4 text-sm">{formatDate(post.date)}</p>}
           <a
             href={post.href}
             target="_blank"

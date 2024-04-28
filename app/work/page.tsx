@@ -3,7 +3,6 @@ import { KodeKloudPosts } from "@/components/kodekloud-posts";
 import { KodeKloudTestimonial } from "@/components/kodekloud-testimonial";
 import { posts as kodekloudPosts } from "@/kodekloud/posts";
 
-
 const playgroundItems = [
   { href: "https://kodekloud.com/playgrounds/playground-chef", label: "Chef" },
   {
@@ -147,7 +146,7 @@ export default function WorkPage() {
   return (
     <div className="kodekloud container max-w-3xl">
       <h1 className="mb-4">Work</h1>
-      <p className="mb-8 leading-7 text-slate-700">
+      <p className="mb-8 leading-7">
         Since November 2022, I have been working as a freelance technical writer
         for <CustomLink href="https://kodekloud.com/">KodeKloud</CustomLink>, an
         online DevOps learning platform. In this role, I primarily write about
@@ -159,7 +158,7 @@ export default function WorkPage() {
         on these subjects, which you can explore below:
       </p>
       <KodeKloudPosts />
-      <p className="mb-8 leading-7 text-slate-700">
+      <p className="mb-8 leading-7">
         In addition to the blog posts, I&apos;ve created write-ups for the
         following{" "}
         <CustomLink href="https://kodekloud.com/playgrounds/">
@@ -169,7 +168,7 @@ export default function WorkPage() {
         learners, allowing them to experiment with various cloud and DevOps
         technologies.
       </p>
-      <ul className="mb-8 ml-10 list-decimal leading-7 marker:text-slate-700">
+      <ul className="mb-8 ml-10 list-decimal leading-7 marker:text-slate-700 dark:marker:text-slate-400">
         {playgroundItems.map((item) => (
           <li key={item.href}>
             <CustomLink href={item.href}>{item.label}</CustomLink>
@@ -184,7 +183,7 @@ export default function WorkPage() {
         that these rewritten articles are credited under the original
         author&apos;s name to acknowledge his initial contribution.
       </p>
-      <ul className="mb-16 ml-10 list-decimal leading-7 marker:text-slate-700">
+      <ul className="mb-16 ml-10 list-decimal leading-7 marker:text-slate-700 dark:marker:text-slate-400">
         {revisedBlogItems.map((item) => (
           <li key={item.href}>
             <CustomLink href={item.href}>{item.label}</CustomLink>
