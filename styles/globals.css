@@ -72,7 +72,7 @@
 
   h3,
   p {
-    @apply text-slate-700;
+    @apply text-slate-700 dark:text-slate-500;
   }
 }
 
@@ -117,7 +117,7 @@ input {
   }
 
   .prose p {
-    @apply mb-8 leading-7 text-slate-700;
+    @apply mb-8 leading-7 text-slate-700 dark:text-slate-500;
   }
 
   .prose p code {
