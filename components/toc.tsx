@@ -1,6 +1,5 @@
 "use client";
 
-import { Icons } from "@/components/icons";
 import { useScrollSpy } from "@/hooks/use-scrollspy";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
@@ -15,7 +14,7 @@ export function TOC() {
         <motion.div
           className="absolute left-0 top-2.5 h-4 w-0.5 bg-primary"
           animate={{
-            y: currentIndex * 36
+            y: currentIndex * 36,
           }}
           transition={{
             type: "spring",
@@ -27,14 +26,12 @@ export function TOC() {
           <li
             key={id}
             className={cn(
-              `ml-${(level - 2) * 4}`,
-              "px-4 py-2 text-sm hover:text-secondary-foreground",
+              level === 3 ? "pl-8" : "pl-4",
+              "py-2 text-sm hover:text-secondary-foreground",
               id === activeId ? "text-primary" : "text-muted-foreground",
             )}
           >
-            <a href={`#${id}`}>
-              {text}
-            </a>
+            <a href={`#${id}`}>{text}</a>
           </li>
         ))}
       </ul>
