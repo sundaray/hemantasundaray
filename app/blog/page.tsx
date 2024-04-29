@@ -1,5 +1,5 @@
 import { Icons } from "@/components/icons";
-import { MotionSection } from "@/components/motion-components";
+import { MotionSection, MotionDiv, MotionH1, MotionH2 } from "@/components/motion-components";
 import { Pagination } from "@/components/pagination";
 import { SearchBar } from "@/components/search-bar";
 import { TagList } from "@/components/tag-list";
@@ -7,6 +7,18 @@ import { getPosts } from "@/lib/get-posts";
 import { formatDate } from "@/lib/utils";
 import { SearchParams } from "@/types";
 import Link from "next/link";
+
+const variants = {
+  initial: { opacity: 0, y: 10 },
+  animate: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5,
+      staggerChildren: 0.2,
+    },
+  },
+};
 
 export default function BlogPage({
   searchParams,
@@ -17,11 +29,16 @@ export default function BlogPage({
     getPosts(searchParams);
 
   return (
-    <div className="container my-16 max-w-2xl">
-      <h1 className="mb-2 text-4xl font-bold">Blog</h1>
-      <h2 className="mb-8 text-lg font-medium text-slate-500 text-slate-500">
+    <MotionSection className="container my-16 max-w-2xl"       className="container max-w-3xl"
+    variants={variants}
+    initial="initial"
+    animate="animate"
+>
+      <MotionH1 className="mb-2 text-4xl font-bold" variants={variants}>Blog</MotionH1>
+      <MotionH2 className="mb-8 text-lg font-medium text-slate-500 text-slate-500" variants={variants}>
         In-depth tutorials on full-stack web development.
-      </h2>
+      </MotionH2>
+      <MotionDiv variants={variants}>
       <SearchBar />
       <TagList searchParams={searchParams} />
       {!tag && totalPosts === 0 && (
@@ -70,6 +87,7 @@ export default function BlogPage({
       {totalPages > 1 && (
         <Pagination currentPage={currentPage} totalPages={totalPages} />
       )}
-    </div>
+      </MotionDiv>
+    </MotionSection>
   );
 }
