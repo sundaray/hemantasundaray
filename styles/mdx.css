@@ -1,0 +1,34 @@
+figure[data-rehype-pretty-code-figure] {
+  @apply relative mb-8;
+}
+
+figcaption[data-rehype-pretty-code-title] {
+  @apply rounded-t-lg border border-b-0 p-3 text-sm text-slate-700 dark:text-slate-400;
+}
+
+figure pre {
+  @apply overflow-x-auto rounded-b-lg border py-4 text-sm;
+  counter-reset: line;
+}
+
+figure code > [data-line] {
+  @apply border-l-2 border-l-transparent;
+}
+
+figure code > [data-line]::before {
+  @apply mx-4 inline-block w-4 text-right text-muted-foreground;
+  counter-increment: line;
+  content: counter(line);
+}
+
+figure code > [data-highlighted-line] {
+  @apply border-l-2 border-primary bg-blue-50;
+}
+
+figure code[data-line-numbers-max-digits="2"] > [data-line]::before {
+  @apply w-8;
+}
+
+figure code[data-line-numbers-max-digits="3"] > [data-line]::before {
+  @apply w-12;
+}

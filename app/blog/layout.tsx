@@ -2,6 +2,7 @@ import { MainNav } from "@/components/main-nav";
 import { ScrollToTop } from "@/components/scroll-to-top";
 import { SiteFooter } from "@/components/site-footer";
 import { homeConfig } from "@/config/home";
+import "@/styles/mdx.css";
 
 
 type BlogLayoutProps = {

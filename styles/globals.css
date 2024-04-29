@@ -77,11 +77,6 @@
 }
 
 @layer components {
-  /*
- * *********************************************
- * **** BLOG POST STYLES START ****
- * *********************************************
- */
 
   .prose a {
     @apply text-primary underline decoration-primary underline-offset-2 transition-all hover:no-underline;
@@ -132,68 +127,9 @@
     @apply mb-8 list-decimal pl-8 leading-7;
   }
 
-  code[data-language="plaintext"] {
-    @apply rounded bg-secondary border px-1 py-0.5 font-mono text-sm;
+  .prose code[data-language="plaintext"] {
+    @apply rounded border bg-secondary px-1 py-0.5 font-mono text-sm;
   }
-
-  code[data-language="plaintext"] > [data-line]::before {
-    content: none;
-  }
-
-  /*
- * *********************************************
- * **** BLOG POST STYLES END ****
- * *********************************************
- */
-
-  /*
- * *********************************************
- * **** CODE BLOCK STYLES START ****
- * *********************************************
- */
-
-  /* Code block is wrapped by figure element */
-  [data-rehype-pretty-code-figure] {
-    @apply relative mb-8;
-  }
-
-  /* Code block title */
-  [data-rehype-pretty-code-title] {
-    @apply rounded-t-lg border border-b-0 p-3 text-sm text-slate-700 dark:text-slate-400;
-  }
-
-  figure pre {
-    @apply overflow-x-auto rounded-b-lg border py-4 text-sm;
-    counter-reset: line;
-  }
-
-  code > [data-line] {
-    @apply border-l-2 border-l-transparent;
-  }
-
-  code > [data-line]::before {
-    @apply mx-4 inline-block w-4 text-right text-muted-foreground;
-    counter-increment: line;
-    content: counter(line);
-  }
-
-  code > [data-highlighted-line] {
-    @apply border-l-2 border-primary bg-blue-50;
-  }
-
-  code[data-line-numbers-max-digits="2"] > [data-line]::before {
-    @apply w-8;
-  }
-
-  code[data-line-numbers-max-digits="3"] > [data-line]::before {
-    @apply w-12;
-  }
-
-  /*
- * *********************************************
- * **** CODE BLOCK STYLES END ****
- * *********************************************
- */
 }
 
 /* Search input cancel button styles */
