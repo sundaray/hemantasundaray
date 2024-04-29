@@ -5,7 +5,7 @@ import { Icons } from "@/components/icons";
 import { PageScrollProgress } from "@/components/page-scroll-progress";
 import { SubscribeForm } from "@/components/subscribe-form";
 import { TOC } from "@/components/toc";
-// import Avatar from "@/app/(blog)/blog/images/avatar.jpg";
+import Avatar from "@/app/blog/images/avatar.jpg";
 import { formatDate } from "@/lib/utils";
 import { Frontmatter } from "@/types";
 import Image from "next/image";
@@ -44,13 +44,13 @@ export function BlogPostLayout({ children, frontmatter }: BlogPostLayoutProps) {
           <h1 className="mb-4 text-balance text-3xl font-bold lg:text-4xl">
             {title}
           </h1>
-          <p className="mb-8 text-lg font-medium">{description}</p>
+          <p className="mb-8 text-lg fpont-medium">{description}</p>
           <div className="flex items-center gap-4">
-            {/* <Image
+            <Image
               src={Avatar}
               className="size-10 rounded-full object-cover object-center"
               alt="Author avatar"
-            /> */}
+            />
             <div className="flex flex-col text-sm text-muted-foreground">
               <p>{author}</p>
               <p>Published on {formatDate(publishedAt)}</p>
