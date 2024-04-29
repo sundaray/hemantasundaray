@@ -1,5 +1,5 @@
 import { Icons } from "@/components/icons";
-import { MotionSection } from "@/components/motion-section";
+import { MotionSection } from "@/components/motion-components";
 import { Pagination } from "@/components/pagination";
 import { SearchBar } from "@/components/search-bar";
 import { TagList } from "@/components/tag-list";
@@ -44,7 +44,7 @@ export default function BlogPage({
         </div>
       )}
 
-      <MotionSection>
+      <MotionSection className="space-y-4" layout="position">
         {currentPosts.map((post) => (
           <article
             key={post.slug}
