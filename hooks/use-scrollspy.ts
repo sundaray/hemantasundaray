@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 
 export function useScrollSpy() {
   const [headings, setHeadings] = useState<PostHeading[]>([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [activeId, setActiveId] = useState<string | null>(null);
   const observer = useRef<IntersectionObserver | null>(null);
 
@@ -46,5 +47,10 @@ export function useScrollSpy() {
     };
   }, [headings]);
 
-  return { headings, activeId };
+  useEffect(() => {
+    const index = headings.findIndex((heading) => heading.id === activeId);
+    setCurrentIndex(index !== -1 ? index : 0);
+  }, [activeId, headings]);
+
+  return { headings, activeId, currentIndex };
 }
