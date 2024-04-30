@@ -13,7 +13,7 @@ import { BlogPostLayout } from "@/components/blog-post-layout";
 
 In Next.js App Router, pages are Server Components by default.
 This means that if you want to add animations to your components using Framer Motion, you can't directly use the `motion` component provided by Framer Motion.
-This is because the `motion{:.comp}` component needs access to DOM nodes to perform animations; however, Server Components in Next.js run on the server and don't have access to the DOM.
+This is because the `motion` component needs access to DOM nodes to perform animations; however, Server Components in Next.js run on the server and don't have access to the DOM.
 
 Let's explore how to solve this problem.
 
@@ -21,7 +21,7 @@ Let's explore how to solve this problem.
 
 Let’s say you have a component like this:
 
-```tsx
+```tsx {2}
 export function WorkExperience() {
   return <h1>Work Experience</h1>;
 }

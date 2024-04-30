@@ -7,7 +7,7 @@ figcaption[data-rehype-pretty-code-title] {
 }
 
 figure pre {
-  @apply overflow-x-auto rounded-lg py-4 text-sm;
+  @apply overflow-x-auto rounded-lg bg-slate-950 py-4 text-sm dark:border;
   counter-reset: line;
 }
 
@@ -22,7 +22,7 @@ figure code > [data-line]::before {
 }
 
 figure code > [data-highlighted-line] {
-  @apply border-l-2 border-primary bg-blue-50;
+  @apply border-l-2 border-blue-500 bg-slate-800;
 }
 
 figure code[data-line-numbers-max-digits="2"] > [data-line]::before {

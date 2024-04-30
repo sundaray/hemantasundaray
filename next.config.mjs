@@ -14,7 +14,7 @@ const nextConfig = {
 
 const options = {
   theme: "night-owl",
-  // keepBackground: false,
+  keepBackground: false,
   defaultLang: {
     block: "plaintext",
     inline: "plaintext",
