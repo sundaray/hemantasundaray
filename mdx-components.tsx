@@ -140,5 +140,17 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
     ...defaultComponents,
     ...components,
+    img: ({
+      className,
+      alt,
+      ...props
+    }: React.ImgHTMLAttributes<HTMLImageElement>) => (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img
+        className={cn("rounded-lg border", className)}
+        alt={alt}
+        {...props}
+      />
+    ),
   };
 }

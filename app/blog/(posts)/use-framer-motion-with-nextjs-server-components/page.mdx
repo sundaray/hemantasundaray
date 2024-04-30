@@ -8,7 +8,6 @@ published: true
 ---
 
 import { BlogPostLayout } from "@/components/blog-post-layout";
-import Image from "next/image";
 
 <BlogPostLayout frontmatter={frontmatter}>
 
@@ -44,7 +43,7 @@ export default function HomePage() {
 
 This will raise an error:
 
-![Alt text](/motion-component-error.jpg "a title")
+![Server Error](/images/blog/motion-component-error.jpg)
 
 ## The Solution
 
@@ -73,6 +72,26 @@ export { MotionH1 };
 ```
 
 Let's break down what's happening in this code:
+
+- We import the `motion` component and the `HTMLMotionProps` type from the Framer Motion library.
+  Note that `HTMLMotionProps` is a generic type, meaning it's designed to be used with a type parameter that specifies the kind of DOM element it is intended to describe.
+
+### Typing forwardrefs
+
+The syntax for `forwardRef` with TypeScript looks like this:
+
+```tsx
+const Component = React.forwardRef<RefType, PropsType>((props, ref) => {
+  // Component implementation
+});
+```
+
+To type `forwardRef`, we need two type parameters:
+
+- `RefType`: Represents the type of the DOM element that the `ref` will be attached to. In our case, it's `HTMLHeadingElement` because we're rendering an `<h1>` element.
+- `PropsType`: Represents the props that the component will receive. We define this as `MotionH1Props`, which is an alias for `HTMLMotionProps<'h1'>`.
+
+`HTMLMotionProps` is a generic type provided by Framer Motion that represents the props for a motion component based on a specific HTML element. By passing `h1` to `HTMLMotionProps`, we're telling it to include all the valid props for an `<h1>` element along with motion-specific props (such as `initial`, `animate`, and `exit` ) from Framer Motion.
 
 ```tsx
 import { MotionH1 } from "@/components/motion-components";

@@ -119,15 +119,15 @@
   }
 
   .prose ul {
-    @apply mb-8 list-disc pl-8 leading-7;
+    @apply mb-8 list-disc space-y-4 pl-8 leading-7;
   }
 
   .prose ol {
-    @apply mb-8 list-decimal pl-8 leading-7;
+    @apply mb-8 list-decimal space-y-4 pl-8 leading-7;
   }
 
   .prose code[data-language="plaintext"] {
-    @apply text-primary rounded bg-accent px-1 py-0.5 font-mono text-sm !important;
+    @apply rounded bg-accent px-1 py-0.5 font-mono text-sm text-secondary-foreground !important;
   }
 }
 
