@@ -8,6 +8,7 @@ published: true
 ---
 
 import { BlogPostLayout } from "@/components/blog-post-layout";
+import Image from "next/image";
 
 <BlogPostLayout frontmatter={frontmatter}>
 
@@ -21,10 +22,76 @@ Let's explore how to solve this problem.
 
 Let’s say you have a component like this:
 
-```tsx {2}
-export function WorkExperience() {
-  return <h1>Work Experience</h1>;
+```tsx
+export default function HomePage() {
+  return <h1>Welcome Home!</h1>;
 }
 ```
+
+This is a Server Component. When this component renders, you want to give the `h1` element an enter animation: fade in and slide up from the bottom. However, because `<HomePage>` is a Server Component, you can't directly convert the `h1` to a motion component like this:
+
+```jsx
+import { motion } from "framer-motion";
+
+export default function HomePage() {
+  return (
+    <motion.h1 initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
+      Work Experience
+    </motion.h1>
+  );
+}
+```
+
+This will raise an error:
+
+![Alt text](/motion-component-error.jpg "a title")
+
+## The Solution
+
+To solve this problem, we need to create a custom motion component that wraps the `motion` component from Framer Motion. This custom component will be a Client Component, which we can use inside Server Components.
+
+Here's how you can create a custom motion component:
+
+```tsx
+import { motion } from "framer-motion";
+import type { HTMLMotionProps } from "framer-motion";
+import React from "react";
+
+type MotionH1Props = HTMLMotionProps<"h1">;
+
+const MotionH1 = React.forwardRef<HTMLHeadingElement, MotionH1Props>(
+  ({ children, className, ...props }, ref) => (
+    <motion.h1 ref={ref} className={className} {...props}>
+      {children}
+    </motion.h1>
+  ),
+);
+
+MotionH1.displayName = "MotionH1";
+
+export { MotionH1 };
+```
+
+Let's break down what's happening in this code:
+
+```tsx
+import { MotionH1 } from "@/components/motion-components";
+
+export function WorkExperience() {
+  return (
+    <MotionH1
+      initial={{ opacity: 0, y: 50 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="text-2xl font-bold"
+    >
+      Work Experience
+    </MotionH1>
+  );
+}
+```
+
+## Conclusion
+
+Now you know how to use
 
 </BlogPostLayout>
