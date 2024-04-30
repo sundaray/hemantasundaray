@@ -1,70 +1,55 @@
 "use client";
 
 import { motion } from "framer-motion";
+import type { HTMLMotionProps } from "framer-motion";
 import React from "react";
 
-interface SectionProps extends React.HTMLAttributes<HTMLElement> {
-  children: React.ReactNode;
-}
+type MotionSectionProps = HTMLMotionProps<"section">;
 
-const Section = React.forwardRef<HTMLElement, SectionProps>(
+const MotionSection = React.forwardRef<HTMLElement, MotionSectionProps>(
   ({ children, ...props }, ref) => (
-    <section ref={ref} {...props}>
+    <motion.section ref={ref} {...props}>
       {children}
-    </section>
+    </motion.section>
   ),
 );
 
-Section.displayName = "Section";
+MotionSection.displayName = "MotionsSection";
 
-const MotionSection = motion(Section, { forwardMotionProps: true });
+type MotionH1Props = HTMLMotionProps<"h1">;
 
-interface H1Props extends React.HTMLAttributes<HTMLHeadingElement> {
-  children: React.ReactNode;
-}
-
-const H1 = React.forwardRef<HTMLHeadingElement, H1Props>(
+const MotionH1 = React.forwardRef<HTMLHeadingElement, MotionsH1Props>(
   ({ children, ...props }, ref) => (
-    <h1 ref={ref} {...props}>
+    <motion.h1 ref={ref} {...props}>
       {children}
-    </h1>
+    </motion.h1>
   ),
 );
 
-H1.displayName = "H1";
+MotionH1.displayName = "MotionH1";
 
-const MotionH1 = motion(H1, { forwardMotionProps: true });
+type MotionH2Props = HTMLMotionProps<"h2">;
 
-interface H2Props extends React.HTMLAttributes<HTMLHeadingElement> {
-  children: React.ReactNode;
-}
-
-const H2 = React.forwardRef<HTMLHeadingElement, H2Props>(
+const MotionH2 = React.forwardRef<HTMLHeadingElement, MotionH2Props>(
   ({ children, ...props }, ref) => (
-    <h2 ref={ref} {...props}>
+    <motion.h2 ref={ref} {...props}>
       {children}
-    </h2>
+    </motion.h2>
   ),
 );
 
-H2.displayName = "H2";
+MotionH2.displayName = "MotionH2";
 
-const MotionH2 = motion(H2, { forwardMotionProps: true });
+type MotionDivProps = HTMLMotionProps<"div">;
 
-interface DivProps extends React.HTMLAttributes<HTMLDivElement> {
-  children: React.ReactNode;
-}
-
-const Div = React.forwardRef<HTMLDivElement, DivProps>(
+const MotionDiv = React.forwardRef<HTMLDivElement, MotionDivProps>(
   ({ children, ...props }, ref) => (
-    <div ref={ref} {...props}>
+    <motion.div ref={ref} {...props}>
       {children}
-    </div>
+    </motion.div>
   ),
 );
 
-Div.displayName = "Div";
-
-const MotionDiv = motion(Div, { forwardMotionProps: true });
+MotionDiv.displayName = "MotionDiv";
 
 export { MotionSection, MotionH1, MotionH2, MotionDiv };
