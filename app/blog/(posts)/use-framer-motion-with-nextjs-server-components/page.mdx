@@ -1,0 +1,30 @@
+---
+title: How to use Framer Motion with Next.js Server Components
+description: "Check out my first blog post."
+author: Hemanta Sundaray
+publishedAt: 30-04-2024
+tags: ["Framer Motion", "Next.js"]
+published: true
+---
+
+import { BlogPostLayout } from "@/components/blog-post-layout";
+
+<BlogPostLayout frontmatter={frontmatter}>
+
+In Next.js App Router, pages are Server Components by default.
+This means that if you want to add animations to your components using Framer Motion, you can't directly use the `motion` component provided by Framer Motion.
+This is because the `motion{:.comp}` component needs access to DOM nodes to perform animations; however, Server Components in Next.js run on the server and don't have access to the DOM.
+
+Let's explore how to solve this problem.
+
+## The Problem
+
+Let’s say you have a component like this:
+
+```tsx
+export function WorkExperience() {
+  return <h1>Work Experience</h1>;
+}
+```
+
+</BlogPostLayout>

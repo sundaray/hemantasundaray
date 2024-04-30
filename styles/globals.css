@@ -77,7 +77,6 @@
 }
 
 @layer components {
-
   .prose a {
     @apply text-primary underline decoration-primary underline-offset-2 transition-all hover:no-underline;
   }
@@ -108,7 +107,7 @@
   }
 
   .prose p {
-    @apply mb-8 leading-7 text-slate-700 dark:text-slate-400;
+    @apply mb-8 leading-7 text-secondary-foreground;
   }
 
   .prose p code {
@@ -128,7 +127,7 @@
   }
 
   .prose code[data-language="plaintext"] {
-    @apply rounded border bg-secondary px-1 py-0.5 font-mono text-sm;
+    @apply text-primary rounded bg-accent px-1 py-0.5 font-mono text-sm !important;
   }
 }
 

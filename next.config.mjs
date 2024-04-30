@@ -13,8 +13,8 @@ const nextConfig = {
 };
 
 const options = {
-  theme: "catppuccin-latte",
-  keepBackground: false,
+  theme: "night-owl",
+  // keepBackground: false,
   defaultLang: {
     block: "plaintext",
     inline: "plaintext",
