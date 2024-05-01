@@ -1,11 +1,11 @@
 "use client";
 
+import Avatar from "@/app/blog/images/avatar.jpg";
 import { Comments } from "@/components/comments";
 import { Icons } from "@/components/icons";
 import { PageScrollProgress } from "@/components/page-scroll-progress";
 import { SubscribeForm } from "@/components/subscribe-form";
 import { TOC } from "@/components/toc";
-import Avatar from "@/app/blog/images/avatar.jpg";
 import { formatDate } from "@/lib/utils";
 import { Frontmatter } from "@/types";
 import Image from "next/image";
@@ -44,7 +44,7 @@ export function BlogPostLayout({ children, frontmatter }: BlogPostLayoutProps) {
           <h1 className="mb-4 text-balance text-3xl font-bold lg:text-4xl">
             {title}
           </h1>
-          <p className="mb-8 text-lg fpont-medium">{description}</p>
+          <p className="fpont-medium mb-8 text-lg">{description}</p>
           <div className="flex items-center gap-4">
             <Image
               src={Avatar}
@@ -61,8 +61,8 @@ export function BlogPostLayout({ children, frontmatter }: BlogPostLayoutProps) {
         <section className="grid grid-cols-16">
           <article className="prose col-span-full col-start-1 lg:col-end-10">
             {children}
-            <div className="mb-4 flex items-center gap-2">
-              <Icons.tags className="size-5 text-slate-700" />
+            <div className="mb-8 flex items-center gap-2 mt-16">
+              <Icons.tags className="size-5 text-muted-foreground" />
               <div className="flex gap-2 text-sm font-medium">
                 {tags.map((tag: string) => (
                   <Link
