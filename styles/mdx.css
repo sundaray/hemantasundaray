@@ -1,9 +1,9 @@
 figure[data-rehype-pretty-code-figure] {
-  @apply mb-8 has-[figcaption]:relative;
+  @apply relative mb-8 has-[figcaption]:mt-16;
 }
 
 figcaption[data-rehype-pretty-code-title] {
-  @apply pb-2 text-sm text-muted-foreground;
+  @apply absolute -top-8 left-0 text-sm text-muted-foreground;
 }
 
 figure pre {
