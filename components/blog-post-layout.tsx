@@ -61,7 +61,7 @@ export function BlogPostLayout({ children, frontmatter }: BlogPostLayoutProps) {
         <section className="grid grid-cols-16">
           <article className="prose col-span-full col-start-1 lg:col-end-10">
             {children}
-            <div className="mb-8 flex items-center gap-2 mt-16">
+            <div className="mb-8 mt-16 flex items-center gap-2">
               <Icons.tags className="size-5 text-muted-foreground" />
               <div className="flex gap-2 text-sm font-medium">
                 {tags.map((tag: string) => (
