@@ -1,6 +1,6 @@
 ---
 title: How to use Framer Motion with Next.js Server Components
-description: "Check out my first blog post."
+description: "Learn how to create custom motion wrappers to animate Server Components."
 author: Hemanta Sundaray
 publishedAt: 30-04-2024
 tags: ["Framer Motion", "Next.js"]
@@ -12,7 +12,7 @@ import { BlogPostLayout } from "@/components/blog-post-layout";
 <BlogPostLayout frontmatter={frontmatter}>
 
 In Next.js App Router, pages are Server Components by default.
-This means that if you want to add animations to your components using Framer Motion, you can't directly use the `motion` component provided by Framer Motion.
+This means that if you want to add animation to your components using Framer Motion, you can't directly use the `motion` component provided by Framer Motion.
 This is because the `motion` component needs access to DOM nodes to perform animations; however, Server Components in Next.js run on the server and don't have access to the DOM.
 
 Let's explore how to solve this problem.
@@ -27,7 +27,7 @@ export default function HomePage() {
 }
 ```
 
-This is a Server Component. When this component renders, you want to give the `h1` element an enter animation: fade in and slide up from the bottom. However, because `<HomePage>` is a Server Component, you can't directly convert the `h1` to a motion component like this:
+This is a Server Component. When this component renders, you want to give the `h1` element an enter animation: fade in and slide up from the bottom. However, because `<HomePage>` is a Server Component, you can't directly use the corresponding `motion` component for the `h1` element, like this:
 
 ```jsx
 import { motion } from "framer-motion";
@@ -39,23 +39,25 @@ export default function HomePage() {
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
     >
-      Work Experience
+      Welcome Home!
     </motion.h1>
   );
 }
 ```
 
-This will raise an error:
+You'll get an error:
 
 ![Server Error](/images/blog/motion-component-error.jpg)
 
 ## The Solution
 
-To solve this problem, we need to create a custom motion component that wraps the `motion` component from Framer Motion. This custom component will be a Client Component, which we can use inside Server Components.
+To solve this problem, you need to create a custom component that wraps the `motion` component from Framer Motion. This custom component will be a Client Component, which you can use inside Server Components.
 
-Here's how you can create a custom motion component:
+Here's how you can create a custom component:
 
-```tsx title="components/use-client.tsx"
+```tsx title="@/components/use-client.tsx"
+"use client";
+
 import { motion } from "framer-motion";
 import type { HTMLMotionProps } from "framer-motion";
 import React from "react";
@@ -63,24 +65,34 @@ import React from "react";
 type MotionH1Props = HTMLMotionProps<"h1">;
 
 const MotionH1 = React.forwardRef<HTMLHeadingElement, MotionH1Props>(
-  ({ children, className, ...props }, ref) => (
-    <motion.h1 ref={ref} className={className} {...props}>
-      {children}
-    </motion.h1>
-  ),
+  function MotionH1({ children, ...props }, ref) {
+    return (
+      <motion.h1 ref={ref} {...props}>
+        {children}
+      </motion.h1>
+    );
+  },
 );
-
-MotionH1.displayName = "MotionH1";
 
 export { MotionH1 };
 ```
 
 Let's break down what's happening in this code:
 
-- We import the `motion` component and the `HTMLMotionProps` type from the Framer Motion library.
-  Note that `HTMLMotionProps` is a generic type, meaning it's designed to be used with a type parameter that specifies the kind of DOM element it is intended to describe.
+- We create a component called `<MotionH1>` using `React.forwardRef`.
+- Inside `forwardRef`, we have a render function called `<MotionH1>` that takes two parameters: `props` and `ref`. We destructure the `props` parameter to extract `children`, and any remaining props using the spread operator `...props`. We then pass these props, along with the `ref`, to the `<motion.h1>` component.
+- Finally, we export `<MotionH1>` to be used inside Server Components.
 
-### Typing forwardrefs
+Now that you have an overall understanding of what the code does, let's understand more about `forwardRef`.
+
+### Understanding forwardRef
+
+`forwardRef` is an API in React that allows a component to expose a DOM node to its parent component with a `ref`.
+In our case, `<MotionH1>` uses `forwardRef` to obtain the `ref` passed to it by Framer Motion and forward that `ref` to the underlying `<motion.h1>` component. This lets Framer Motion access the `h1` DOM node exposed by `<MotionH1>`
+
+Now that you understand the what and why behind `forwardRef`, let's understand how to type it.
+
+### Typing forwardRef
 
 The syntax for `forwardRef` with TypeScript looks like this:
 
@@ -90,19 +102,17 @@ const Component = React.forwardRef<RefType, PropsType>((props, ref) => {
 });
 ```
 
-To type `forwardRef`, we need two type parameters:
+To type `forwardRef`, you need two type parameters:
 
-- `RefType`: Represents the type of the DOM element that the `ref` will be attached to. In our case, it's `HTMLHeadingElement` because we're rendering an `<h1>` element.
+- `RefType`: Represents the type of the DOM element that the `ref` will be attached to. In our case, it's `HTMLHeadingElement` because we're rendering an `h1` element.
 - `PropsType`: Represents the props that the component will receive. We define this as `MotionH1Props`, which is an alias for `HTMLMotionProps<'h1'>`.
 
-`HTMLMotionProps` is a generic type provided by Framer Motion that represents the props for a motion component based on a specific HTML element. By passing `h1` to `HTMLMotionProps`, we're telling it to include all the valid props for an `<h1>` element along with motion-specific props (such as `initial`, `animate`, and `exit` ) from Framer Motion.
+`HTMLMotionProps` is a generic type provided by Framer Motion that represents the props for a motion component based on a specific HTML element. By passing `h1` to `HTMLMotionProps`, we're telling it to include all the valid props for an `h1` element along with motion-specific props (such as `initial`, `animate`, and `exit` ) from Framer Motion.
 
-Now, you can import and use the `MotionH1` component inside your Server Component:
+Now, you can import and use the `<MotionH1>` component inside the Server Component:
 
 ```tsx
-import { MotionH1 } from "@/components/motion-components";
-
-Now, you can import and use the `MotionH1` component inside your Server Component:
+import { MotionH1 } from "@/components/use-client";
 
 export default function HomePage() {
   return (
@@ -117,12 +127,15 @@ export default function HomePage() {
 }
 ```
 
-Now when `<HomePage>` renders, you'll see the enter animation on the `h1` element.
+When `<HomePage>` renders, you'll see the enter animation on the `h1` element.
 
-But h1 is not the only HTML element you'll wnat to animate. You might want to animate a div, a section, a p element etc. In such cases you'll have to create wrapper components like motionDiv, MotionSection etc. You can create a use-client.tsx file in your components folder, have wrapper components inside teh file and export them. you can then import these wrapper components to any Server Component you need and use for animation.
+But an `h1` is not the only HTML element you'll want to animate. You might also want to animate a `div`, a `section`, a `p` element, and more. In such cases, you'll have to create wrapper components for each element you want to animate, such as `MotionDiv`, `MotionSection`, `MotionP`, etc.
+
+To keep your code organized, you can create a single file called `use-client.tsx` in your `components` folder. Inside this file, you can define all your motion component wrappers and export them.
 
 ## References
 
-Now you know how to use
+1. [forwardRef](https://react.dev/reference/react/forwardRef)
+2. [Custom motion components](https://www.framer.com/motion/component/#custom-components)
 
 </BlogPostLayout>

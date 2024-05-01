@@ -76,7 +76,7 @@ export default function BlogPage({
           {currentPosts.map((post) => (
             <article
               key={post.slug}
-              className="boder group relative rounded-md bg-secondary p-4 transition-all"
+              className="boder group relative rounded-md bg-secondary p-4 transition-all hover:bg-border"
             >
               <p className="mb-2 text-sm text-muted-foreground">
                 {formatDate(post.publishedAt)}
