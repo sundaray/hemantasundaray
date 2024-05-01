@@ -1,9 +1,9 @@
 figure[data-rehype-pretty-code-figure] {
-  @apply relative mb-8;
+  @apply mb-8 has-[figcaption]:relative;
 }
 
 figcaption[data-rehype-pretty-code-title] {
-  @apply rounded-t-lg border border-b-0 p-3 text-sm text-slate-700 dark:text-slate-400;
+  @apply pb-2 text-sm text-muted-foreground;
 }
 
 figure pre {

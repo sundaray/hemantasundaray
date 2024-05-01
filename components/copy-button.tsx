@@ -26,7 +26,7 @@ export function CopyButton({ text }: { text: string }) {
       size="icon"
       variant="ghost"
       onClick={copyToClipboard}
-      className="absolute right-1 top-1 size-7"
+      className="absolute right-0 top-0 size-6 text-muted-foreground"
     >
       <AnimatePresence mode="wait">
         {isCopied ? (

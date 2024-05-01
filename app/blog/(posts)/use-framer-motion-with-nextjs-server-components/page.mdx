@@ -23,7 +23,7 @@ Let’s say you have a component like this:
 
 ```tsx
 export default function HomePage() {
-  return <h1>Welcome Home!</h1>;
+  return <h1 className="text-2xl font-bold">Welcome Home!</h1>;
 }
 ```
 
@@ -34,7 +34,11 @@ import { motion } from "framer-motion";
 
 export default function HomePage() {
   return (
-    <motion.h1 initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
+    <motion.h1
+      className="text-2xl font-bold"
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+    >
       Work Experience
     </motion.h1>
   );
@@ -51,7 +55,7 @@ To solve this problem, we need to create a custom motion component that wraps th
 
 Here's how you can create a custom motion component:
 
-```tsx
+```tsx title="components/use-client.tsx"
 import { motion } from "framer-motion";
 import type { HTMLMotionProps } from "framer-motion";
 import React from "react";
@@ -93,23 +97,31 @@ To type `forwardRef`, we need two type parameters:
 
 `HTMLMotionProps` is a generic type provided by Framer Motion that represents the props for a motion component based on a specific HTML element. By passing `h1` to `HTMLMotionProps`, we're telling it to include all the valid props for an `<h1>` element along with motion-specific props (such as `initial`, `animate`, and `exit` ) from Framer Motion.
 
+Now, you can import and use the `MotionH1` component inside your Server Component:
+
 ```tsx
 import { MotionH1 } from "@/components/motion-components";
 
-export function WorkExperience() {
+Now, you can import and use the `MotionH1` component inside your Server Component:
+
+export default function HomePage() {
   return (
     <MotionH1
-      initial={{ opacity: 0, y: 50 }}
+      initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       className="text-2xl font-bold"
     >
-      Work Experience
+      Welcome Home!
     </MotionH1>
   );
 }
 ```
 
-## Conclusion
+Now when `<HomePage>` renders, you'll see the enter animation on the `h1` element.
+
+But h1 is not the only HTML element you'll wnat to animate. You might want to animate a div, a section, a p element etc. In such cases you'll have to create wrapper components like motionDiv, MotionSection etc. You can create a use-client.tsx file in your components folder, have wrapper components inside teh file and export them. you can then import these wrapper components to any Server Component you need and use for animation.
+
+## References
 
 Now you know how to use
 
