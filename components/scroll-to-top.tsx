@@ -1,8 +1,9 @@
-"use client";
+"use client"
 
-import { Icons } from "@/components/icons";
-import { motion, AnimatePresence } from "framer-motion";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react"
+import { AnimatePresence, motion } from "framer-motion"
+
+import { Icons } from "@/components/icons"
 
 const scrollVariants = {
   initial: { y: ".5rem", opacity: 0 },
@@ -13,32 +14,32 @@ const scrollVariants = {
       duration: 0.5,
     },
   },
-};
+}
 export function ScrollToTop() {
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(false)
   // Show button when page is scrolled upto given distance
   const toggleVisibility = () => {
     if (window.scrollY > 800) {
-      setIsVisible(true);
+      setIsVisible(true)
     } else {
-      setIsVisible(false);
+      setIsVisible(false)
     }
-  };
+  }
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
       behavior: "smooth",
-    });
-  };
+    })
+  }
   // the scroll event fires when the document view has been scrolled
   useEffect(() => {
-    window.addEventListener("scroll", toggleVisibility);
-  }, []);
+    window.addEventListener("scroll", toggleVisibility)
+  }, [])
   return (
     <AnimatePresence>
       {isVisible && (
         <motion.button
-          className="fixed bottom-4 right-4 flex items-center gap-1 rounded-md border bg-secondary px-1 py-0.5 text-sm text-secondary-foreground shadow-lg transition-colors hover:bg-border hover:text-slate-700"
+          className="fixed bottom-4 right-4 flex items-center gap-1 rounded-md border bg-secondary px-1 py-0.5 text-sm text-secondary-foreground shadow-lg transition-colors"
           onClick={scrollToTop}
           variants={scrollVariants}
           initial="initial"
@@ -50,5 +51,5 @@ export function ScrollToTop() {
         </motion.button>
       )}
     </AnimatePresence>
-  );
+  )
 }
