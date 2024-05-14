@@ -1,0 +1,36 @@
+---
+title: What is the TypeScript Type of Next.js searchParams?
+description: "Learn how to correctly type searchParams in Next.js using TypeScript."
+author: Hemanta Sundaray
+publishedAt: 17-09-2023
+updatedAt: 14-05-2024
+tags: ["TypeScript", "Next.js"]
+published: true
+---
+
+import { BlogPostLayout } from "@/components/blog-post-layout"
+import { Note } from "@/components/note"
+
+<BlogPostLayout frontmatter={frontmatter}>
+
+In Next.js (app router), [useSearchParams](https://nextjs.org/docs/app/api-reference/functions/use-search-params) is a client-side hook that allows you to read the current URL’s query string. It returns a read-only version of the [URLSearchParams](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams) interface.
+
+<Note>
+  The query string is the part of the URL that comes after the question mark
+  (`?`), containing key-value pairs separated by ampersands (`&`).
+
+For example, in the URL `https://example.com/products?category=electronics&brand=samsung`, the query string is `category=electronics&brand=samsung`. It consists of two parameters: `category` with the value `electronics`, and `brand` with the value `samsung`.
+
+</Note>
+
+To type `searchParams`, you simply import `ReadonlyURLSearchParams` from `next/navigation` and then specify the type of `searchParams` as `ReadOnlyURLSearchParams`, like this:
+
+```tsx
+import {ReadonlyURLSearchParams} from “next/navigation”
+
+type MyType = {
+	searchParams: ReadonlyURLSearchParams
+}
+```
+
+</BlogPostLayout>

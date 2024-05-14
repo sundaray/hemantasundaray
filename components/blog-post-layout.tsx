@@ -1,24 +1,25 @@
-"use client";
+"use client"
 
-import Avatar from "@/app/blog/images/avatar.jpg";
-import { Comments } from "@/components/comments";
-import { Icons } from "@/components/icons";
-import { PageScrollProgress } from "@/components/page-scroll-progress";
-import { SubscribeForm } from "@/components/subscribe-form";
-import { TOC } from "@/components/toc";
-import { formatDate } from "@/lib/utils";
-import { Frontmatter } from "@/types";
-import Image from "next/image";
-import Link from "next/link";
+import Image from "next/image"
+import Link from "next/link"
+import { Frontmatter } from "@/types"
+
+import { formatDate } from "@/lib/utils"
+import { Comments } from "@/components/comments"
+import { Icons } from "@/components/icons"
+import { PageScrollProgress } from "@/components/page-scroll-progress"
+import { SubscribeForm } from "@/components/subscribe-form"
+import { TOC } from "@/components/toc"
+import Avatar from "@/app/blog/images/avatar.jpg"
 
 type BlogPostLayoutProps = {
-  children: React.ReactNode;
-  frontmatter: Frontmatter;
-};
+  children: React.ReactNode
+  frontmatter: Frontmatter
+}
 
 export function BlogPostLayout({ children, frontmatter }: BlogPostLayoutProps) {
   const { title, description, author, publishedAt, updatedAt, tags } =
-    frontmatter;
+    frontmatter
 
   return (
     <>
@@ -76,7 +77,7 @@ export function BlogPostLayout({ children, frontmatter }: BlogPostLayoutProps) {
               </div>
             </div>
             {updatedAt && (
-              <p className="w-fit rounded bg-blue-100 px-2 py-1 text-sm font-medium">
+              <p className="w-fit rounded bg-secondary px-2 py-1 text-sm font-medium">
                 Last updated on {formatDate(updatedAt)}
               </p>
             )}
@@ -99,5 +100,5 @@ export function BlogPostLayout({ children, frontmatter }: BlogPostLayoutProps) {
         </section>
       </div>
     </>
-  );
+  )
 }
