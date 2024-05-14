@@ -2,12 +2,12 @@
 title: How to use Framer Motion with Next.js Server Components
 description: "Learn how to create custom motion wrappers to animate Server Components."
 author: Hemanta Sundaray
-publishedAt: 30-04-2024
+publishedAt: 2024-04-30
 tags: ["Framer Motion", "Next.js"]
 published: true
 ---
 
-import { BlogPostLayout } from "@/components/blog-post-layout";
+import { BlogPostLayout } from "@/components/blog-post-layout"
 
 <BlogPostLayout frontmatter={frontmatter}>
 
@@ -23,14 +23,14 @@ Let’s say you have a component like this:
 
 ```tsx
 export default function HomePage() {
-  return <h1 className="text-2xl font-bold">Welcome Home!</h1>;
+  return <h1 className="text-2xl font-bold">Welcome Home!</h1>
 }
 ```
 
 This is a Server Component. When this component renders, you want to give the `h1` element an enter animation: fade in and slide up from the bottom. However, because `<HomePage>` is a Server Component, you can't directly use the corresponding `motion` component for the `h1` element, like this:
 
 ```jsx
-import { motion } from "framer-motion";
+import { motion } from "framer-motion"
 
 export default function HomePage() {
   return (
@@ -41,7 +41,7 @@ export default function HomePage() {
     >
       Welcome Home!
     </motion.h1>
-  );
+  )
 }
 ```
 
@@ -56,13 +56,13 @@ To solve this problem, you need to create a custom component that wraps the `mot
 Here's how you can create a custom component:
 
 ```tsx title="@/components/use-client.tsx"
-"use client";
+"use client"
 
-import { motion } from "framer-motion";
-import type { HTMLMotionProps } from "framer-motion";
-import React from "react";
+import React from "react"
+import { motion } from "framer-motion"
+import type { HTMLMotionProps } from "framer-motion"
 
-type MotionH1Props = HTMLMotionProps<"h1">;
+type MotionH1Props = HTMLMotionProps<"h1">
 
 const MotionH1 = React.forwardRef<HTMLHeadingElement, MotionH1Props>(
   function MotionH1({ children, ...props }, ref) {
@@ -70,11 +70,11 @@ const MotionH1 = React.forwardRef<HTMLHeadingElement, MotionH1Props>(
       <motion.h1 ref={ref} {...props}>
         {children}
       </motion.h1>
-    );
-  },
-);
+    )
+  }
+)
 
-export { MotionH1 };
+export { MotionH1 }
 ```
 
 Let's break down what's happening in this code:
@@ -99,7 +99,7 @@ The syntax for `forwardRef` with TypeScript looks like this:
 ```tsx
 const Component = React.forwardRef<RefType, PropsType>((props, ref) => {
   // Component implementation
-});
+})
 ```
 
 To type `forwardRef`, you need two type parameters:
@@ -112,7 +112,7 @@ To type `forwardRef`, you need two type parameters:
 Now, you can import and use the `<MotionH1>` component inside the Server Component:
 
 ```tsx
-import { MotionH1 } from "@/components/use-client";
+import { MotionH1 } from "@/components/use-client"
 
 export default function HomePage() {
   return (
@@ -123,7 +123,7 @@ export default function HomePage() {
     >
       Welcome Home!
     </MotionH1>
-  );
+  )
 }
 ```
 

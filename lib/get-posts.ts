@@ -1,27 +1,28 @@
-import type { Post } from "@/types";
-import { SearchParams } from "@/types";
-import fs from "fs";
-import matter from "gray-matter";
-import path from "path";
-import "server-only";
+import fs from "fs"
+import path from "path"
+import type { Post } from "@/types"
+import { SearchParams } from "@/types"
+import matter from "gray-matter"
+
+import "server-only"
 
 export function getPosts(searchParams: SearchParams) {
-  const tag = searchParams?.tag || "";
-  const currentPage = Number(searchParams?.page) || 1;
-  const query = searchParams?.query || "";
+  const tag = searchParams?.tag || ""
+  const currentPage = Number(searchParams?.page) || 1
+  const query = searchParams?.query || ""
 
-  const postsPerPage = 5;
+  const postsPerPage = 5
 
-  const postsDirectory = path.join(process.cwd(), "app", "blog", "(posts)");
+  const postsDirectory = path.join(process.cwd(), "app", "blog", "(posts)")
 
   const dirs = fs
     .readdirSync(postsDirectory, { withFileTypes: true })
     .filter((dirent) => dirent.isDirectory())
-    .map((dirent) => dirent.name);
+    .map((dirent) => dirent.name)
 
   let posts: Post[] = dirs.map((dirName) => {
-    const filePath = path.join(postsDirectory, dirName, "page.mdx");
-    const fileContents = fs.readFileSync(filePath, "utf8");
+    const filePath = path.join(postsDirectory, dirName, "page.mdx")
+    const fileContents = fs.readFileSync(filePath, "utf8")
     const {
       data: {
         title,
@@ -32,7 +33,7 @@ export function getPosts(searchParams: SearchParams) {
         tags,
         published,
       },
-    } = matter(fileContents);
+    } = matter(fileContents)
 
     return {
       slug: dirName,
@@ -43,34 +44,34 @@ export function getPosts(searchParams: SearchParams) {
       updatedAt,
       published,
       tags,
-    };
-  });
+    }
+  })
 
   // Filter posts that are published
-  posts = posts.filter((post) => post.published);
+  posts = posts.filter((post) => post.published)
 
   if (tag) {
     posts = posts.filter((post) =>
-      post.tags.map((t) => t.toLowerCase()).includes(tag.toLowerCase()),
-    );
+      post.tags.map((t) => t.toLowerCase()).includes(tag.toLowerCase())
+    )
   }
 
   if (query) {
     posts = posts.filter((post) =>
-      post.title.toLowerCase().includes(query.toLowerCase()),
-    );
+      post.title.toLowerCase().includes(query.toLowerCase())
+    )
   }
 
   posts.sort(
     (a, b) =>
-      new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),
-  );
+      new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+  )
 
-  const totalPosts = posts.length;
-  const totalPages = Math.ceil(totalPosts / postsPerPage);
-  const startIndex = (currentPage - 1) * postsPerPage;
-  const endIndex = startIndex + postsPerPage;
-  const currentPosts = posts.slice(startIndex, endIndex);
+  const totalPosts = posts.length
+  const totalPages = Math.ceil(totalPosts / postsPerPage)
+  const startIndex = (currentPage - 1) * postsPerPage
+  const endIndex = startIndex + postsPerPage
+  const currentPosts = posts.slice(startIndex, endIndex)
 
   return {
     tag,
@@ -78,5 +79,5 @@ export function getPosts(searchParams: SearchParams) {
     totalPosts,
     currentPage,
     totalPages,
-  };
+  }
 }
