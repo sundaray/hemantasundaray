@@ -1,17 +1,18 @@
-import { Icons } from "@/components/icons";
+import Link from "next/link"
+import { SearchParams } from "@/types"
+
+import { getPosts } from "@/lib/get-posts"
+import { formatDate } from "@/lib/utils"
+import { Icons } from "@/components/icons"
 import {
-  MotionSection,
   MotionDiv,
   MotionH1,
   MotionH2,
-} from "@/components/motion-components";
-import { Pagination } from "@/components/pagination";
-import { SearchBar } from "@/components/search-bar";
-import { TagList } from "@/components/tag-list";
-import { getPosts } from "@/lib/get-posts";
-import { formatDate } from "@/lib/utils";
-import { SearchParams } from "@/types";
-import Link from "next/link";
+  MotionSection,
+} from "@/components/motion-components"
+import { Pagination } from "@/components/pagination"
+import { SearchBar } from "@/components/search-bar"
+import { TagList } from "@/components/tag-list"
 
 const variants = {
   initial: { opacity: 0, y: 10 },
@@ -23,15 +24,15 @@ const variants = {
       staggerChildren: 0.2,
     },
   },
-};
+}
 
 export default function BlogPage({
   searchParams,
 }: {
-  searchParams: SearchParams;
+  searchParams: SearchParams
 }) {
   const { tag, currentPosts, totalPosts, currentPage, totalPages } =
-    getPosts(searchParams);
+    getPosts(searchParams)
 
   return (
     <MotionSection
@@ -100,5 +101,5 @@ export default function BlogPage({
         )}
       </MotionDiv>
     </MotionSection>
-  );
+  )
 }
