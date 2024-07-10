@@ -1,15 +1,16 @@
-import { CopyButton } from "@/components/copy-button";
-import { cn } from "@/lib/utils";
-import type { MDXComponents } from "mdx/types";
-import Image, { ImageProps } from "next/image";
-import Link, { LinkProps } from "next/link";
-import React from "react";
+import React from "react"
+import Image, { ImageProps } from "next/image"
+import Link, { LinkProps } from "next/link"
+import type { MDXComponents } from "mdx/types"
+
+import { cn } from "@/lib/utils"
+import { CopyButton } from "@/components/copy-button"
 
 type CustomLinkProps = React.HTMLAttributes<HTMLAnchorElement> &
-  Partial<LinkProps>;
+  Partial<LinkProps>
 
 function MDXImage(props: ImageProps) {
-  return <Image {...props} alt={props.alt} className="rounded-lg" />;
+  return <Image {...props} alt={props.alt} className="rounded-lg" />
 }
 
 function Pre({
@@ -17,18 +18,18 @@ function Pre({
   raw,
   ...props
 }: {
-  children?: React.ReactNode;
-  raw?: string;
+  children?: React.ReactNode
+  raw?: string
 }) {
   const extractTextFromChildren = (children: React.ReactNode): string => {
-    if (!children) return "";
+    if (!children) return ""
 
     if (typeof children === "string") {
-      return children;
+      return children
     }
 
     if (Array.isArray(children)) {
-      return children.map((child) => extractTextFromChildren(child)).join("");
+      return children.map((child) => extractTextFromChildren(child)).join("")
     }
 
     // Using type assertion to assume 'children' is a ReactElement
@@ -37,28 +38,28 @@ function Pre({
       children !== null &&
       "props" in children
     ) {
-      const element = children as React.ReactElement;
+      const element = children as React.ReactElement
       if (element.props && element.props.children) {
-        return extractTextFromChildren(element.props.children);
+        return extractTextFromChildren(element.props.children)
       }
     }
 
-    return "";
-  };
+    return ""
+  }
 
   // // Use raw if available, otherwise extract text from children
-  const textToCopy = raw ?? extractTextFromChildren(children);
+  const textToCopy = raw ?? extractTextFromChildren(children)
 
   return (
     <pre {...props}>
       <CopyButton text={textToCopy} />
       {children}
     </pre>
-  );
+  )
 }
 
 function CustomLink(props: CustomLinkProps) {
-  const { href, ...rest } = props;
+  const { href, ...rest } = props
 
   if (typeof href === "string") {
     if (href.startsWith("/")) {
@@ -66,19 +67,17 @@ function CustomLink(props: CustomLinkProps) {
         <Link href={href} {...rest}>
           {props.children}
         </Link>
-      );
+      )
     }
 
     if (href.startsWith("#")) {
-      return <a href={href} {...rest} />;
+      return <a href={href} {...rest} />
     }
 
-    return (
-      <a href={href} target="_blank" rel="noopener noreferrer" {...rest} />
-    );
+    return <a href={href} target="_blank" rel="noopener noreferrer" {...rest} />
   }
 
-  return null;
+  return null
 }
 
 function slugify(str: string) {
@@ -89,7 +88,7 @@ function slugify(str: string) {
     .replace(/\s+/g, "-") // Replace spaces with -
     .replace(/&/g, "-and-") // Replace & with 'and'
     .replace(/[^\w\-]+/g, "") // Remove all non-word characters except for -
-    .replace(/\-\-+/g, "-"); // Replace multiple - with single -
+    .replace(/\-\-+/g, "-") // Replace multiple - with single -
 }
 
 function createHeading(level: 1 | 2 | 3 | 4 | 5 | 6) {
@@ -98,13 +97,13 @@ function createHeading(level: 1 | 2 | 3 | 4 | 5 | 6) {
     const contentString = React.Children.toArray(children)
       .map((child) => {
         if (typeof child === "string") {
-          return child;
+          return child
         }
-        return "";
+        return ""
       })
-      .join("");
+      .join("")
 
-    let slug = slugify(contentString);
+    let slug = slugify(contentString)
     return React.createElement(
       `h${level}`,
       { id: slug },
@@ -115,13 +114,13 @@ function createHeading(level: 1 | 2 | 3 | 4 | 5 | 6) {
           className: "anchor scroll-m-20",
         }),
       ],
-      children,
-    );
-  };
+      children
+    )
+  }
 
-  Heading.displayName = `Heading${level}`;
+  Heading.displayName = `Heading${level}`
 
-  return Heading;
+  return Heading
 }
 
 const defaultComponents = {
@@ -134,9 +133,10 @@ const defaultComponents = {
   a: CustomLink,
   pre: Pre,
   Image: MDXImage,
-};
+}
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
+  // @ts-ignore
   return {
     ...defaultComponents,
     ...components,
@@ -152,5 +152,5 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         {...props}
       />
     ),
-  };
+  }
 }
