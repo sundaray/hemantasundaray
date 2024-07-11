@@ -8,7 +8,6 @@ import { formatDate } from "@/lib/utils"
 import { Comments } from "@/components/comments"
 import { Icons } from "@/components/icons"
 import { PageScrollProgress } from "@/components/page-scroll-progress"
-import { SubscribeForm } from "@/components/subscribe-form"
 import { TOC } from "@/components/toc"
 import Avatar from "@/app/blog/images/avatar.jpg"
 
@@ -91,7 +90,6 @@ export function BlogPostLayout({ children, frontmatter }: BlogPostLayoutProps) {
               <p className="mb-4 text-sm text-muted-foreground">
                 Get notified when I publish a blog post.
               </p>
-              <SubscribeForm />
             </div>
           </aside>
         </section>
