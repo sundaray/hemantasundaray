@@ -107,7 +107,7 @@
   }
 
   .prose p {
-    @apply mb-8 leading-7 text-secondary-foreground;
+    @apply mb-8 leading-7 text-slate-600 dark:text-slate-100;
   }
 
   .prose p code {
@@ -127,7 +127,7 @@
   }
 
   .prose code[data-language="plaintext"] {
-    @apply rounded border bg-accent px-1 py-0.5 font-mono text-sm text-secondary-foreground !important;
+    @apply rounded border bg-accent px-1 py-0.5 font-mono text-sm text-slate-600 dark:text-slate-100 !important;
   }
 }
 

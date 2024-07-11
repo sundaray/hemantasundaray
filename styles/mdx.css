@@ -7,7 +7,7 @@ figcaption[data-rehype-pretty-code-title] {
 }
 
 figure pre {
-  @apply overflow-x-auto rounded-lg bg-slate-950 py-4 text-sm dark:border;
+  @apply overflow-x-auto rounded-lg bg-slate-900 py-6 text-sm dark:border;
   counter-reset: line;
 }
 
@@ -16,7 +16,7 @@ figure code > [data-line] {
 }
 
 figure code > [data-line]::before {
-  @apply mx-4 inline-block w-4 text-right text-muted-foreground;
+  @apply mx-6 inline-block w-4 text-right text-muted-foreground;
   counter-increment: line;
   content: counter(line);
 }

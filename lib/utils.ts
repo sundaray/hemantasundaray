@@ -6,11 +6,11 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export function formatDate(dateStr: string): string {
-  const expectedFormat = "yyyy-MM-dd"
+export function formatDate(date: string | Date): string {
+  const parsedDate =
+    typeof date === "string" ? parse(date, "yyyy-MM-dd", new Date()) : date
 
   try {
-    const parsedDate = parse(dateStr, expectedFormat, new Date())
     if (!isNaN(parsedDate.getTime())) {
       return format(parsedDate, "EEEE, MMMM do, yyyy")
     } else {

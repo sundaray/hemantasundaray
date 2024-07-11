@@ -1,32 +1,33 @@
-"use client";
+"use client"
 
-import { Icons } from "@/components/icons";
-import { Button } from "@/components/ui/button";
-import { motion, AnimatePresence } from "framer-motion";
-import React, { useState } from "react";
+import React, { useState } from "react"
+import { AnimatePresence, motion } from "framer-motion"
+
+import { Button } from "@/components/ui/button"
+import { Icons } from "@/components/icons"
 
 export function CopyButton({ text }: { text: string }) {
-  const [isCopied, setIsCopied] = useState<boolean>(false);
+  const [isCopied, setIsCopied] = useState<boolean>(false)
 
   async function copyToClipboard() {
-    if (isCopied) return;
-    await navigator.clipboard.writeText(text);
-    setIsCopied(true);
-    setTimeout(() => setIsCopied(false), 1000); // Reset after 1 second
+    if (isCopied) return
+    await navigator.clipboard.writeText(text)
+    setIsCopied(true)
+    setTimeout(() => setIsCopied(false), 1000) // Reset after 1 second
   }
 
   const iconVariants = {
     initial: { opacity: 0, scale: 0.5 },
     animate: { opacity: 1, scale: 1 },
     exit: { opacity: 0, scale: 0.5 },
-  };
+  }
 
   return (
     <Button
       size="icon"
       variant="ghost"
       onClick={copyToClipboard}
-      className="absolute right-1 top-1 size-6 bg-transparent text-muted-foreground dark:text-slate-500 hover:bg-transparent hover:text-secondary dark:hover:text-slate-100"
+      className="absolute right-1 top-1 size-6 bg-transparent text-muted-foreground hover:bg-transparent hover:text-secondary dark:text-slate-500 dark:hover:text-slate-100"
     >
       <AnimatePresence mode="wait">
         {isCopied ? (
@@ -54,5 +55,5 @@ export function CopyButton({ text }: { text: string }) {
         )}
       </AnimatePresence>
     </Button>
-  );
+  )
 }

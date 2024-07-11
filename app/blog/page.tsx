@@ -74,27 +74,31 @@ export default function BlogPage({
         )}
 
         <MotionSection className="space-y-4" layout="position">
-          {currentPosts.map((post) => (
-            <article
-              key={post.slug}
-              className="boder group relative rounded-md bg-secondary p-4 transition-all hover:bg-border"
-            >
-              <p className="mb-2 text-sm text-muted-foreground">
-                {formatDate(post.publishedAt)}
-              </p>
-              <h2 className="mb-2 text-2xl font-bold text-secondary-foreground">
-                {post.title}
-              </h2>
-              <p className="mb-8 text-slate-700">{post.description}</p>
-              <span className="text-sm text-primary">
-                Read more{" "}
-                <Icons.arrowRight className="inline-block size-4 transition-transform group-hover:translate-x-1" />
-              </span>
-              <Link href={`blog/${post.slug}`} className="absolute inset-0">
-                <span className="sr-only">View article</span>
-              </Link>
-            </article>
-          ))}
+          {currentPosts.map((post) => {
+            return (
+              <article
+                key={post.slug}
+                className="boder group relative rounded-md bg-secondary p-4 transition-all hover:scale-[1.02] hover:shadow-lg"
+              >
+                <p className="mb-2 text-sm text-muted-foreground">
+                  {post.publishedAt
+                    ? formatDate(post.publishedAt)
+                    : "Date unavailable"}
+                </p>
+                <h2 className="mb-2 text-2xl font-bold text-secondary-foreground">
+                  {post.title}
+                </h2>
+                <p className="mb-8 text-slate-600">{post.description}</p>
+                <span className="text-sm text-primary">
+                  Read more{" "}
+                  <Icons.arrowRight className="inline-block size-4 transition-transform group-hover:translate-x-1" />
+                </span>
+                <Link href={`blog/${post.slug}`} className="absolute inset-0">
+                  <span className="sr-only">View article</span>
+                </Link>
+              </article>
+            )
+          })}
         </MotionSection>
         {totalPages > 1 && (
           <Pagination currentPage={currentPage} totalPages={totalPages} />
