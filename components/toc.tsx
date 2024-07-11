@@ -1,11 +1,17 @@
-"use client";
+"use client"
 
-import { useScrollSpy } from "@/hooks/use-scrollspy";
-import { cn } from "@/lib/utils";
-import { motion } from "framer-motion";
+import { motion } from "framer-motion"
+
+import { cn } from "@/lib/utils"
+import { useScrollSpy } from "@/hooks/use-scrollspy"
 
 export function TOC() {
-  const { headings, activeId, currentIndex } = useScrollSpy();
+  const { headings, activeId, currentIndex } = useScrollSpy()
+
+  // If there are no headings, don't render anything
+  if (headings.length === 0) {
+    return null
+  }
 
   return (
     <nav className="scrollbar scrollbar-thin scrollbar-thumb-muted-foreground scrollbar-track-slate-200 h-auto max-h-96 space-y-4 overflow-y-auto">
@@ -28,7 +34,7 @@ export function TOC() {
             className={cn(
               level === 3 ? "pl-8" : "pl-4",
               "py-2 text-sm hover:text-secondary-foreground",
-              id === activeId ? "text-primary" : "text-muted-foreground",
+              id === activeId ? "text-primary" : "text-muted-foreground"
             )}
           >
             <a href={`#${id}`}>{text}</a>
@@ -36,5 +42,5 @@ export function TOC() {
         ))}
       </ul>
     </nav>
-  );
+  )
 }
