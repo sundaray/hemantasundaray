@@ -127,7 +127,7 @@
   }
 
   .prose code[data-language="plaintext"] {
-    @apply rounded bg-accent px-1 py-0.5 font-mono text-sm text-secondary-foreground !important;
+    @apply rounded border bg-accent px-1 py-0.5 font-mono text-sm text-secondary-foreground !important;
   }
 }
 

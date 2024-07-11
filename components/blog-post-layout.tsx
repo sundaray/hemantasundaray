@@ -83,14 +83,14 @@ export function BlogPostLayout({ children, frontmatter }: BlogPostLayoutProps) {
           </article>
           <aside className="sticky top-24 col-span-full col-start-12 hidden self-start lg:block">
             <TOC />
-            <div className="mt-8 rounded-lg bg-secondary p-6">
+            {/* <div className="mt-8 rounded-lg bg-secondary p-6">
               <h2 className="text-2xl font-semibold text-secondary-foreground">
                 Subscribe
               </h2>
               <p className="mb-4 text-sm text-muted-foreground">
                 Get notified when I publish a blog post.
               </p>
-            </div>
+            </div> */}
           </aside>
         </section>
         <section className="rounded-lg bg-secondary p-4 lg:p-16">
