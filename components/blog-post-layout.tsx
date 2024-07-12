@@ -46,7 +46,7 @@ export function BlogPostLayout({ children, frontmatter }: BlogPostLayoutProps) {
           <h1 className="mb-4 text-balance text-3xl font-bold lg:text-4xl">
             {title}
           </h1>
-          <p className="fpont-medium mb-8 text-lg text-slate-700">
+          <p className="fpont-medium mb-8 text-lg text-slate-700 dark:text-slate-200">
             {description}
           </p>
           <div className="flex items-center gap-4">

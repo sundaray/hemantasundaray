@@ -84,7 +84,7 @@ export default function BlogPage({
                   {formatDate(post.publishedAt)}
                 </p>
                 <h2 className="mb-2">{post.title}</h2>
-                <p className="mb-8 text-slate-700">{post.description}</p>
+                <p className="mb-8 text-slate-700 dark:text-slate-200">{post.description}</p>
                 <span className="text-sm text-primary transition-all">
                   Read more{" "}
                   <Icons.arrowRight className="inline-block size-4 transition-transform group-hover:translate-x-1" />
