@@ -45,7 +45,7 @@ export default function BlogPage({
         Blog
       </MotionH1>
       <MotionH2
-        className="mb-8 text-lg font-medium text-slate-500 text-slate-500"
+        className="mb-8 text-lg font-medium text-muted-foreground"
         variants={variants}
       >
         In-depth tutorials on full-stack web development.
@@ -78,18 +78,14 @@ export default function BlogPage({
             return (
               <article
                 key={post.slug}
-                className="boder group relative rounded-md bg-secondary p-4 transition-all hover:scale-[1.02] hover:shadow-lg"
+                className="boder group relative rounded-md bg-secondary p-4"
               >
                 <p className="mb-2 text-sm text-muted-foreground">
-                  {post.publishedAt
-                    ? formatDate(post.publishedAt)
-                    : "Date unavailable"}
+                  {formatDate(post.publishedAt)}
                 </p>
-                <h2 className="mb-2 text-2xl font-bold text-secondary-foreground">
-                  {post.title}
-                </h2>
-                <p className="mb-8 text-slate-600">{post.description}</p>
-                <span className="text-sm text-primary">
+                <h2 className="mb-2">{post.title}</h2>
+                <p className="mb-8 text-slate-700">{post.description}</p>
+                <span className="text-sm text-primary transition-all">
                   Read more{" "}
                   <Icons.arrowRight className="inline-block size-4 transition-transform group-hover:translate-x-1" />
                 </span>
