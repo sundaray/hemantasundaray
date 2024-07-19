@@ -7,8 +7,108 @@ tags: ["Supabase Auth", "Next.js", "Google Sign-In", "Authentication"]
 published: false
 ---
 
+import Image from "next/image"
+
 import { BlogPostLayout } from "@/components/blog-post-layout"
+import { Note } from "@/components/note"
+import Avatar from "@/app/blog/images/avatar.jpg"
 
 <BlogPostLayout frontmatter={frontmatter}>
+
+Hello World!
+
+## Create a Supabase Project
+
+- Go to [supabase.com/dashboard/projects](https://supabase.com/dashboard/projects) (sign in if you have an account, or create one if you don't).
+- Click on **New project**.
+- Give your project a name, choose a database password, select a region, and then click on **Create new project**.
+- The project setup may take a minute or two to complete. Once the setup is finished, scroll down the page to find the **Project API** section. Copy the **Project URL** and **API Key**, and save them somewhere safe - **we'll need these later**.
+
+  You'll notice that the **API Key** is tagged with **anon** and **public**. This **anon** key (short for anonymous) is a public key that's safe to use in a browser, but only if you've enabled RLS (row-level security) for your tables and configured appropriate policies.
+
+<Note title="Note">
+**When you create a Supabase project, Supabase automatically deploys an instance of the Auth API server and injects your database with the required auth schema**. This Auth API server is responsible for:
+ 
+ - Validating, issuing, and refreshing JSON Web Tokens (JWTs).
+ - Serving as an intermediary between your app and the auth information in the database.
+ - Communicating with external providers for Social Login and SSO (Single Sign-On).
+
+To view the auth schema in the Supabase dashboard:
+
+- Click on **Database** in the sidebar navigation.
+- You'll see a dropdown menu to select a schema. Choose **auth** from this dropdown.
+- You'll notice a list of tables appears. These are the tables that store user information, sessions, identities and other authentication-related data
+
+It's crucial to understand that **the auth schema in Supabase is managed internally and is read-only through the dashboard**. This means that your application code cannot directly access or modify the auth schema tables.
+
+But what if you want to keep track of user information, for example, to display a list of users on a page accessible only to administrators? In such cases, you must create your own user table in the public schema, which I'll guide you through later in this guide.
+
+You can then link the **public.users** table to the **auth.users** table using the users' UUIDs as foreign keys. This approach allows you to store and manage user data while maintaining the integrity and security of Supabase's core authentication system.
+
+</Note>
+
+## Configure Google Cloud for OAuth
+
+- Go to the [Google Cloud Console](console.cloud.google.com).
+- On the main navigation bar at the top, to the left of the search input, there is a dropdown menu. Click on the dropdown menu to open a pop-up window with all of your projects listed. In the pop-up window, click on **NEW PROJECT**.
+- Enter a project name and click **CREATE**. It’ll take half a minute or so to create the project. Once the project is created, select it.
+- Navigate to **APIs & Services** > **OAuth consent screen**.
+
+### Oauth consent screen
+
+- Choose **External** as the user type (this will make your project accessible to anyone with a Google account) and click **CREATE**.
+- Under **App information**, enter the **App name** and the **user support email**. Under **Authorized domains**, enter the Supabase **Project URL** (which you had copied earlier). Under **Developer contact information**, enter your email address. Then click **SAVE AND CONTINUE**.
+
+  An authorized domain is a domain that you explicitly allow to use your OAuth credentials. By entering the Supabase Project URL as an authorized domain, you ensure that only requests originating from the Supabase Project URL can use your OAuth client ID and secret to authenticate users. This helps prevent unauthorized use of your OAuth credentials.
+
+### Scopes
+
+On the **Scopes** page, you'll see the following information:
+
+- **Non-sensitive scopes**: Permissions that your app requests which are generally safe and don't require extensive review by Google.
+- **Sensitive scopes**: Permissions that request access to more private user data.
+- **Restricted scopes**: Permissions that request access to highly sensitive user data.
+
+If your app doesn't require access to sensitive or restricted data, you can proceed without adding any scopes. Click **SAVE AND CONTINUE**.
+
+### Test users
+
+On the **Test users** page, you'll see the following information:
+
+- **Test users**: While publishing status is set to **Testing**, only test users are able to access the app. Allowed user cap prior to app verification is 100, and is counted over the entire lifetime of the app.
+
+If you don't need to add any specific test users at this point, you can proceed by clicking **SAVE AND CONTINUE**.
+
+### Summary
+
+On the **Summary** page, review the information to ensure everything is correct. Click **BACK TO DASHBOARD**.
+
+### OAuth Client ID
+
+Navigate to **APIs & Services** > **Credentials**. Click on **Create Credentials** and select **OAuth client ID**.
+
+On the **Create OAuth Client ID** page, follow the steps below to fill out the fields:
+
+- **Application Type**: Select Web application.
+- **Name**: Enter a name for your OAuth 2.0 client. This name is only used to identify the client in the console and will not be shown to end users.
+- **Authorized JavaScript origins**: Add the origins from which your app is allowed to access the Google APIs. As we are developing locally, add `http://localhost:3000`.
+- **Authorized Redirect URIs**: Add the **Callback URL** from your Supabase dashboard.
+- Click **CREATE** to generate your **Client ID** and **Client Secret**. Copy both the **Client ID** and the **Client Secret** and save them somewhere safe; we will need them in the next step.
+
+<Note title="How to locate the Callback URL in Supabase dashboard">
+  To find the Callback URL in your Supabase dashboard, follow these steps: - On
+  the sidebar navigation, click **Authentication**. - Under the
+  **CONFIGURATION** section, click **Providers**. - Click on **Google** in the
+  list of providers. Scroll down slightly, and you'll see the **Callback URL**
+  displayed.
+</Note>
+
+- Return to your Supabase dashboard. Navigate to **Authentication** > **Providers**.
+- Find **Google** in the list and click on it.
+- Toggle **Enable Sign In with Google** to on.
+- Enter the **Client ID** and **Client Secret** you obtained from Google Cloud.
+- Click **Save** to apply the changes
+
+## Set up a Next.js Project
 
 </BlogPostLayout>

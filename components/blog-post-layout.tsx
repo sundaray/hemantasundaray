@@ -20,8 +20,6 @@ export function BlogPostLayout({ children, frontmatter }: BlogPostLayoutProps) {
   const { title, description, author, publishedAt, updatedAt, tags } =
     frontmatter
 
-  console.log("Published at: ", publishedAt)
-
   return (
     <>
       {/* <PageScrollProgress /> */}

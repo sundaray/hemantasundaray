@@ -124,7 +124,7 @@
   }
 
   .prose ul {
-    @apply mb-8 list-disc space-y-4 pl-8 leading-7;
+    @apply mb-8 list-disc space-y-4 pl-8 leading-7 text-slate-700;
   }
 
   .prose ol {
@@ -148,6 +148,16 @@ input[type="search"]:focus::-webkit-search-cancel-button {
 
 .note-component p:last-child {
   margin-bottom: 0 !important;
+}
+
+.note-component ul {
+  margin-bottom: 0 !important;
+}
+
+.note-component p:first-child {
+  font-weight: bold !important;
+  font-size: 18px !important;
+  margin-bottom: 16px;
 }
 
 input {
