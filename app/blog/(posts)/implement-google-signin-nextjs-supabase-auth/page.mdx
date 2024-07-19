@@ -22,9 +22,11 @@ Hello World!
 - Go to [supabase.com/dashboard/projects](https://supabase.com/dashboard/projects) (sign in if you have an account, or create one if you don't).
 - Click on **New project**.
 - Give your project a name, choose a database password, select a region, and then click on **Create new project**.
-- The project setup may take a minute or two to complete. Once the setup is finished, scroll down the page to find the **Project API** section. Copy the **Project URL** and **API Key**, and save them somewhere safe - **we'll need these later**.
+- The project setup may take a minute or two to complete. Once the setup is finished, scroll down the page to find the **Project API** and **JWT Settings** sections.
 
-  You'll notice that the **API Key** is tagged with **anon** and **public**. This **anon** key (short for anonymous) is a public key that's safe to use in a browser, but only if you've enabled RLS (row-level security) for your tables and configured appropriate policies.
+  From the **Project API** section, copy the **Project URL** and **API Key**. From the **JWT Settings** section, copy the **JWT Secret**. Save these three values somewhere safe - we'll need them later in our setup process.
+
+  You'll notice that the **API Key** is tagged with **anon** and **public**. This **anon** key (short for anonymous) is a public key that's safe to use in a browser, but _only if you've enabled RLS (row-level security) for your tables and configured appropriate policies_.
 
 <Note title="Note">
 **When you create a Supabase project, Supabase automatically deploys an instance of the Auth API server and injects your database with the required auth schema**. This Auth API server is responsible for:
@@ -54,7 +56,7 @@ You can then link the **public.users** table to the **auth.users** table using t
 - Enter a project name and click **CREATE**. It’ll take half a minute or so to create the project. Once the project is created, select it.
 - Navigate to **APIs & Services** > **OAuth consent screen**.
 
-### Oauth consent screen
+### OAuth consent screen
 
 - Choose **External** as the user type (this will make your project accessible to anyone with a Google account) and click **CREATE**.
 - Under **App information**, enter the **App name** and the **user support email**. Under **Authorized domains**, enter the Supabase **Project URL** (which you had copied earlier). Under **Developer contact information**, enter your email address. Then click **SAVE AND CONTINUE**.
@@ -95,12 +97,15 @@ On the **Create OAuth Client ID** page, follow the steps below to fill out the f
 - **Authorized Redirect URIs**: Add the **Callback URL** from your Supabase dashboard.
 - Click **CREATE** to generate your **Client ID** and **Client Secret**. Copy both the **Client ID** and the **Client Secret** and save them somewhere safe; we will need them in the next step.
 
-<Note title="How to locate the Callback URL in Supabase dashboard">
-  To find the Callback URL in your Supabase dashboard, follow these steps: - On
-  the sidebar navigation, click **Authentication**. - Under the
-  **CONFIGURATION** section, click **Providers**. - Click on **Google** in the
-  list of providers. Scroll down slightly, and you'll see the **Callback URL**
+<Note title="How to locate the Callback URL (OAuth) in Supabase dashboard">
+
+To find the Callback URL in your Supabase dashboard, follow these steps:
+
+- On the sidebar navigation, click **Authentication**.
+- Under the **CONFIGURATION** section, click **Providers**.
+- Click on **Google** in the list of providers. Scroll down slightly, and you'll see the **Callback URL**
   displayed.
+
 </Note>
 
 - Return to your Supabase dashboard. Navigate to **Authentication** > **Providers**.
@@ -110,5 +115,588 @@ On the **Create OAuth Client ID** page, follow the steps below to fill out the f
 - Click **Save** to apply the changes
 
 ## Set up a Next.js Project
+
+Create a Next.js project by using `create-next-app`:
+
+```sh
+npx create-next-app@latest supabase-auth-nextjs-demo
+```
+
+**Note**: I’ve named the project `supabase-auth-nextjs-demo`, but you can choose any name you prefer.
+
+Once the project is created, navigate to the project directory. Once the project is created, navigate to the project directory. Once the project is created, navigate to the project directory:
+
+Install shadcn/ui:
+shadcn/ui is a collection of re-usable components that we'll use in our project. To set it up, run the following command:
+
+```sh
+npx shadcn-ui@latest init
+```
+
+Follow the prompts to configure shadcn/ui according to your preferences.
+
+We'll be using the `Button`, `Dropdown`, and `Toast` components. Install them with these commands:
+
+```sh
+npx shadcn-ui@latest add button
+npx shadcn-ui@latest add dropdown-menu
+npx shadcn-ui@latest add toast
+```
+
+we'll use Lucide icons in our project. Install it with npm:
+
+```sh
+npm install lucide-react
+```
+
+Install Supabase packages:
+We'll need the Supabase client library to interact with our Supabase backend:
+
+```sh
+npm install @supabase/supabase-js @supabase/ssr
+```
+
+### Configure Environment Variables
+
+Create a .env.local file in the root directory of your project, and add the following environment variables:
+
+```sh
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+SUPABASE_JWT_SECRET=your_supabase_jwt_secret
+```
+
+Replace your_supabase_project_url, your_supabase_anon_key, and your_supabase_jwt_secret with the values you copied earlier from your Supabase project.
+
+If you need to find these values again, navigate to the "Project Settings" in your Supabase dashboard. Under the CONFIGURATION section, click "API". Here you'll find the Project URL, the API Key and the JWT Secret.
+
+### Set up Supabase Clients
+
+We need to set up two different Supabase clients.
+
+Create a new folder named `supabase` inside the `lib` folder of your project. Inside the `supabase` folder, create two files: `client.ts` and `server.ts`.
+
+In `client.ts`, add the following code:
+
+```tsx title="@/lib/supabase/client.ts"
+import { createBrowserClient } from "@supabase/ssr"
+
+export function createClient() {
+  return createBrowserClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  )
+}
+```
+
+In `server.ts`, add the following code:
+
+```tsx title="@/lib/supabase/server.ts"
+import { cookies } from "next/headers"
+import { createServerClient, type CookieOptions } from "@supabase/ssr"
+
+export function createClient() {
+  const cookieStore = cookies()
+
+  return createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        getAll: async () => {
+          return cookieStore.getAll().map((cookie) => ({
+            name: cookie.name,
+            value: cookie.value,
+          }))
+        },
+        setAll: async (
+          cookiesToSet: {
+            name: string
+            value: string
+            options: CookieOptions
+          }[]
+        ) => {
+          cookiesToSet.forEach((cookie) => {
+            cookieStore.set(cookie.name, cookie.value, cookie.options)
+          })
+        },
+      },
+    }
+  )
+}
+```
+
+You might be wondering why we need two separate client files. The reason is that we use different methods to access Supabase depending on where we're making the call:
+
+- The `createClient` function in `client.ts` is used to access Supabase inside client components.
+- The `createClient` function in `server.ts` is used to access Supabase inside server components, server actions, and route handlers.
+
+## Creating Core Components
+
+In a typical app, you'll find a main navigation bar with navigation links and a sign-in button. This is the structure we're going to follow.
+
+We'll create a main navigation bar component with the following links:
+
+- Client
+- Server
+- Protected
+- Admin
+
+These links are carefully planned to cover common authentication and authorization use cases in a Next.js app:
+
+- Accessing signed-in user information on client components
+- Accessing signed-in user information on server components
+- Protecting routes accessible only to signed-in users
+- Protecting routes accessible only to signed-in users with specific roles (e.g., admin)
+
+Let's start by defining our components.
+
+#### MainNav component
+
+Create a file named `main-nav.tsx` in the `components` folder:
+
+```tsx title="@/components/main-nav.tsx"
+import { NavItem } from "@/components/nav-item"
+import { UserAccountNav } from "@/components/user-account-nav"
+
+export function MainNav() {
+  return (
+    <nav className="flex h-16 items-center justify-between border px-4">
+      <div className="flex space-x-4">
+        <NavItem href="/client">Client</NavItem>
+        <NavItem href="/server">Server</NavItem>
+        <NavItem href="/protected">Protected</NavItem>
+        <NavItem href="/admin">Admin</NavItem>
+      </div>
+      <UserAccountNav />
+    </nav>
+  )
+}
+```
+
+NavItem component
+
+Create a file named `nav-item.tsx` in the `components` folder:
+
+```tsx title="@/components/nav-items.tsx"
+"use client"
+
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+
+import { cn } from "@/lib/utils"
+
+type NavItemProps = {
+  href: string
+  children: React.ReactNode
+}
+
+export function NavItem({ href, children }: NavItemProps) {
+  const pathname = usePathname()
+  const isActive = pathname === href
+
+  return (
+    <Link
+      href={href}
+      className={cn("text-muted-foreground text-sm", {
+        "text-secondary-foreground": isActive,
+      })}
+    >
+      {children}
+    </Link>
+  )
+}
+```
+
+UserAccountNav component
+
+Create a file named `user-account-nav.tsx` in the `components` folder:
+
+```tsx title="@/components/user-account-nav.tsx"
+import React from "react"
+import { FaUser } from "react-icons/fa6"
+
+import { createClient } from "@/lib/supabase/server"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { SignInButton } from "@/components/signin-button"
+
+import { SignOutButton } from "./signout-button"
+
+export async function UserAccountNav() {
+  const supabase = createClient()
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+
+  if (!user) {
+    return <SignInButton />
+  }
+
+  return (
+    <div className="w-max space-x-2">
+      <DropdownMenu>
+        <DropdownMenuTrigger className="flex items-center space-x-1">
+          <div className="bg-border grid size-7 place-items-center rounded-full">
+            <FaUser className="text-muted-foreground" />
+          </div>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end">
+          <div className="flex items-center justify-start gap-2 p-2">
+            <div className="flex flex-col space-y-1 leading-none">
+              {user.email && (
+                <p className="text-muted-foreground w-[200px] truncate text-sm">
+                  {user.email}
+                </p>
+              )}
+            </div>
+          </div>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem className="cursor-pointer">
+            <SignOutButton />
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </div>
+  )
+}
+```
+
+Here, we check for the presence of a user. If no user is present, we render a `SignInButton` component. If a user is present, we render a user icon. Clicking on the user icon reveals a dropdown with the user's email and a Sign out button.
+
+Note that the `getUser()` method sends a request to the Supabase Auth server every time to revalidate the Auth token.
+
+SignInButton component
+
+Create a file named `signin-button.tsx` in the `components` folder:
+
+```tsx title="@/components/signin-button.tsx"
+"use client"
+
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+
+import { cn } from "@/lib/utils"
+import { buttonVariants } from "@/components/ui/button"
+
+export function SignInButton() {
+  const pathname = usePathname()
+
+  return pathname !== "/login" ? (
+    <Link
+      href="/login"
+      className={cn(buttonVariants({ variant: "secondary", size: "sm" }))}
+    >
+      Sign in
+    </Link>
+  ) : null
+}
+```
+
+Clicking on the Sign In link takes the user to the login page where we render the `Sign in with Google` button.
+
+SignOutButton component
+Create a file named `signout-button.tsx` in the `components` folder:
+
+```tsx title="@/components/signout-button.tsx"
+"use client"
+
+import { useRouter } from "next/navigation"
+
+import { createClient } from "@/lib/supabase/client"
+import { Button } from "@/components/ui/button"
+
+export function SignOutButton() {
+  const supabase = createClient()
+  const router = useRouter()
+
+  async function handleLogout() {
+    await supabase.auth.signOut()
+    router.push("/login")
+    router.refresh()
+  }
+
+  return (
+    <Button className="w-full" onClick={handleLogout}>
+      Sign out
+    </Button>
+  )
+}
+```
+
+In the `SignOutButton` component, we use the `signOut()` method to sign out the user and then redirect them to the `login` page. We also refresh the page to ensure that the `UserAccountNav` component (which is a server component) accurately renders the authentication state.
+
+## Create Pages
+
+Now that we have our basic components, let's create the pages that will be rendered when we click on the links in the main navigation.
+
+#### Client page
+
+Create a file named `page.tsx` inside the `app/client` folder:
+
+```tsx title="@/app/client/page.tsx"
+"use client"
+
+import { useUser } from "@/hooks/use-user"
+
+export default function ClientPage() {
+  const { loading, error, user, role } = useUser()
+
+  return (
+    <div className="space-y-4">
+      {loading ? (
+        <p>Loading...</p>
+      ) : error ? (
+        <p>Error: {error.message}</p>
+      ) : (
+        <>
+          <h1 className="text-lg font-medium">User: {user?.email || "N/A"}</h1>
+          <h2 className="text-lg font-medium"> Role: {role || "N/A"}</h2>
+        </>
+      )}
+      <p className="text-muted-foreground">(I am a client component.)</p>
+    </div>
+  )
+}
+```
+
+We're using a custom hook in this client component to get the user information. Let's create that hook now.
+
+#### useUser hook
+
+Create a file named `use-user.ts` inside a new `hooks` folder at the project root:
+
+```ts title="@/hooks/use-user.ts"
+import { useEffect, useState } from "react"
+import { AuthError, Session, User } from "@supabase/supabase-js"
+import { jwtDecode } from "jwt-decode"
+import type { JwtPayload } from "jwt-decode"
+
+import { createClient } from "@/lib/supabase/client"
+
+type SupabaseJwtPayload = JwtPayload & {
+  app_metadata: {
+    role: string
+  }
+}
+
+export function useUser() {
+  const [user, setUser] = useState<User | null>(null)
+  const [session, setSession] = useState<Session | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<AuthError | null>(null)
+  const [role, setRole] = useState<string | null>(null)
+  const supabase = createClient()
+
+  useEffect(() => {
+    async function fetchUser() {
+      try {
+        const {
+          data: { session },
+          error,
+        } = await supabase.auth.getSession()
+        if (error) throw error
+
+        if (session) {
+          setSession(session)
+          setUser(session.user)
+          const decodedJwt = jwtDecode<SupabaseJwtPayload>(session.access_token)
+          setRole(decodedJwt.app_metadata.role)
+        }
+      } catch (error) {
+        setError(error as AuthError)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchUser()
+  }, [])
+
+  return { loading, error, session, user, role }
+}
+```
+
+Need explanation
+
+#### Server page
+
+Create a file named `page.tsx` inside the `app/server` folder:
+
+```tsx title="@/app/server/page.tsx"
+import { getUserRole } from "@/lib/supabase/get-user-role-server"
+import { createClient } from "@/lib/supabase/server"
+
+export default async function ServerPage() {
+  const supabase = createClient()
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+
+  const role = await getUserRole()
+
+  return (
+    <div className="space-y-4">
+      <h1 className="text-lg font-medium">User: {user?.email || "N/A"}</h1>
+      <h2 className="text-lg font-medium"> Role: {role || "N/A"}</h2>
+      <p className="text-muted-foreground">(I am a server component.)</p>
+    </div>
+  )
+}
+```
+
+Explain
+
+#### Protected page
+
+Create a file named `page.tsx` inside the `app/protected` folder:
+
+```tsx title="@/app/protected/page.tsx"
+export default function ProtectedPage() {
+  return <h1 className="text-lg font-medium">I am a protected component.</h1>
+}
+```
+
+#### Admin page
+
+Create a file named `page.tsx` inside the `app/admin` folder:
+
+```tsx title="@/app/admin/page.tsx"
+import { createClient } from "@/lib/supabase/server"
+
+export default async function AdminPage() {
+  const supabase = createClient()
+
+  // Fetch all users from the public users table
+  const { data: users, error } = await supabase
+    .from("users")
+    .select("id, email, role")
+
+  return (
+    <div className="space-y-4">
+      <h1 className="text-lg font-medium">Welcome admin!</h1>
+      <h2>User List:</h2>
+      {error ? (
+        <p>Error loading users: {error.message}</p>
+      ) : (
+        <ul className="text-muted-foreground text-sm">
+          {users.map(({ id, email, role }) => (
+            <li key={id}>
+              Email: {email}, Role: {role}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  )
+}
+```
+
+Explain
+
+#### Login page
+Create a file named `page.tsx` inside the `app/login` folder:
+
+```tsx title="@/app/login/page.tsx"
+"use client";
+
+import { useState } from "react";
+import { createClient } from "@/lib/supabase/client";
+
+import { Icons } from "@/components/icons";
+import { Button } from "@/components/ui/button";
+import { toast } from "@/components/ui/use-toast";
+import { useSearchParams } from "next/navigation";
+
+export default function LoginPage() {
+  const [isGoogleLoading, setIsGoogleLoading] = useState<boolean>(false);
+  const supabase = createClient();
+
+  const searchParams = useSearchParams();
+
+  const next = searchParams.get("next");
+
+  async function logInWithGoogle() {
+    setIsGoogleLoading(true);
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: `${window.location.origin}/auth/callback${
+            next ? `?next=${encodeURIComponent(next)}` : ""
+          }`,
+        },
+      });
+
+      if (error) {
+        throw error;
+      }
+    } catch (error) {
+      toast({
+        title: "Please try again.",
+        description: "There was an error logging in with Google.",
+        variant: "destructive",
+      });
+      setIsGoogleLoading(false);
+    }
+  }
+
+  return (
+    <Button
+      type="button"
+      variant="outline"
+      onClick={logInWithGoogle}
+      disabled={isGoogleLoading}
+    >
+      {isGoogleLoading ? (
+        <Icons.loaderCircle className="mr-2 size-4 animate-spin" />
+      ) : (
+        <Icons.google className="mr-2 size-6" />
+      )}{" "}
+      Sign in with Google
+    </Button>
+  );
+}
+```
+When a user clicks the "Sign in with Google" button, the following process occurs:
+The logInWithGoogle function is called, which initiates the OAuth flow with Google using Supabase's signInWithOAuth method.
+The user is redirected to Google's login page.
+After successful authentication, Google redirects the user back to our application's callback URL (/auth/callback).
+The next search parameter is used to redirect the user to the protected page they were trying to visit before being redirected to the login page. This improves user experience by returning them to their intended destination after authentication.
+
+Need improvement
+
+#### Auth callback route
+To handle the OAuth callback, create a file named route.ts inside the app/auth/callback folder:
+
+```ts title="@/app/auth/callback/route.ts"
+import { NextResponse } from "next/server";
+import { createClient } from "@/lib/supabase/server";
+
+export async function GET(request: Request) {
+  const { searchParams, origin } = new URL(request.url);
+
+  const code = searchParams.get("code");
+  const next = searchParams.get("next") ?? "/";
+
+  if (code) {
+    const supabase = createClient();
+    const { error } = await supabase.auth.exchangeCodeForSession(code);
+    if (!error) {
+      return NextResponse.redirect(`${origin}${next}`);
+    }
+  }
+
+  return NextResponse.redirect(`${origin}/auth/auth-code-error`);
+}
+```
+
+This route handles the callback from Google OAuth. It exchanges the authorization code for a session and then redirects the user to their intended destination or the home page if no specific destination was set.
+
+Need more explanation
 
 </BlogPostLayout>
