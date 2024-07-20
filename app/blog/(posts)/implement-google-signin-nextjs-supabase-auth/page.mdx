@@ -15,7 +15,18 @@ import Avatar from "@/app/blog/images/avatar.jpg"
 
 <BlogPostLayout frontmatter={frontmatter}>
 
-Hello World!
+If you want to integrate Sign in with Google in your Next.js app using Supabase Auth, you're in the right place. This comprehensive guide covers everything you need, from creating a Supabase project and configuring Google Cloud for OAuth to setting up your Next.js project and implementing robust authentication and authorization logic.
+
+In this guide, you'll learn how to:
+
+- Set up a Supabase project and configure Google Cloud for OAuth
+- Implement Google Sign-in in your Next.js application
+- Access user information inside both client and server components
+- Protect routes using middleware
+- Assign roles to users using Supabase auth hooks
+- Create and manage a users table in the public schema
+
+Let's get started!
 
 ## Create a Supabase Project
 
@@ -61,9 +72,9 @@ You can then link the **public.users** table to the **auth.users** table using t
 - Choose **External** as the user type (this will make your project accessible to anyone with a Google account) and click **CREATE**.
 - Under **App information**, enter the **App name** and the **user support email**. Under **Authorized domains**, enter the Supabase **Project URL** (which you had copied earlier). Under **Developer contact information**, enter your email address. Then click **SAVE AND CONTINUE**.
 
-  An authorized domain is a domain that you explicitly allow to use your OAuth credentials. By entering the Supabase Project URL as an authorized domain, you ensure that only requests originating from the Supabase Project URL can use your OAuth client ID and secret to authenticate users. This helps prevent unauthorized use of your OAuth credentials.
+  An authorized domain is a domain that you explicitly allow to use your OAuth credentials. By entering the Supabase Project URL as an authorized domain, you ensure that only requests originating from the Supabase Project URL can use your OAuth Client ID and Client Secret to authenticate users. This helps prevent unauthorized use of your OAuth credentials.
 
-### Scopes
+#### Scopes
 
 On the **Scopes** page, you'll see the following information:
 
@@ -73,7 +84,7 @@ On the **Scopes** page, you'll see the following information:
 
 If your app doesn't require access to sensitive or restricted data, you can proceed without adding any scopes. Click **SAVE AND CONTINUE**.
 
-### Test users
+#### Test users
 
 On the **Test users** page, you'll see the following information:
 
@@ -81,7 +92,7 @@ On the **Test users** page, you'll see the following information:
 
 If you don't need to add any specific test users at this point, you can proceed by clicking **SAVE AND CONTINUE**.
 
-### Summary
+#### Summary
 
 On the **Summary** page, review the information to ensure everything is correct. Click **BACK TO DASHBOARD**.
 
@@ -103,7 +114,7 @@ To find the Callback URL in your Supabase dashboard, follow these steps:
 
 - On the sidebar navigation, click **Authentication**.
 - Under the **CONFIGURATION** section, click **Providers**.
-- Click on **Google** in the list of providers. Scroll down slightly, and you'll see the **Callback URL**
+- Click **Google** in the list of providers. Scroll down slightly, and you'll see the **Callback URL**
   displayed.
 
 </Note>
@@ -231,7 +242,223 @@ You might be wondering why we need two separate client files. The reason is that
 - The `createClient` function in `client.ts` is used to access Supabase inside client components.
 - The `createClient` function in `server.ts` is used to access Supabase inside server components, server actions, and route handlers.
 
-## Creating Core Components
+### Set up middleware
+
+Middleware in Next.js allows you to run code before a request is completed. In our case, we'll use it to handle authentication and authorization. Let's set it up:
+
+#### Root middleware
+
+First, create a middleware.ts file at the root of your project:
+
+```ts title="@/middleware.ts"
+import { type NextRequest } from "next/server"
+
+import { updateSession } from "@/lib/supabase/middleware"
+
+export async function middleware(request: NextRequest) {
+  return await updateSession(request)
+}
+
+export const config = {
+  matcher: ["/protected", "/login", "/admin/:path*"],
+}
+```
+
+The matcher array specifies which routes the middleware should run on. In this case:
+
+- **/protected**: Ensures only authenticated users can access this route
+- **/login**: Handles redirects for already authenticated users
+- **/admin/:path\***: Protects all routes under /admin, ensuring only users with admin roles can access them
+
+#### Supabase middleware
+
+Now, create a `middleware.ts` file inside the `/lib/supabase` folder:
+
+```ts title="@/lib/supabase/middleware.ts"
+import { NextResponse, type NextRequest } from "next/server"
+import { createServerClient } from "@supabase/ssr"
+
+import { getUserRole } from "@/lib/supabase/get-user-role-server"
+
+export async function updateSession(request: NextRequest) {
+  let supabaseResponse = NextResponse.next({
+    request,
+  })
+
+  // Create a Supabase client for server-side operations
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        // Get all cookies from the request
+        getAll() {
+          return request.cookies.getAll()
+        },
+        // Set cookies in both the request and response
+        setAll(cookiesToSet) {
+          cookiesToSet.forEach(({ name, value, options }) =>
+            request.cookies.set(name, value)
+          )
+          supabaseResponse = NextResponse.next({
+            request,
+          })
+          cookiesToSet.forEach(({ name, value, options }) =>
+            supabaseResponse.cookies.set(name, value, options)
+          )
+        },
+      },
+    }
+  )
+
+  // Get the current user from Supabase
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+
+  // Get the user's role using the custom getUserRole function
+  const role = await getUserRole()
+
+  // Redirect non-admin users trying to access admin pages to the home page
+  if (
+    user &&
+    role !== "admin" &&
+    request.nextUrl.pathname.startsWith("/admin")
+  ) {
+    const url = request.nextUrl.clone()
+    url.pathname = "/"
+    return NextResponse.redirect(url)
+  }
+
+  // Redirect unauthenticated users to login page
+  if (
+    !user &&
+    !request.nextUrl.pathname.startsWith("/login") &&
+    !request.nextUrl.pathname.startsWith("/auth")
+  ) {
+    const url = request.nextUrl.clone()
+    url.pathname = "/login"
+    url.searchParams.set("next", request.nextUrl.pathname)
+    return NextResponse.redirect(url)
+  }
+
+  // Redirect authenticated users attempting to access the login page to the home page
+  if (user && request.nextUrl.pathname.startsWith("/login")) {
+    const url = request.nextUrl.clone()
+    url.pathname = "/"
+    return NextResponse.redirect(url)
+  }
+
+  return supabaseResponse
+}
+```
+
+This middleware file handles several key aspects of our authentication flow:
+
+- It creates a Supabase client for server-side operations.
+- It checks the user's authentication status and role.
+- It manages redirects based on the user's authentication status and the route they're trying to access.
+
+Here's a breakdown of the redirect logic:
+
+- If an unauthenticated user tries to access any page mentioned in the matcher array, they are redirected to the login page. While redirecting, we also set the next parameter. This next parameter is crucial because it stores the URL of the page the user was trying to access. After successful authentication, we can use this parameter to redirect the user back to their intended destination, providing a seamless user experience.
+- If a signed-in user tries to access the sign-in page, we redirect them to the home page. This is because the user is already authenticated, so they don't need to go to the sign-in page anymore. This prevents unnecessary authentication attempts and improves the user flow.
+- Finally, if a signed-in user is trying to access an admin page but does not have the admin role, they are redirected to the home page. This ensures that only users with the appropriate permissions can access sensitive admin areas of the application.
+
+By implementing these redirects, we maintain proper access control throughout the application, ensuring users are always directed to the appropriate pages based on their authentication status and roles.
+
+### Assign roles to users
+
+After setting up our middleware, we need to address how roles are assigned to users. This is where the concept of custom claims comes into play. Custom claims are essentially special attributes that we can attach to a user. In our case, we want to attach a role, so that we can use this role to control access to special areas of our application. These custom claims are implemented using a Custom Access Token Auth Hook.
+Auth hooks are Postgres functions that we can use to alter the default Supabase Auth flow. We'll use the following function to add a role field to the JWT:
+
+```sql
+create or replace function public.set_user_role(event jsonb)
+returns jsonb
+language plpgsql
+as $$
+declare
+  claims jsonb;
+  user_email text;
+begin
+  -- Log the entire event object
+  RAISE LOG 'Full event object: %', event;
+
+  -- Get the user's email
+  user_email := event->>'email';
+
+  -- Log the user's email
+  RAISE LOG 'User email: %', user_email;
+
+  claims := coalesce(event->'claims', '{}'::jsonb);
+
+  -- Check if 'app_metadata' exists in claims
+  if jsonb_typeof(claims->'app_metadata') is null then
+    claims := jsonb_set(claims, '{app_metadata}', '{}');
+  end if;
+
+  -- Set a claim of 'admin' if the email matches, otherwise 'regular'
+  if user_email = 'rawgrittt@gmail.com' then
+    claims := jsonb_set(claims, '{app_metadata, role}', '"admin"');
+    -- Log the role being set
+    RAISE LOG 'Setting role to admin for email: %', user_email;
+  else
+    claims := jsonb_set(claims, '{app_metadata, role}', '"regular"');
+    -- Log the role being set
+    RAISE LOG 'Setting role to regular for email: %', user_email;
+  end if;
+
+  -- Update the 'claims' object in the original event
+  event := jsonb_set(event, '{claims}', claims);
+
+  -- Log the final event object
+  RAISE LOG 'Final event object: %', event;
+
+  return event;
+end;
+$$;
+
+-- Set permissions for the function
+grant usage on schema public to supabase_auth_admin;
+grant execute on function public.set_user_role to supabase_auth_admin;
+revoke execute on function public.set_user_role from authenticated, anon, public;
+```
+
+This function does the following:
+
+- It checks the user's email address.
+- If the email is 'rawgrittt@gmail.com', it sets the role to "admin".
+- For all other email addresses, it sets the role to "regular".
+- The role is set inside the app_metadata object, which is part of the JWT claims.
+
+We've used RAISE LOG statements throughout the function. These are helpful for debugging purposes, allowing you to study the structure of the event object passed to the function and troubleshoot if any errors occur. You can find these logs in the Supabase dashboard under "Database" > "Logs" > "Postgres Logs".
+
+Notice the last three lines of code in the function above:
+
+These lines are crucial for setting up the correct permissions for our function:
+
+- We grant the supabase_auth_admin role permission to use the public schema.
+- We grant the supabase_auth_admin role permission to execute our set_user_role function.
+- We revoke execute permissions from the authenticated, anon, and public roles.
+
+The reason for revoking permissions is to enhance security. By default, the public role has access to functions created in the public schema, and both anon and authenticated roles inherit permissions from the public role. By revoking these permissions, we ensure that our role-setting function is not accessible via Supabase Serverless APIs or by regular users. This prevents potential misuse or unauthorized manipulation of user roles.
+
+To implement this function:
+
+- Go to the SQL editor in the Supabase dashboard.
+- Paste the entire function (including the permission grants and revokes) into the editor.
+- Click "RUN" to create the function and set the permissions.
+
+Finally, to enable the custom claims:
+
+- In the Supabase dashboard, click on "Authentication" in the sidebar navigation.
+- Go to "Configuration" > "Hooks".
+- Enable "Custom Access token (JWT) Claims hook".
+- Select the set_user_role function.
+
+By setting up this hook, Supabase will add the role property to the JWT before releasing it, ensuring that each user's token contains their assigned role.
+
+### Creating Core Components
 
 In a typical app, you'll find a main navigation bar with navigation links and a sign-in button. This is the structure we're going to follow.
 
@@ -599,29 +826,30 @@ export default async function AdminPage() {
 Explain
 
 #### Login page
+
 Create a file named `page.tsx` inside the `app/login` folder:
 
 ```tsx title="@/app/login/page.tsx"
-"use client";
+"use client"
 
-import { useState } from "react";
-import { createClient } from "@/lib/supabase/client";
+import { useState } from "react"
+import { useSearchParams } from "next/navigation"
 
-import { Icons } from "@/components/icons";
-import { Button } from "@/components/ui/button";
-import { toast } from "@/components/ui/use-toast";
-import { useSearchParams } from "next/navigation";
+import { createClient } from "@/lib/supabase/client"
+import { Button } from "@/components/ui/button"
+import { toast } from "@/components/ui/use-toast"
+import { Icons } from "@/components/icons"
 
 export default function LoginPage() {
-  const [isGoogleLoading, setIsGoogleLoading] = useState<boolean>(false);
-  const supabase = createClient();
+  const [isGoogleLoading, setIsGoogleLoading] = useState<boolean>(false)
+  const supabase = createClient()
 
-  const searchParams = useSearchParams();
+  const searchParams = useSearchParams()
 
-  const next = searchParams.get("next");
+  const next = searchParams.get("next")
 
-  async function logInWithGoogle() {
-    setIsGoogleLoading(true);
+  async function signInWithGoogle() {
+    setIsGoogleLoading(true)
     try {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",
@@ -630,18 +858,18 @@ export default function LoginPage() {
             next ? `?next=${encodeURIComponent(next)}` : ""
           }`,
         },
-      });
+      })
 
       if (error) {
-        throw error;
+        throw error
       }
     } catch (error) {
       toast({
         title: "Please try again.",
         description: "There was an error logging in with Google.",
         variant: "destructive",
-      });
-      setIsGoogleLoading(false);
+      })
+      setIsGoogleLoading(false)
     }
   }
 
@@ -649,7 +877,7 @@ export default function LoginPage() {
     <Button
       type="button"
       variant="outline"
-      onClick={logInWithGoogle}
+      onClick={signInWithGoogle}
       disabled={isGoogleLoading}
     >
       {isGoogleLoading ? (
@@ -659,44 +887,61 @@ export default function LoginPage() {
       )}{" "}
       Sign in with Google
     </Button>
-  );
+  )
 }
 ```
-When a user clicks the "Sign in with Google" button, the following process occurs:
-The logInWithGoogle function is called, which initiates the OAuth flow with Google using Supabase's signInWithOAuth method.
-The user is redirected to Google's login page.
-After successful authentication, Google redirects the user back to our application's callback URL (/auth/callback).
-The next search parameter is used to redirect the user to the protected page they were trying to visit before being redirected to the login page. This improves user experience by returning them to their intended destination after authentication.
 
-Need improvement
+When a user clicks the `Sign in with Google` button, the following sequence of events occurs:
+
+- The `signInWithGoogle` function is called, initiating the OAuth flow with Google.
+- The user is redirected to Google's authentication page, where they sign in and grant necessary permissions.
+- After successful authentication, Google redirects the user back to our application's `/auth/callback` route. Notice how we include the `next` parameter in this redirect URL, ensuring we don't lose context of where the user originally intended to go.
 
 #### Auth callback route
-To handle the OAuth callback, create a file named route.ts inside the app/auth/callback folder:
+
+To handle the OAuth callback, create a file named `route.ts` inside the `app/auth/callback` folder:
 
 ```ts title="@/app/auth/callback/route.ts"
-import { NextResponse } from "next/server";
-import { createClient } from "@/lib/supabase/server";
+import { NextResponse } from "next/server"
+
+import { createClient } from "@/lib/supabase/server"
 
 export async function GET(request: Request) {
-  const { searchParams, origin } = new URL(request.url);
+  // Extract search parameters and origin from the request URL
+  const { searchParams, origin } = new URL(request.url)
 
-  const code = searchParams.get("code");
-  const next = searchParams.get("next") ?? "/";
+  // Get the authorization code and the 'next' redirect path
+  const code = searchParams.get("code")
+  const next = searchParams.get("next") ?? "/"
 
   if (code) {
-    const supabase = createClient();
-    const { error } = await supabase.auth.exchangeCodeForSession(code);
+    // Create a Supabase client
+    const supabase = createClient()
+
+    // Exchange the code for a session
+    const { error } = await supabase.auth.exchangeCodeForSession(code)
+
     if (!error) {
-      return NextResponse.redirect(`${origin}${next}`);
+      // If successful, redirect to the 'next' path or home
+      return NextResponse.redirect(`${origin}${next}`)
     }
   }
 
-  return NextResponse.redirect(`${origin}/auth/auth-code-error`);
+  // If there's no code or an error occurred, redirect to an error page
+  return NextResponse.redirect(`${origin}/auth/auth-code-error`)
 }
 ```
 
-This route handles the callback from Google OAuth. It exchanges the authorization code for a session and then redirects the user to their intended destination or the home page if no specific destination was set.
+After Google authenticates the user and redirects them back to our application's `/auth/callback` route, the following process occurs:
 
-Need more explanation
+- The `GET` function handles the incoming request to the `/auth/callback` route.
+- We extract the `code` (authorization code) sent by Google.
+- We also retrieve the `next` parameter, which contains the path where the user should be redirected after successful authentication. If it's not present, we default to the root path ("/").
+- If an authorization code is present, we create a Supabase client.
+- We then use Supabase's `exchangeCodeForSession` method to exchange the authorization code for a user session. This step completes the OAuth flow, establishing the user's authenticated session in our application.
+- If the code exchange is successful (no error), we redirect the user to the path specified in the `next` parameter, or the home page if no specific path was provided.
+- If there's no authorization code, or if an error occurs during the code exchange, we redirect the user to an error page.
+
+This callback handler ensures that after Google's authentication, we complete the process by establishing a session in our application and then direct the user to their intended destination.
 
 </BlogPostLayout>

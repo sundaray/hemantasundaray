@@ -60,7 +60,8 @@
 
   h1,
   h2,
-  h3 {
+  h3,
+  h4 {
     @apply font-bold tracking-tight text-secondary-foreground;
   }
 
@@ -74,6 +75,10 @@
 
   h3 {
     @apply text-lg lg:text-xl;
+  }
+
+  h4 {
+    @apply text-base lg:text-lg;
   }
 
   p {
@@ -94,7 +99,7 @@
     @apply visible no-underline;
   }
 
-  .prose :where(h2, h3):hover > .anchor {
+  .prose :where(h2, h3, h4):hover > .anchor {
     @apply visible;
   }
 
@@ -102,11 +107,12 @@
     @apply mb-4 mt-16;
   }
 
-  .prose h3 {
+  .prose h3,
+  h4 {
     @apply mb-4;
   }
 
-  .prose :where(h2, h3) {
+  .prose :where(h2, h3, h4) {
     scroll-margin-top: 80px;
     position: relative;
   }
@@ -150,7 +156,7 @@ input[type="search"]:focus::-webkit-search-cancel-button {
   margin-bottom: 0 !important;
 }
 
-.note-component ul {
+.note-component ul:last-child {
   margin-bottom: 0 !important;
 }
 

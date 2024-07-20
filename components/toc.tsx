@@ -32,7 +32,7 @@ export function TOC() {
           <li
             key={id}
             className={cn(
-              level === 3 ? "pl-8" : "pl-4",
+              level === 3 ? "pl-8" : level === 4 ? "pl-12" : "pl-4",
               "py-2 text-sm hover:text-secondary-foreground",
               id === activeId ? "text-primary" : "text-muted-foreground"
             )}
