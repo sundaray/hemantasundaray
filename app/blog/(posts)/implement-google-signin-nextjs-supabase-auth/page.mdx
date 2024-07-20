@@ -119,11 +119,22 @@ To find the Callback URL in your Supabase dashboard, follow these steps:
 
 </Note>
 
-- Return to your Supabase dashboard. Navigate to **Authentication** > **Providers**.
+Next, return to your Supabase dashboard to continue the setup.
+
+### Enable Google sign-in
+
+- In the Supabase dashboard, navigate to **Authentication** > **Providers**.
 - Find **Google** in the list and click on it.
 - Toggle **Enable Sign In with Google** to on.
 - Enter the **Client ID** and **Client Secret** you obtained from Google Cloud.
 - Click **Save** to apply the changes
+
+### Add Redirect URL
+
+- In the Supabase dashboard, navigate to `Authentication > URL Configuration`.
+- Add `http://localhost:3000/\*\*` in the Redirect URLs section.
+
+By adding `http://localhost:3000/\*\*`, you ensure that after a user has authenticated using Google sign-In, they are redirected back to your local development server (running at http://localhost:3000).
 
 ## Set up a Next.js Project
 
@@ -135,9 +146,14 @@ npx create-next-app@latest supabase-auth-nextjs-demo
 
 **Note**: I’ve named the project `supabase-auth-nextjs-demo`, but you can choose any name you prefer.
 
-Once the project is created, navigate to the project directory. Once the project is created, navigate to the project directory. Once the project is created, navigate to the project directory:
+Once the project is created, navigate to the project directory.
 
-Install shadcn/ui:
+### Install packages
+
+We'll need to install several packages for our project. Let's go through them:
+
+#### Install shadcn/ui:
+
 shadcn/ui is a collection of re-usable components that we'll use in our project. To set it up, run the following command:
 
 ```sh
@@ -154,22 +170,39 @@ npx shadcn-ui@latest add dropdown-menu
 npx shadcn-ui@latest add toast
 ```
 
-we'll use Lucide icons in our project. Install it with npm:
+#### Install Supabase packages
 
-```sh
-npm install lucide-react
-```
-
-Install Supabase packages:
 We'll need the Supabase client library to interact with our Supabase backend:
 
 ```sh
 npm install @supabase/supabase-js @supabase/ssr
 ```
 
+#### Install client-only and server-only packages
+
+```sh
+npm install client-only server-only
+```
+
+These packages are useful for ensuring that certain modules are only used in their intended environment. For example, if you try to use a module marked as `client-only` in a server environment, it will raise an error. This helps prevent issues related to code that's meant to run exclusively on the client or server.
+
+#### Install JWT decoding libraries
+
+```sh
+npm install jose jwt-decode
+```
+
+These libraries are necessary to decode the JWT and access the user role. We'll be using Supabase auth hooks to add user roles inside the JWT, so we need libraries to decode them. `jose` is used for server-side decoding, while `jwt-decode` is used for client-side decoding.
+
+#### Install icon libraries
+
+```sh
+npm install lucide-react react-icons
+```
+
 ### Configure Environment Variables
 
-Create a .env.local file in the root directory of your project, and add the following environment variables:
+Create a `.env.local` file in the root directory of your project, and add the following environment variables:
 
 ```sh
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
@@ -177,9 +210,9 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 SUPABASE_JWT_SECRET=your_supabase_jwt_secret
 ```
 
-Replace your_supabase_project_url, your_supabase_anon_key, and your_supabase_jwt_secret with the values you copied earlier from your Supabase project.
+Replace `your_supabase_project_url`, `your_supabase_anon_key`, and `your_supabase_jwt_secret` with the values you copied earlier from your Supabase project.
 
-If you need to find these values again, navigate to the "Project Settings" in your Supabase dashboard. Under the CONFIGURATION section, click "API". Here you'll find the Project URL, the API Key and the JWT Secret.
+If you need to find these values again, click **Project Settings** in the sidebar navigation of your Supabase dashboard. Under the `CONFIGURATION` section, click `API`. Here you'll find the `Project UR`L, the `API Key` and the `JWT Secret`.
 
 ### Set up Supabase Clients
 
@@ -190,6 +223,8 @@ Create a new folder named `supabase` inside the `lib` folder of your project. In
 In `client.ts`, add the following code:
 
 ```tsx title="@/lib/supabase/client.ts"
+import "client-only"
+
 import { createBrowserClient } from "@supabase/ssr"
 
 export function createClient() {
@@ -268,7 +303,7 @@ The matcher array specifies which routes the middleware should run on. In this c
 
 - **/protected**: Ensures only authenticated users can access this route
 - **/login**: Handles redirects for already authenticated users
-- **/admin/:path\***: Protects all routes under /admin, ensuring only users with admin roles can access them
+- **/admin/:path\***: Protects all routes under `/admin`, ensuring only users with admin roles can access them
 
 #### Supabase middleware
 
@@ -276,40 +311,17 @@ Now, create a `middleware.ts` file inside the `/lib/supabase` folder:
 
 ```ts title="@/lib/supabase/middleware.ts"
 import { NextResponse, type NextRequest } from "next/server"
-import { createServerClient } from "@supabase/ssr"
 
-import { getUserRole } from "@/lib/supabase/get-user-role-server"
+import { getUserRole } from "@/lib/supabase/get-user-role"
+import { createClient } from "@/lib/supabase/server"
 
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
     request,
   })
 
-  // Create a Supabase client for server-side operations
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        // Get all cookies from the request
-        getAll() {
-          return request.cookies.getAll()
-        },
-        // Set cookies in both the request and response
-        setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value, options }) =>
-            request.cookies.set(name, value)
-          )
-          supabaseResponse = NextResponse.next({
-            request,
-          })
-          cookiesToSet.forEach(({ name, value, options }) =>
-            supabaseResponse.cookies.set(name, value, options)
-          )
-        },
-      },
-    }
-  )
+  // Create a Supabase client
+  const supabase = createClient()
 
   // Get the current user from Supabase
   const {
@@ -330,20 +342,20 @@ export async function updateSession(request: NextRequest) {
     return NextResponse.redirect(url)
   }
 
-  // Redirect unauthenticated users to login page
+  // Redirect unauthenticated users to sign-in page
   if (
     !user &&
-    !request.nextUrl.pathname.startsWith("/login") &&
+    !request.nextUrl.pathname.startsWith("/signin") &&
     !request.nextUrl.pathname.startsWith("/auth")
   ) {
     const url = request.nextUrl.clone()
-    url.pathname = "/login"
+    url.pathname = "/signin"
     url.searchParams.set("next", request.nextUrl.pathname)
     return NextResponse.redirect(url)
   }
 
-  // Redirect authenticated users attempting to access the login page to the home page
-  if (user && request.nextUrl.pathname.startsWith("/login")) {
+  // Redirect authenticated users attempting to access the sign-in page to the home page
+  if (user && request.nextUrl.pathname.startsWith("/signin")) {
     const url = request.nextUrl.clone()
     url.pathname = "/"
     return NextResponse.redirect(url)
@@ -355,21 +367,84 @@ export async function updateSession(request: NextRequest) {
 
 This middleware file handles several key aspects of our authentication flow:
 
-- It creates a Supabase client for server-side operations.
+- It creates a Supabase client.
 - It checks the user's authentication status and role.
 - It manages redirects based on the user's authentication status and the route they're trying to access.
 
 Here's a breakdown of the redirect logic:
 
-- If an unauthenticated user tries to access any page mentioned in the matcher array, they are redirected to the login page. While redirecting, we also set the next parameter. This next parameter is crucial because it stores the URL of the page the user was trying to access. After successful authentication, we can use this parameter to redirect the user back to their intended destination, providing a seamless user experience.
-- If a signed-in user tries to access the sign-in page, we redirect them to the home page. This is because the user is already authenticated, so they don't need to go to the sign-in page anymore. This prevents unnecessary authentication attempts and improves the user flow.
-- Finally, if a signed-in user is trying to access an admin page but does not have the admin role, they are redirected to the home page. This ensures that only users with the appropriate permissions can access sensitive admin areas of the application.
+- If an unauthenticated user tries to access any page mentioned in the `matcher` array, they are redirected to the login page. While redirecting, we also set the `next` parameter. This `next` parameter is crucial because it stores the pathname of the page the user was trying to access. After successful authentication, we use this parameter to redirect the user back to their intended destination.
+- If a signed-in user tries to access the sign-in page, we redirect them to the home page. This is because the user is already authenticated, so they don't need to go to the sign-in page anymore.
+- Finally, if a signed-in user tries to access an admin page but does not have the `admin` role, they are redirected to the home page. This ensures that only users with the appropriate permissions can access sensitive admin areas of the application.
 
 By implementing these redirects, we maintain proper access control throughout the application, ensuring users are always directed to the appropriate pages based on their authentication status and roles.
 
+Notice that in the middleware, we use the `getUserRole()` function to determine the user's role. Create a new file named `get-user-role.ts` inside the `lib/supabase` folder:
+
+```ts title="@/lib/supabase/get-user-role.ts"
+import "server-only"
+
+import { JWTPayload, jwtVerify } from "jose"
+
+import { createClient } from "@/lib/supabase/server"
+
+// Extend the JWTPayload type to include Supabase-specific metadata
+type SupabaseJwtPayload = JWTPayload & {
+  app_metadata: {
+    role: string
+  }
+}
+
+export async function getUserRole() {
+  // Create a Supabase client for server-side operations
+  const supabase = createClient()
+
+  // Retrieve the current session
+  const {
+    data: { session },
+  } = await supabase.auth.getSession()
+
+  let role
+
+  if (session) {
+    // Extract the access token from the session
+    const token = session.access_token
+
+    try {
+      // Encode the JWT secret for verification
+      const secret = new TextEncoder().encode(process.env.SUPABASE_JWT_SECRET)
+
+      // Verify the JWT token and extract the payload
+      const { payload } = await jwtVerify<SupabaseJwtPayload>(token, secret)
+
+      // Extract the role from the app_metadata in the payload
+      role = payload.app_metadata.role
+    } catch (error) {
+      console.error("Failed to verify token:", error)
+    }
+  }
+
+  return role
+}
+```
+
+This function does the following:
+
+- It creates a Supabase client for server-side operations.
+- It retrieves the current session using `supabase.auth.getSession()`.
+- If a session exists, it extracts the access token (JWT).
+- It then prepares to verify the JWT token. The JWT secret is encoded using `TextEncoder().encode(process.env.SUPABASE_JWT_SECRET)`. This step is crucial because the `jwtVerify` function from the `jose` library expects the secret to be in a specific format - a `Uint8Array`. Encoding the secret ensures it's in the correct format for the verification process.
+- It verifies the JWT token using the encoded `SUPABASE_JWT_SECRET`.
+- After verification, it extracts the `role` from the `app_metadata` in the token payload.
+- Finally, it returns the user's role.
+
 ### Assign roles to users
 
-After setting up our middleware, we need to address how roles are assigned to users. This is where the concept of custom claims comes into play. Custom claims are essentially special attributes that we can attach to a user. In our case, we want to attach a role, so that we can use this role to control access to special areas of our application. These custom claims are implemented using a Custom Access Token Auth Hook.
+After setting up our middleware, we need to address how roles are assigned to users. This is where the concept of custom claims comes into play.
+
+Custom claims are essentially special attributes that we can attach to a user. In our case, we want to attach a role, so that we can use this role to control access to special areas of our application.
+
+These custom claims are implemented using a Custom Access Token Auth Hook.
 Auth hooks are Postgres functions that we can use to alter the default Supabase Auth flow. We'll use the following function to add a role field to the JWT:
 
 ```sql
@@ -427,27 +502,27 @@ revoke execute on function public.set_user_role from authenticated, anon, public
 This function does the following:
 
 - It checks the user's email address.
-- If the email is 'rawgrittt@gmail.com', it sets the role to "admin".
-- For all other email addresses, it sets the role to "regular".
-- The role is set inside the app_metadata object, which is part of the JWT claims.
+- If the email is `rawgrittt@gmail.com`, it sets the role to `admin`.
+- For all other email addresses, it sets the role to `regular`.
+- The role is set inside the `app_metadata` object, which is part of the JWT claims.
 
-We've used RAISE LOG statements throughout the function. These are helpful for debugging purposes, allowing you to study the structure of the event object passed to the function and troubleshoot if any errors occur. You can find these logs in the Supabase dashboard under "Database" > "Logs" > "Postgres Logs".
+We've used `RAISE LOG` statements throughout the function. These are helpful for debugging purposes, allowing you to study the structure of the event object passed to the function and troubleshoot if any errors occur. You can find these logs in the Supabase dashboard under `Database > Logs > Postgres Logs`.
 
 Notice the last three lines of code in the function above:
 
 These lines are crucial for setting up the correct permissions for our function:
 
-- We grant the supabase_auth_admin role permission to use the public schema.
-- We grant the supabase_auth_admin role permission to execute our set_user_role function.
-- We revoke execute permissions from the authenticated, anon, and public roles.
+- We grant the `supabase_auth_admin` role permission to use the public schema.
+- We grant the `supabase_auth_admin` role permission to execute our `set_user_role` function.
+- We revoke execute permissions from the `authenticated`, `anon`, and `public` roles.
 
-The reason for revoking permissions is to enhance security. By default, the public role has access to functions created in the public schema, and both anon and authenticated roles inherit permissions from the public role. By revoking these permissions, we ensure that our role-setting function is not accessible via Supabase Serverless APIs or by regular users. This prevents potential misuse or unauthorized manipulation of user roles.
+The reason for revoking permissions is to enhance security. By default, the `public` role has access to functions created in the `public` schema, and both `anon` and `authenticated` roles inherit permissions from the `public` role. By revoking these permissions, we ensure that our role-setting function is not accessible via Supabase Serverless APIs or by regular users. This prevents potential misuse or unauthorized manipulation of user roles.
 
 To implement this function:
 
 - Go to the SQL editor in the Supabase dashboard.
 - Paste the entire function (including the permission grants and revokes) into the editor.
-- Click "RUN" to create the function and set the permissions.
+- Click `RUN` to create the function and set the permissions.
 
 Finally, to enable the custom claims:
 
@@ -457,6 +532,74 @@ Finally, to enable the custom claims:
 - Select the set_user_role function.
 
 By setting up this hook, Supabase will add the role property to the JWT before releasing it, ensuring that each user's token contains their assigned role.
+
+### Create a Users Table
+
+In most applications, you'll want to access user data for various purposes. Even though we've taken care of authentication and authorization, we haven't yet saved the users' data in a way that's easily accessible to our application. As discussed earlier, the user data inside the `auth.users` table is not directly accessible to our application. To solve this, we need to create our own table in the `public` schema.
+
+Run the following command in the SQL editor in the Supabase dashboard:
+
+```sql
+CREATE TABLE public.users (
+  id UUID PRIMARY KEY REFERENCES auth.users(id) NOT NULL,
+  name TEXT NOT NULL,
+  email TEXT NOT NULL UNIQUE,
+  role TEXT NOT NULL DEFAULT 'regular'
+);
+```
+
+This command creates a table named `users` in the `public` schema with four columns:
+
+- **id**: A `UUID` that serves as the primary key and references the `id` column in the `auth.users` table.
+- **name**: The user's full name.
+- **email**: The user's email address (must be unique).
+- **role**: The user's role in the application (defaults to 'regular').
+
+The `REFERENCES auth.users(id)` clause in the `id` column definition is crucial. It sets up a foreign key relationship between our `public.users` table and the `auth.users` table. This relationship ensures that every `id` in our `public.users` table corresponds to a valid user in the `auth.users` table.
+
+Now that we have created the table, we'll use a concept called database triggers to automatically populate data inside the `users` table in the `public` schema.
+
+<Note title="What are database triggers?">
+  Database triggers are special functions that automatically run when certain
+  events occur in a database. Triggers can be set to run either before or after
+  the triggering event.
+</Note>
+
+Run the following command in the SQL editor to create the trigger:
+
+```sql
+CREATE OR REPLACE FUNCTION public.create_new_user()
+RETURNS TRIGGER AS $$
+BEGIN
+  INSERT INTO public.users (id, name, email, role)
+  VALUES (
+    NEW.id,
+    NEW.raw_user_meta_data->>'full_name',
+    NEW.email,
+    CASE
+      WHEN NEW.email = 'rawgrittt@gmail.com' THEN 'admin'
+      ELSE 'regular'
+    END
+  );
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+CREATE TRIGGER on_auth_user_created
+  AFTER INSERT ON auth.users
+  FOR EACH ROW EXECUTE FUNCTION public.create_new_user();
+```
+
+Let's break down what this code does:
+
+- We create a function called `create_new_user()` that will be executed by our trigger.
+- Inside this function, we insert a new row into our `public.users` table using data from the newly inserted `auth.users` row (represented by NEW).
+- We use `NEW.raw_user_meta_data->>'full_name'` to extract the full name from the metadata.
+- We set the `role` to `admin` for a specific email address (in this case, `rawgrittt@gmail.com`) and `regular` for all others.
+- We create a trigger named `on_auth_user_created` that executes our function after each insert on the `auth.users` table.
+
+With this trigger in place, every time a new user signs up or is created in the `auth.users` table, a corresponding entry will automatically be inserted into our `public.users` table.
+This ensures that our application always has access to the latest user data in a format that we can easily query and manipulate.
 
 ### Creating Core Components
 
@@ -658,7 +801,7 @@ export function SignOutButton() {
 
 In the `SignOutButton` component, we use the `signOut()` method to sign out the user and then redirect them to the `login` page. We also refresh the page to ensure that the `UserAccountNav` component (which is a server component) accurately renders the authentication state.
 
-## Create Pages
+### Create Pages
 
 Now that we have our basic components, let's create the pages that will be rendered when we click on the links in the main navigation.
 
