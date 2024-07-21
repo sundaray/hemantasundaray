@@ -76,15 +76,17 @@ export default function BlogPage({
         <MotionSection className="space-y-4" layout="position">
           {currentPosts.map((post) => {
             return (
-              <article
+              <div
                 key={post.slug}
-                className="boder group relative rounded-md bg-secondary p-4"
+                className="hover:bg-input transition-all group relative rounded-md bg-accent p-4"
               >
                 <p className="mb-2 text-sm text-muted-foreground">
                   {formatDate(post.publishedAt)}
                 </p>
                 <h2 className="mb-2">{post.title}</h2>
-                <p className="mb-8 text-slate-700 dark:text-slate-200">{post.description}</p>
+                <p className="mb-8 text-slate-700 dark:text-slate-200">
+                  {post.description}
+                </p>
                 <span className="text-sm text-primary transition-all">
                   Read more{" "}
                   <Icons.arrowRight className="inline-block size-4 transition-transform group-hover:translate-x-1" />
@@ -92,7 +94,7 @@ export default function BlogPage({
                 <Link href={`blog/${post.slug}`} className="absolute inset-0">
                   <span className="sr-only">View article</span>
                 </Link>
-              </article>
+              </div>
             )
           })}
         </MotionSection>

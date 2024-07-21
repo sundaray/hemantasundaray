@@ -72,9 +72,8 @@ export function BlogPostLayout({ children, frontmatter }: BlogPostLayoutProps) {
                   <Link
                     key={tag}
                     href={`/blog?tag=${encodeURIComponent(tag)}`}
-                    className="text-blue-600 hover:underline hover:underline-offset-2"
                   >
-                    #{tag}
+                    {tag}
                   </Link>
                 ))}
               </div>

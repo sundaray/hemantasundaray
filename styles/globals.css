@@ -88,7 +88,7 @@
 
 @layer components {
   .prose a {
-    @apply text-primary underline decoration-primary underline-offset-2 transition-all hover:no-underline;
+    @apply text-primary underline decoration-blue-300 underline-offset-2 transition-all hover:decoration-primary;
   }
 
   .prose .anchor {
