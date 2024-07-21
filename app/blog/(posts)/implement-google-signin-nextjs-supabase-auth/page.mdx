@@ -676,6 +676,48 @@ Let's break down what this code does:
 With this trigger in place, every time a new user signs up or is created in the `auth.users` table, a corresponding entry will automatically be inserted into our `public.users` table.
 This ensures that our application always has access to the latest user data in a format that we can easily query and manipulate.
 
+#### Enable RLS on the users table
+
+<Note title="Note">
+  **Every table created in the **public** schema should have Row Level Security
+  (RLS) enabled**.
+</Note>
+
+RLS allows you to control which users can access and modify specific rows in a table based on their authentication status and/or role or other criteria. Since the `users` table contains sensitive information, we'll enable RLS and create a policy that only allows logged-in users with an `admin` role to query and manipulate its data.
+
+In the Supabase dashboard, navigate to the **SQL Editor** on the sidebar navigation, and run the following command:
+
+```sql
+ALTER TABLE public.users ENABLE ROW LEVEL SECURITY;
+```
+
+Next, create the policy by running this command:
+
+```sql
+CREATE POLICY "Allow only admin access to the users table"
+ON public.users
+FOR ALL
+USING (
+  current_setting('request.jwt.claims', true)::jsonb #>> '{app_metadata, role}' = 'admin'
+);
+```
+
+Let's break down each part of this policy:
+
+- **CREATE POLICY**: Creates a policy named `Allow only admin access to the users table`.
+
+- **ON public.users**: Specifies that the policy applies to the `users` table within the `public` schema.
+- **FOR ALL**: Means this policy applies to all operations on the table, including `SELECT`, `INSERT`, `UPDATE`, and `DELETE`.
+- **USING** Clause: Defines the actual condition that must be satisfied for a row to be accessible.
+  `current_setting('request.jwt.claims', true)` fetches the current JWT claims from the session settings. The `true` parameter indicates that if the setting is not found, it should return `NULL` instead of throwing an error.
+  `::jsonb` casts the fetched JWT claims to a JSONB (Binary JSON) data type.
+  `#>> '{app_metadata, role}'` operator extracts the value from the JSONB data at the specified path. In this case, it navigates to the `app_metadata` section and then to the `role` key within the JWT claims.
+- `= 'admin'` checks if the extracted `role` is equal to `admin`. If it is, the condition is satisfied, and the user is granted access to the row.
+
+The policy essentially ensures that only users whose JWT claims include a role of `admin` can perform any operation on the `users` table.
+
+To verify that the RLS policy works as expected, sign in using a non-admin email (after you have created all the components and pages). Then query the `users` table from any page except the `admin` page. You'll receive an empty array in response.
+
 ### Create components
 
 In a typical app, you'll find a main navigation bar with navigation links and a sign-in button. This is the structure we're going to follow.
