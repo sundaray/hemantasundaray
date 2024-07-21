@@ -525,11 +525,11 @@ This function does the following:
 - For all other email addresses, it sets the role to `regular`.
 - The role is set inside the `app_metadata` object, which is part of the JWT claims.
 
-We've used `RAISE LOG` statements throughout the function. These are helpful for debugging purposes, allowing you to study the structure of the event object passed to the function and troubleshoot if any errors occur. You can find these logs in the Supabase dashboard under `Database > Logs > Postgres Logs`.
+We've used `RAISE LOG` statements throughout the function. These are helpful for debugging purposes, allowing you to study the structure of the event object passed to the function and troubleshoot if any errors occur.
 
-Notice the last three lines of code in the function above:
+To find these logs in the Supabase dashboard, navigate to **Logs** on the sidebar navigation and then click **Postgres** under the **INFRASTRUCTURE LOGS** section.
 
-These lines are crucial for setting up the correct permissions for our function:
+Notice the last three lines of code in the function above. These lines are crucial for setting up the correct permissions for our function:
 
 - We grant the `supabase_auth_admin` role permission to use the `public` schema.
 - We grant the `supabase_auth_admin` role permission to execute our `set_user_role` function.
