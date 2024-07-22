@@ -89,7 +89,7 @@ export default function BlogPage({
                 </p>
                 <span className="text-sm text-primary transition-all">
                   Read more{" "}
-                  <Icons.arrowRight className="inline-block size-4 transition-transform group-hover:translate-x-1" />
+                  <Icons.arrowRight className="inline-block size-4 transition-transform" />
                 </span>
                 <Link href={`blog/${post.slug}`} className="absolute inset-0">
                   <span className="sr-only">View article</span>

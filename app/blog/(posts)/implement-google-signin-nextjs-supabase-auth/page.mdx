@@ -218,9 +218,9 @@ If you need to find these values again, click **Project Settings** in the sideba
 
 ### Set up Supabase clients
 
-We need to set up three different Supabase clients: two for authentication (client-side and server-side) and one for database interactions.
+We need to set up two different Supabase clients.
 
-Create a new folder named `supabase` inside the `lib` folder, and inside `supabase`, create three files: `client.ts`, `client-db.ts` and `server.ts`.
+Create a new folder named `supabase` inside the `lib` folder, and inside `supabase`, create two files: `client.ts` and `server.ts`.
 
 In `client.ts`, add the following code:
 
@@ -235,17 +235,6 @@ export function createClient() {
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
   )
 }
-```
-
-In `client-db.ts`, add the following code:
-
-```ts title="@/lib/supabase/client-db.ts"
-import { createClient } from "@supabase/supabase-js"
-
-export const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-)
 ```
 
 In `server.ts`, add the following code:
@@ -291,8 +280,6 @@ You might be wondering why we need two separate clients for Supabase Auth. The r
 
 - The `createClient` function in `client.ts` is used to access Supabase inside client components.
 - The `createClient` function in `server.ts` is used to access Supabase inside server components, server actions, and route handlers.
-
-Note that the Supabase database client can be used in both client and server components.
 
 ### Set up middleware
 
@@ -1083,10 +1070,11 @@ export default function ProtectedPage() {
 Inside the `app` folder, create a folder named `admin` and inside `admin`, create a file named `page.tsx`:
 
 ```tsx title="@/app/admin/page.tsx"
-import { supabase } from "@/lib/supabase/client-db"
+import { createClient } from "@/lib/supabase/server"
 
 export default async function AdminPage() {
-  // Fetch all users from the public users table
+  const supabase = createClient()
+
   const { data: users, error } = await supabase
     .from("users")
     .select("id, email, role")
