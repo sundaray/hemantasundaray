@@ -303,7 +303,7 @@ export const config = {
 The `matcher` array specifies which routes the middleware should run on. In this case:
 
 - **/protected**: Ensures only authenticated users can access this route
-- **/login**: Handles redirects for already authenticated users
+- **/signin**: Handles redirects for already authenticated users
 - **/admin/:path\***: Protects all routes under `/admin`, ensuring only users with `admin` roles can access them
 
 #### Supabase middleware
