@@ -875,8 +875,6 @@ export function SignInButton() {
 }
 ```
 
-Clicking on the Sign in link takes the user to the signin page where we render the `Sign in with Google` button.
-
 #### SignOutButton component
 
 Create a file named `signout-button.tsx` in the `components` folder:
@@ -907,7 +905,7 @@ export function SignOutButton() {
 }
 ```
 
-In the `SignOutButton` component, we use the `signOut()` method to sign out the user and then redirect them to the `login` page. We also refresh the page to ensure that the `UserAccountNav` component (which is a server component) accurately renders the authentication state.
+In the `SignOutButton` component, we use the `signOut()` method to sign out the user and then redirect them to the `signin` page. We also refresh the page to ensure that the `UserAccountNav` component (which is a server component) accurately renders the authentication state.
 
 #### Icons component
 
