@@ -8,7 +8,7 @@ export function Note({
   children: ReactNode
 }) {
   return (
-    <div className="note-component mb-8 border-l-4 border-muted-foreground p-4">
+    <div className="note-component mb-8 border-l-4 border-primary p-4">
       <p>{title}</p>
       {children}
     </div>

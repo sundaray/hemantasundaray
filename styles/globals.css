@@ -61,7 +61,7 @@
   h1,
   h2,
   h3,
-  h4 {
+  h4, h5 {
     @apply font-bold tracking-tight text-secondary-foreground;
   }
 
@@ -79,6 +79,10 @@
 
   h4 {
     @apply text-base lg:text-lg;
+  }
+
+  h5 {
+    @apply text-sm lg:text-base;
   }
 
   p {
@@ -99,7 +103,7 @@
     @apply visible no-underline;
   }
 
-  .prose :where(h2, h3, h4):hover > .anchor {
+  .prose :where(h2, h3, h4, h5):hover > .anchor {
     @apply visible;
   }
 
@@ -108,11 +112,12 @@
   }
 
   .prose h3,
-  h4 {
+  h4,
+  h5 {
     @apply mb-4;
   }
 
-  .prose :where(h2, h3, h4) {
+  .prose :where(h2, h3, h4, h5) {
     scroll-margin-top: 80px;
     position: relative;
   }
@@ -130,11 +135,11 @@
   }
 
   .prose ul {
-    @apply mb-8 list-disc space-y-4 pl-8 leading-7 text-slate-700 dark:text-slate-200;
+    @apply mb-8 list-disc space-y-2 pl-8 leading-7 text-slate-700 dark:text-slate-200;
   }
 
   .prose ol {
-    @apply mb-8 list-decimal space-y-4 pl-8 leading-7;
+    @apply mb-8 list-decimal space-y-2 pl-8 leading-7 text-slate-700 dark:text-slate-200;
   }
 
   .prose code[data-language="plaintext"] {
@@ -163,6 +168,7 @@ input[type="search"]:focus::-webkit-search-cancel-button {
 .note-component p:first-child {
   font-weight: bold !important;
   font-size: 18px !important;
+  color: #2563eb !important;
   margin-bottom: 16px;
 }
 
