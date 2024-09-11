@@ -6,9 +6,9 @@ const courses = [
 
 export default function CoursesPage() {
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container max-w-3xl">
       <h1 className="mb-8 text-4xl font-bold">Courses</h1>
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-10 sm:grid-cols-2">
         {courses.map((course) => (
           <CourseCard key={course.slug} {...course} />
         ))}
