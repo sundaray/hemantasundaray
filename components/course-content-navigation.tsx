@@ -21,7 +21,9 @@ export default function CourseContentNavigation({
 
   const toggleSection = (slug: string) => {
     setExpandedSections((prev) =>
-      prev.includes(slug) ? prev.filter((s) => s !== slug) : [...prev, slug]
+      prev.includes(slug)
+        ? prev.filter((s) => s !== slug)
+        : [...prev, slug]
     )
   }
 
@@ -32,18 +34,17 @@ export default function CourseContentNavigation({
           ? `${parentSlug}/${section.slug}`
           : section.slug
         const isExpanded = expandedSections.includes(fullSlug)
-        const hasSubsections =
-          section.subsections && section.subsections.length > 0
+        const hasSubsections = section.subsections && section.subsections.length > 0
 
         return (
           <li key={fullSlug}>
             <div className="flex items-center justify-between">
               <Link
                 href={`/courses/${courseSlug}/${fullSlug}`}
-                className={`block flex-grow rounded px-2 py-1 ${
+                className={`block rounded px-2 py-1 flex-grow ${
                   pathname.includes(fullSlug)
                     ? "bg-border text-sm text-secondary-foreground"
-                    : "text-sm text-muted-foreground hover:bg-border"
+                    : "text-muted-foreground hover:bg-border text-sm"
                 }`}
               >
                 {section.title}
@@ -53,12 +54,10 @@ export default function CourseContentNavigation({
                   onClick={() => toggleSection(fullSlug)}
                   className="p-1 text-muted-foreground hover:text-secondary-foreground"
                   aria-expanded={isExpanded}
-                  aria-label={
-                    isExpanded ? "Collapse section" : "Expand section"
-                  }
+                  aria-label={isExpanded ? "Collapse section" : "Expand section"}
                 >
                   <Icons.chevronDown
-                    className={`h-4 w-4 transition-transform ${
+                    className={`size-4 transition-transform ${
                       isExpanded ? "rotate-180" : ""
                     }`}
                   />
@@ -76,5 +75,5 @@ export default function CourseContentNavigation({
     </ul>
   )
 
-  return <nav className="w-64 bg-accent p-4">{renderSections(sections)}</nav>
+  return <nav className="bg-accent p-4">{renderSections(sections)}</nav>
 }

@@ -18,8 +18,8 @@ export const courses: Course[] = [
       { title: "Introduction", slug: "introduction" },
       { title: "What is Terraform?", slug: "what-is-terraform" },
       {
-        title: "Getting Started with Terraform",
-        slug: "getting-started-with-terraform",
+        title: "Prerequisites",
+        slug: "prerequisites",
         subsections: [
           { title: "Choose a code editor", slug: "choose-a-code-editor" },
           { title: "Create an AWS account", slug: "create-an-aws-account" },

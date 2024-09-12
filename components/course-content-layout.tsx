@@ -4,6 +4,7 @@ import { usePathname, useRouter } from "next/navigation"
 
 import { courses, Section } from "@/lib/courses"
 import { Button } from "@/components/ui/button"
+import CourseContentNavigation from "@/components/course-content-navigation"
 
 interface CourseContentLayoutProps {
   children: React.ReactNode
@@ -47,21 +48,29 @@ export function CourseContentLayout({ children }: CourseContentLayoutProps) {
   const isLastSection = currentIndex === flattenedSections.length - 1
 
   return (
-    <div className="container max-w-2xl">
-      <article className="prose">{children}</article>
-      <div className="flex justify-between">
-        <Button
-          onClick={() => handleNavigation("previous")}
-          disabled={isFirstSection}
-        >
-          Previous
-        </Button>
-        <Button
-          onClick={() => handleNavigation("next")}
-          disabled={isLastSection}
-        >
-          Next
-        </Button>
+    <div className="container grid max-w-4xl grid-cols-16">
+      <aside className="sticky top-24 col-start-1 col-end-5 hidden self-start lg:block">
+        <CourseContentNavigation
+          sections={course.sections}
+          courseSlug={courseSlug}
+        />
+      </aside>
+      <div className="col-start-1 col-span-full lg:col-start-6">
+        <article className="prose">{children}</article>
+        <div className="flex justify-between">
+          <Button
+            onClick={() => handleNavigation("previous")}
+            disabled={isFirstSection}
+          >
+            Previous
+          </Button>
+          <Button
+            onClick={() => handleNavigation("next")}
+            disabled={isLastSection}
+          >
+            Next
+          </Button>
+        </div>
       </div>
     </div>
   )
