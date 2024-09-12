@@ -1,6 +1,7 @@
 export type Section = {
   title: string
   slug: string
+  fullSlug?: string
   subsections?: Section[]
 }
 
@@ -21,7 +22,7 @@ export const courses: Course[] = [
         title: "Prerequisites",
         slug: "prerequisites",
         subsections: [
-          { title: "Choose a code editor", slug: "choose-a-code-editor" },
+          { title: "Choose a code editor", slug: "choose-code-editor" },
           { title: "Create an AWS account", slug: "create-an-aws-account" },
           { title: "Create an IAM user", slug: "create-an-iam-user" },
           {

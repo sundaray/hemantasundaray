@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
@@ -10,41 +10,60 @@ import { Icons } from "@/components/icons"
 interface CourseContentNavigationProps {
   sections: Section[]
   courseSlug: string
+  currentSectionSlug: string
 }
 
 export default function CourseContentNavigation({
   sections,
   courseSlug,
+  currentSectionSlug,
 }: CourseContentNavigationProps) {
   const pathname = usePathname()
-  const [expandedSections, setExpandedSections] = useState<string[]>([])
+
+  const initiallyExpandedSections = useMemo(() => {
+    return new Set(currentSectionSlug.split("/").slice(0, -1))
+  }, [currentSectionSlug])
+
+  const [userToggledSections, setUserToggledSections] = useState<Set<string>>(
+    new Set()
+  )
 
   const toggleSection = (slug: string) => {
-    setExpandedSections((prev) =>
-      prev.includes(slug)
-        ? prev.filter((s) => s !== slug)
-        : [...prev, slug]
-    )
+    setUserToggledSections((prev) => {
+      const newSet = new Set(prev)
+      if (newSet.has(slug)) {
+        newSet.delete(slug)
+      } else {
+        newSet.add(slug)
+      }
+      return newSet
+    })
   }
 
-  const renderSections = (sections: Section[], parentSlug?: string) => (
+  const isExpanded = (slug: string) => {
+    return initiallyExpandedSections.has(slug) !== userToggledSections.has(slug)
+  }
+
+  const renderSections = (sections: Section[], parentSlug = "") => (
     <ul className="space-y-1">
       {sections.map((section) => {
         const fullSlug = parentSlug
           ? `${parentSlug}/${section.slug}`
           : section.slug
-        const isExpanded = expandedSections.includes(fullSlug)
-        const hasSubsections = section.subsections && section.subsections.length > 0
+        const expanded = isExpanded(fullSlug)
+        const hasSubsections =
+          section.subsections && section.subsections.length > 0
+        const isActive = currentSectionSlug.startsWith(fullSlug)
 
         return (
           <li key={fullSlug}>
             <div className="flex items-center justify-between">
               <Link
                 href={`/courses/${courseSlug}/${fullSlug}`}
-                className={`block rounded px-2 py-1 flex-grow ${
-                  pathname.includes(fullSlug)
-                    ? "bg-border text-sm text-secondary-foreground"
-                    : "text-muted-foreground hover:bg-border text-sm"
+                className={`block flex-grow rounded px-2 py-1 ${
+                  isActive
+                    ? "bg-accent text-sm text-secondary-foreground"
+                    : "text-sm text-muted-foreground hover:text-secondary-foreground"
                 }`}
               >
                 {section.title}
@@ -53,18 +72,18 @@ export default function CourseContentNavigation({
                 <button
                   onClick={() => toggleSection(fullSlug)}
                   className="p-1 text-muted-foreground hover:text-secondary-foreground"
-                  aria-expanded={isExpanded}
-                  aria-label={isExpanded ? "Collapse section" : "Expand section"}
+                  aria-expanded={expanded}
+                  aria-label={expanded ? "Collapse section" : "Expand section"}
                 >
                   <Icons.chevronDown
                     className={`size-4 transition-transform ${
-                      isExpanded ? "rotate-180" : ""
+                      expanded ? "rotate-180" : ""
                     }`}
                   />
                 </button>
               )}
             </div>
-            {hasSubsections && isExpanded && (
+            {hasSubsections && expanded && (
               <div className="ml-4 mt-1">
                 {renderSections(section.subsections!, fullSlug)}
               </div>

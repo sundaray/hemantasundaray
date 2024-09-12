@@ -15,17 +15,20 @@ export function CourseContentLayout({ children }: CourseContentLayoutProps) {
   const router = useRouter()
 
   const parts = pathname.split("/")
-  const courseSlug = parts[2] // Assuming the URL structure is /courses/[courseSlug]/[sectionSlug]
-  const currentSectionSlug = parts[parts.length - 1]
+  const courseSlug = parts[2]
+  const currentSectionSlug = parts.slice(3).join("/")
 
   const course = courses.find((c) => c.slug === courseSlug)
-  if (!course) return null // or some error component
+  if (!course) return null
 
-  const flattenSections = (sections: Section[]): Section[] => {
+  const flattenSections = (sections: Section[], parentSlug = ""): Section[] => {
     return sections.reduce((acc: Section[], section: Section) => {
-      acc.push(section)
+      const fullSlug = parentSlug
+        ? `${parentSlug}/${section.slug}`
+        : section.slug
+      acc.push({ ...section, fullSlug })
       if (section.subsections) {
-        acc.push(...flattenSections(section.subsections))
+        acc.push(...flattenSections(section.subsections, fullSlug))
       }
       return acc
     }, [])
@@ -33,13 +36,13 @@ export function CourseContentLayout({ children }: CourseContentLayoutProps) {
 
   const flattenedSections = flattenSections(course.sections)
   const currentIndex = flattenedSections.findIndex(
-    (section) => section.slug === currentSectionSlug
+    (section) => section.fullSlug === currentSectionSlug
   )
 
   const handleNavigation = (direction: "previous" | "next") => {
     const newIndex = direction === "next" ? currentIndex + 1 : currentIndex - 1
     if (newIndex >= 0 && newIndex < flattenedSections.length) {
-      const newPath = `/courses/${courseSlug}/${flattenedSections[newIndex].slug}`
+      const newPath = `/courses/${courseSlug}/${flattenedSections[newIndex].fullSlug}`
       router.push(newPath)
     }
   }
@@ -53,9 +56,10 @@ export function CourseContentLayout({ children }: CourseContentLayoutProps) {
         <CourseContentNavigation
           sections={course.sections}
           courseSlug={courseSlug}
+          currentSectionSlug={currentSectionSlug}
         />
       </aside>
-      <div className="col-start-1 col-span-full lg:col-start-6">
+      <div className="col-span-full col-start-1 lg:col-start-6">
         <article className="prose">{children}</article>
         <div className="flex justify-between">
           <Button
