@@ -1,0 +1,32 @@
+import { CourseContentLayout } from "@/components/course-content-layout"
+
+<CourseContentLayout>
+
+# Define a resource
+
+Before you can deploy an infrastructure resource such as a server, a database, or a load balancer, you must define it using a `resource` block. Each `resource` block specifies a particular type of resource and includes the necessary configuration details for that resource.
+
+Here’s the basic syntax for creating a resource in Terraform:
+
+```hcl
+resource "<PROVIDER>_<TYPE>" "<NAME>" {
+  [CONFIG …]
+}
+```
+ - **\<PROVIDER\>_\<TYPE\>**: `<PROVIDER>` specifies the provider responsible for managing the resource (e.g., aws). `<TYPE>` indicates the specific type of resource within the provider's ecosystem (e.g., `s3_bucket` for an S3 bucket in AWS). 
+ - **\<NAME\>**: This is a unique identifier for the resource, used to reference it elsewhere in your Terraform code.
+ - **[CONFIG]**: This section is where you provide one or more inputs called arguments that are specific to the resource being defined.
+
+Keep in mind that AWS offers more than 1,400 different resources. Each resource type can take many arguments, with some being required and others optional. There's no way you can memorize all these resource types and their arguments. Therefore, it's always best to consult the [Terraform documentation for AWS](https://registry.terraform.io/providers/hashicorp/aws/latest/docs) for details on the resources and how to use them.
+
+The first resource we’re going to create is an AWS S3 bucket. If you’re not familiar with the AWS S3 service, just note that it’s a storage service that stores data as objects.
+
+Inside the `terraform-basics` folder, create a file named `main.tf` and paste in the following code:
+
+```hcl
+resource "aws_s3_bucket" "terraform_course_demo" {
+    bucket = "terraform-course-demo-bucket-001"
+}
+```
+
+</CourseContentLayout>

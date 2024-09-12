@@ -1,0 +1,22 @@
+import { CourseContentLayout } from "@/components/course-content-layout"
+
+<CourseContentLayout>
+
+# Configure the provider
+
+After specifying a provider, the next step is to configure it using a `provider` block. **Note that including a `provider` block is mandatory**.
+
+Create a file named `providers.tf` in the `terraform-basics` folder and add the following code:
+
+```hcl
+provider "aws" {
+    region = "<AWS_REGION>"
+}
+```
+Replace `<AWS_REGION>` with your specific AWS region. 
+
+The AWS region you specify is where the resources will be deployed. For example, if you set the region to `us-east-1`, all resources defined in your Terraform configuration will be created in the US East (N. Virginia) region.
+
+Note that the `provider` block, like the `terraform` block, sets configurations that apply to the entire Terraform project.
+
+</CourseContentLayout>

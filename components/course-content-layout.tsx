@@ -4,7 +4,7 @@ import { usePathname, useRouter } from "next/navigation"
 
 import { courses, Section } from "@/lib/courses"
 import { Button } from "@/components/ui/button"
-import CourseContentNavigation from "@/components/course-content-navigation"
+import { CourseContentNavigation } from "@/components/course-content-navigation"
 
 interface CourseContentLayoutProps {
   children: React.ReactNode
@@ -63,12 +63,14 @@ export function CourseContentLayout({ children }: CourseContentLayoutProps) {
         <article className="prose">{children}</article>
         <div className="flex justify-between">
           <Button
+            className="hover:bg-blue-700"
             onClick={() => handleNavigation("previous")}
             disabled={isFirstSection}
           >
             Previous
           </Button>
           <Button
+            className="hover:bg-blue-700"
             onClick={() => handleNavigation("next")}
             disabled={isLastSection}
           >

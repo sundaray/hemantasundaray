@@ -1,0 +1,23 @@
+import { CourseContentLayout } from "@/components/course-content-layout"
+
+<CourseContentLayout>
+
+# Initialize the project directory
+
+We have defined a resource for creating an AWS S3 bucket. Before we can create this resource, Terraform needs to download the necessary provider plugin. To do this, we need to initialize the project directory.
+
+In the terminal, navigate to the `terraform-basics` folder, and then run the following command:
+
+```sh
+terraform init
+```
+
+After running the command, you should see a message stating: `Terraform has been successfully initialized!`.
+
+![Terraform init output](/images/courses/terraform-for-beginners/terraform_init.jpg)
+
+Inside the `terraform-basics` folder, you'll notice that Terraform has created a folder named `.terraform` and a file named `.terraform.lock.hcl`.
+
+When you run the `terraform init` command, Terraform identifies the provider specified in your code, downloads the necessary provider plugin from the Terraform registry and stores it in a directory named `.terraform`. Alongside the `.terraform` directory, Terraform creates a `.terraform.lock.hcl` file, which records the exact version of the provider plugin that was downloaded. By locking the version, Terraform ensures that whenever you or anyone else runs `terraform init` in the future, the same version of the provider is used.
+
+</CourseContentLayout>

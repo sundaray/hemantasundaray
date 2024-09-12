@@ -16,7 +16,7 @@ export default async function CourseOverviewPage({
 
   const renderTableOfContents = (sections: Section[], level: number = 0) => {
     return (
-      <ul className={`space-y-2 ${level > 0 ? "ml-4" : ""}`}>
+      <ul className={`${level > 0 ? "ml-4" : ""}`}>
         {sections.map((section) => (
           <li key={section.slug}>
             <span
@@ -40,7 +40,7 @@ export default async function CourseOverviewPage({
       <div className="mt-8">
         <Link
           href={`/courses/${params.courseSlug}/${courseData.sections[0].slug}`}
-          className="inline-flex w-full justify-center rounded-full bg-primary px-6 py-3 text-white transition-colors hover:bg-blue-700"
+          className="inline-flex w-full justify-center rounded-md bg-primary px-6 py-3 text-white transition-colors hover:bg-blue-700"
         >
           Get Started
         </Link>

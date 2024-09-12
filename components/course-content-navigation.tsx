@@ -13,7 +13,7 @@ interface CourseContentNavigationProps {
   currentSectionSlug: string
 }
 
-export default function CourseContentNavigation({
+export function CourseContentNavigation({
   sections,
   courseSlug,
   currentSectionSlug,
@@ -102,5 +102,9 @@ export default function CourseContentNavigation({
     </ul>
   )
 
-  return <nav className="bg-accent p-4 overflow-y-auto max-h-[420px]">{renderSections(sections)}</nav>
+  return (
+    <nav className="max-h-[420px] overflow-y-auto bg-accent p-4">
+      {renderSections(sections)}
+    </nav>
+  )
 }
