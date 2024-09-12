@@ -1,0 +1,38 @@
+import { CourseContentLayout } from "@/components/course-content-layout"
+
+<CourseContentLayout>
+
+# Reference a resource attribute
+
+When you write Terraform code, you'll often need to reference the attributes of different resources. And to reference an attribute of a particular resource, you use the following syntax:
+
+```hcl
+<PROVIDER>_<TYPE>.<NAME>.<ATTRIBUTE>
+```
+ - **\<PROVIDER\>**: This specifies the cloud provider, such as AWS (aws). 
+ - **\<TYPE\>**: The type of resource, such as `s3_bucket`.
+ - **\<NAME\>**: The specific name you've assigned to the resource, e.g., `terraform_course_demo`.
+ - **\<ATTRIBUTE\>**: The property you want to reference, such as id.
+
+Let's understand this by enabling EventBridge notifications on our S3 bucket. If you are not familiar with the Amazon EventBridge service, just note that it’s a serverless service that uses events to connect application components together, making it easier to build event-driven applications.
+
+Add the following code in the `main.tf` file:
+
+```hcl
+# Enable EventBridge Notifications for the S3 Bucket
+resource "aws_s3_bucket_notification" "terraform_course_demo" {
+  bucket      = aws_s3_bucket.terraform_course_demo.id
+  eventbridge = true
+}
+```
+The `aws_s3_bucket_notification` resource requires a mandatory argument: `bucket`. The value assigned to the bucket needs to be the ID of the bucket. We have referenced the bucket ID using the following Terraform expression (anything that returns a value):
+
+```hcl
+aws_s3_bucket.terraform_course_demo.id
+```
+This expression allows Terraform to dynamically retrieve the ID of the S3 bucket you created, ensuring that the correct bucket is linked to your EventBridge notification configuration.
+
+After adding the `aws_s3_bucket_notification` resource, run `terraform apply` to enable EventBridge notifications for your S3 bucket. 
+
+
+</CourseContentLayout>

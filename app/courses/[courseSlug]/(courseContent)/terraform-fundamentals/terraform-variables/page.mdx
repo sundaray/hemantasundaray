@@ -1,0 +1,90 @@
+import { CourseContentLayout } from "@/components/course-content-layout"
+
+<CourseContentLayout>
+
+# Terraform variables
+
+We created an S3 bucket and enabled EventBridge notifications for it. Next, let's create an EventBridge rule that detects when objects are uploaded to the S3 bucket.
+
+In the `main.tf` file, add the following code:
+
+```hcl
+# Create an EventBridge Rule
+resource "aws_cloudwatch_event_rule" "terraform_course_demo" {
+  name        = "terraform-course-demo-eventbridge-rule"
+  description = "Match 'Object Created' events from the specified S3 bucket."
+  event_pattern = jsonencode({
+    source      = ["aws.s3"]
+    detail-type = ["Object Created"]
+    detail = {
+      bucket = {
+        name = ["terraform-course-demo-bucket-001"]
+      }
+    }
+  })
+}
+```
+
+Notice that the resource type is `cloudwatch_event_rule`, not `eventbridge_event_rule`. This is because EventBridge was formerly known as CloudWatch Events. Their functionality is identical.
+
+In the `main.tf` file, you’ll see that the bucket name `terraform-course-demo-bucket-001` is hard-coded in two places: within the `aws_s3_bucket` resource and the `aws_cloudwatch_event_rule` resource.
+
+If you need to change the bucket name, you must update it in both places. While this might not seem difficult with just two places, imagine if the bucket name were used in ten places or more. Updating the name in each place would be time-consuming and error-prone, and you might even forget to update the bucket name in some places.
+
+To solve this issue, we can use Terraform variables, which are similar to variables in programming languages. They allow you to define a value once and reuse it throughout your code. If you need to change the value, you only need to update it in one place.
+
+We define a variable in Terraform using the `variable` block. Here’s the syntax:
+
+```hcl
+variable "NAME" {
+    [CONFIG…]
+}
+```
+
+Inside the `terraform-basics` folder, create a file named `variables.tf` and define a `variable` block as shown below:
+
+```hcl
+variable "bucket_name" {
+  description = "The name of the S3 bucket.Bucket names must be unique across all AWS accounts in all the AWS Regions."
+  type        = string
+  default     = "terraform-course-demo-bucket-001"
+}
+```
+
+Here, we define a variable named `bucket_name` of type `string`.
+
+We can then use this variable in our code by referencing it with the following syntax:
+
+```hcl
+var.<VARIABLE-NAME>
+```
+
+Now replace the hard-coded values with the variable:
+
+```hcl {2}
+resource "aws_s3_bucket" "terraform-course-bucket" {
+    bucket = var.bucket_name
+    force_destroy = true
+}
+```
+
+```hcl {10}
+# Create an EventBridge Rule
+resource "aws_cloudwatch_event_rule" "terraform_course_demo" {
+  name        = "terraform-course-demo-eventbridge-rule"
+  description = "Match 'Object Created' events from the specified S3 bucket."
+  event_pattern = jsonencode({
+    source      = ["aws.s3"]
+    detail-type = ["Object Created"]
+    detail = {
+      bucket = {
+        name = [var.bucket_name]
+      }
+    }
+  })
+}
+```
+
+Now, if you need to change the name of the bucket, you do it at one place only, in the `variables.tf` file.
+
+</CourseContentLayout>

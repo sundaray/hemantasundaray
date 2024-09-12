@@ -1,0 +1,55 @@
+import { CourseContentLayout } from "@/components/course-content-layout"
+
+<CourseContentLayout>
+
+# Version control with Git and GitHub
+
+Now that you've deployed your first infrastructure, it's a great time to start managing your Terraform code with version control. Using a version control system like Git helps you track changes, collaborate with others, and maintain a history of your project.
+
+Make sure you are in the `terraform-basics` folder in your terminal, and then run the following command:
+
+```sh
+git init 
+```
+This command initializes your project as a Git repository. 
+
+Next, create a file named `.gitignore` inside the `terraform-basics` folder and add the following lines: 
+
+```sh
+.terraform
+*.tfstate
+*.tfstate.backup
+```
+
+The `.terraform` folder holds temporary data that is necessary for Terraform to function but can be regenerated at any time by running `terraform init` again. Therefore, you don’t need to version control this folder. 
+
+The Terraform state files (`.tfstate` files) keep track of the current state of your infrastructure. They contain metadata about resources, including their IDs and other sensitive information. Therefore, committing state files to a version control system like GitHub is risky. Sensitive information could be exposed accidentally, leading to potential security breaches. 
+
+Now, run the following command to add all your files to the staging area and make an initial commit:
+
+```sh
+git add .
+git commit -m "Initial commit of Terraform project"
+```
+
+Next, go to GitHub and create a new repository. You might name it something like `terraform-course`.
+
+Run the following command to add the remote repository URL to your local Git setup:
+
+```sh
+git remote add origin https://github.com/your-username/terraform-course.git
+```
+
+Replace `your-username` with your GitHub username.
+
+Finally, run the following command to push your local commits to the remote repository on GitHub:
+
+```sh
+git branch -M main
+git push -u origin main
+```
+This pushes your code to GitHub, making it accessible from anywhere and safe from local data loss.
+
+As you continue to make changes to your Terraform code throughout the upcoming chapters, regularly commit your changes and push them to GitHub. This practice ensures that your work is backed up and allows you to revert to previous states if needed.
+
+</CourseContentLayout>

@@ -1,0 +1,24 @@
+import { CourseContentLayout } from "@/components/course-content-layout"
+
+<CourseContentLayout>
+
+# Format and validate Terraform code
+
+You have initialized the project directory. You are now ready to create an AWS S3 bucket. But before you proceed, it's important to ensure that your code is well-structured and error-free. Terraform provides two commands to help with this: `terraform fmt` and `terraform validate`.
+
+Make sure you are in the `terraform-basics` folder in the terminal. Then run the following command:
+
+```sh
+terraform fmt
+```
+This command scans the configuration files and applies a standardized style and formatting, ensuring that your code is easy to read and understand.
+
+Next, run the following command:
+
+```sh
+terraform validate
+```
+
+This command checks your configuration files for syntax and logical errors. If any errors are found, you can address them at this stage before they cause deployment failures during infrastructure deployment. Catching and fixing errors early saves you time and ensures a smoother deployment process.
+
+</CourseContentLayout>

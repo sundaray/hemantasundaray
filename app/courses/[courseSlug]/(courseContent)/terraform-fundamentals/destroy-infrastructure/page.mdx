@@ -1,0 +1,19 @@
+import { CourseContentLayout } from "@/components/course-content-layout"
+
+<CourseContentLayout>
+
+# Destroy infrastructure
+
+In Terraform, to delete the resources you have deployed, you simply run one command:
+
+```sh
+terraform destroy 
+```
+We have created three resources: an S3 bucket, an S3 bucket notification, and an EventBridge rule. Let's delete them. Make sure you are in the `terraform-basics` folder and then run the `terraform destroy` command.
+
+After running this command, Terraform will generate an execution plan, similar to what you saw with `terraform apply`. This plan outlines which resources will be destroyed. You'll see a list of resources scheduled for deletion, and Terraform will prompt you for confirmation before proceeding.
+
+Carefully review the list of resources that Terraform plans to destroy. This is your chance to ensure you're not accidentally deleting anything important. If everything looks good, type `yes` and press Enter to confirm that you want to proceed with the deletion. Terraform will then proceed to destroy the specified resources.
+
+
+</CourseContentLayout>

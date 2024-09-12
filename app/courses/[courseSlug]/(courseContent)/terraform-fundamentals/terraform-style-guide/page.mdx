@@ -1,0 +1,27 @@
+import { CourseContentLayout } from "@/components/course-content-layout"
+import { Note } from "@/components/note"
+
+<CourseContentLayout>
+
+# Terraform style guide
+
+When writing Terraform code, you should follow the official Terraform Style Guide: a set of conventions and best practices designed to make your code consistent, readable, and maintainable. While the official Terraform style guide contains comprehensive details, I think there's one convention that every beginner should adopt right from the start: file naming conventions.
+
+In our project, we've named the files as follows:
+
+ - `terraform.tf`: This file contains the source and version of the provider.
+ - `providers.tf`: Here you'll find the provider configurations, specifying which region the resources will be deployed to.
+ - `variables.tf`: This file holds all the variable declarations.
+ - `main.tf`: The primary configuration file, where you define the resources that Terraform will deploy and manage.
+
+The naming of these files is not random. We have named them following the [file naming conventions outlined in the official Terraform style guide](https://developer.hashicorp.com/terraform/language/style#file-names).
+
+Why follow these conventions? 
+
+By following consistent naming conventions, you make it easier for yourself and others to navigate and understand the structure of your Terraform configurations. It also simplifies the maintenance and updating of your Terraform code. When changes are needed, you can quickly locate the relevant files, which means you spend less time searching.
+
+As you gain more experience with Terraform and start working on complex projects, you should revisit the official style guide and incorporate its recommendations in your code. Doing so will not only enhance your Terraform skills but also enable you to collaborate more effectively with others.
+
+
+
+</CourseContentLayout>

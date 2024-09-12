@@ -49,17 +49,17 @@ export const courses: Course[] = [
           },
           {
             title: "Format and validate Terraform code",
-            slug: "format-and-validate-terraform-code",
+            slug: "format-validate-terraform-code",
           },
           { title: "Create infrastructure", slug: "create-infrastructure" },
           {
             title: "Version control with Git and GitHub",
-            slug: "version-control-with-git-and-github",
+            slug: "version-control-git-github",
           },
           { title: "Update infrastructure", slug: "update-infrastructure" },
           {
             title: "Reference a resource attribute",
-            slug: "reference-a-resource-attribute",
+            slug: "reference-resource-attribute",
           },
           {
             title: "Manage dependencies between terraform resources",
@@ -70,8 +70,8 @@ export const courses: Course[] = [
           { title: "Terraform State", slug: "terraform-state" },
           { title: "Terraform Modules", slug: "terraform-modules" },
           {
-            title: "Introduction to Terraform style guide",
-            slug: "introduction-to-terraform-style-guide",
+            title: "Terraform style guide",
+            slug: "terraform-style-guide",
           },
         ],
       },

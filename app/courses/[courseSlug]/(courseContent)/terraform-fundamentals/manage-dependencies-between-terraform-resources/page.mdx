@@ -1,0 +1,24 @@
+import { CourseContentLayout } from "@/components/course-content-layout"
+
+<CourseContentLayout>
+
+# Manage dependencies between Terraform resources
+
+When you add a reference from one resource to another in Terraform, you create an **implicit dependency**. This means Terraform automatically understands that one resource depends on another and uses this information to determine the order in which resources should be created or modified.
+
+In the context of our code, let's consider the following snippet:
+
+```hcl
+resource "aws_s3_bucket_notification" "terraform_course_demo" {
+  bucket      = aws_s3_bucket.terraform_course_demo.id
+  eventbridge = true
+}
+```
+
+Here, the `aws_s3_bucket_notification` resource references the `id` attribute of the `aws_s3_bucket` resource. This reference creates an implicit dependency between the two resources. It tells Terraform that the `aws_s3_bucket` resource must be created before the `aws_s3_bucket_notification` resource can be configured. This is because the notification configuration requires the bucket's ID, which is only available after the bucket is created.
+
+That being said, there may be cases where you must create an **explicit dependency** between resources. In such cases, you can use the [`depends_on` meta argument](https://developer.hashicorp.com/terraform/language/meta-arguments/depends_on).
+
+Note that while `depends_on` can be handy, it’s best to rely on Terraform’s ability to infer dependencies when possible. It keeps your code cleaner and easier to maintain. It also ensures that Terraform can create resources in parallel when there are no dependencies between them, speeding up the execution of your configuration. Use depends_on as a last resort when enforcing a specific order that Terraform cannot infer automatically.
+
+</CourseContentLayout>

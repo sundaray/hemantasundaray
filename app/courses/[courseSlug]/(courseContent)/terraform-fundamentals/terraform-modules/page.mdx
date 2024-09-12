@@ -1,0 +1,70 @@
+import { CourseContentLayout } from "@/components/course-content-layout"
+
+<CourseContentLayout>
+
+# Terraform modules
+
+A course on Terraform fundamentals is not complete without a discussion of Terraform modules. You would come across the term “Terraform modules” everywhere.
+
+So, what are Terraform modules?
+
+In Terraform, **any folder that contains Terraform configuration files is considered a module**. **The root module is the folder where you run Terraform commands like `terraform init`**.
+
+Based on this definition, you've already been working with modules. Our `terraform-basics` folder contains configuration files, so it's considered a module. Since we ran `terraform apply` in this folder, it is the root module.
+
+But how are modules useful?
+
+Modules allow you to organize and reuse your code, similar to how functions work in traditional programming languages.
+
+To understand how modules help with code reusability, let's explore a practical scenario. In a real-world setting, you're likely to have at least two environments: development and production. In such a scenario, how should you structure your code? A popular approach is to create separate folders for each environment. Let's implement this.
+
+First, delete the following folder and files from the `terraform-basics` folder:
+
+- `.terraform`
+- `.terraform.lock.hcl`
+- `terraform.tfstate`
+- `terraform.tfstate.backup`
+
+Then, create three sub-folders named `modules`, `dev` and `prod`. Next, move the reusable configuration files (`terraform.tf`, `providers.tf`, `main.tf` and `variables.tf`) inside the `modules` folder. Your folder structure should look like this:
+
+![Terraform project folder structure](/images/courses/terraform-for-beginners/terraform_project_folder_structure.jpg)
+
+The `modules` folder contains the configuration files needed for both our `dev` and `prod` environments. Should we copy these files into the `dev` and `prod` folders? While that would work, we would duplicate the same code across multiple locations, which violates the DRY (Don't Repeat Yourself) principle, which states that instead of writing the same code multiple times, you should write it once and reuse it wherever needed.
+
+So, what’s the solution? The solution is to import the modules inside the `dev` and `prod` folders using the `module` block. This approach allows us to reuse the configuration files without duplicating them.
+
+The `module` block has the following syntax:
+
+```hcl
+module "<NAME>" {
+  source = "<SOURCE>"
+
+  [CONFIG ...]
+}
+```
+
+The keyword `module` is followed by the local name of the module instance. This local name is used to reference the module within your Terraform configuration. The `source` argument is mandatory for all blocks. The value of the source argument is the path to a local directory containing the modules configuration files. Besides the `source` argument, if the module requires any input parameters, you would pass them inside the block body (inside `{}`), like the way you pass arguments inside `resource` blocks.
+
+Create a file named `main.tf` inside the `dev` folder and add the following code:
+
+```hcl
+module "dev" {
+  source      = "../modules"
+  bucket_name = "dev-terraform-course-demo-bucket-001"
+}
+```
+
+Similarly, create a `main.tf` file inside the `prod` folder and add this code:
+
+```hcl
+module "prod" {
+  source      = "../modules"
+  bucket_name = "prod-terraform-course-demo-bucket-001"
+}
+```
+
+Do you see the power of modules now? By importing the module and passing in the required values, we were able to reuse the code inside the `modules` folder for both the `dev` and `prod` environments.
+
+Now, you would run `terraform init` in the `dev` and `prod` folders to initialize each of them. After initialization, you can run Terraform commands to deploy and manage infrastructure. Since each environment has its own state files, changes in one environment will not affect the other.
+
+</CourseContentLayout>

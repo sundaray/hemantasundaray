@@ -1,0 +1,23 @@
+import { CourseContentLayout } from "@/components/course-content-layout"
+
+<CourseContentLayout>
+
+# Terraform state
+
+Have you ever wondered how Terraform keeps track of your resources? How does it know which resources to create, update, or delete when you make changes to your configuration?
+
+The answer is: the state file.
+
+When you run `terraform apply`, Terraform creates a file named `terraform.tfstate` in the directory where you executed the command. This is the file where Terraform keeps a record of the current state of your infrastructure.
+
+Go ahead, open the `terraform.tfstate` file. You'll see that it's structured as a JSON (JavaScript Object Notation) document. Within this document, the `resources` array contains a list of all the resources that Terraform manages. Each resource in this array is represented as a JSON object with various properties.
+
+Now, what role does this state file play when you make changes to your infrastructure? Let’s see: 
+
+ - When you run `terraform apply`, Terraform reads your configuration files to understand the desired state.
+ - It then compares this desired state with the current state stored in the `terraform.tfstate` file.
+ - Based on this comparison, Terraform determines whether it needs to create, update, or delete resources.
+
+**Note that the state file is solely for internal use within Terraform. You should never manually edit it or interact with it directly**.
+
+</CourseContentLayout>

@@ -1,0 +1,42 @@
+import { CourseContentLayout } from "@/components/course-content-layout"
+
+<CourseContentLayout>
+
+# Update infrastructure
+
+Inside the `main.tf` file, you have the `aws_s3_bucket` resource block that looks like this:
+
+```hcl
+resource "aws_s3_bucket" "terraform_course_demo" {
+    bucket = “terraform-course-demo-bucket-001”
+}
+```
+
+We have one argument: `bucket`. Let’s add another argument - `force_destroy` - and set its value to `true`. This is a useful configuration to have for the following reason:
+
+If you try to delete an S3 bucket that still contains objects, AWS will throw an error. This is because AWS requires that all objects within a bucket be deleted before the bucket itself can be deleted. This is a safety measure to prevent accidental data loss.
+
+By setting the argument `force_destroy = true`, you tell Terraform to delete all objects inside the bucket before deleting the bucket itself. This ensures that the bucket is deleted without any error.
+
+Add the following highlighted line in the demo resource block:
+
+```hcl {3}
+resource "aws_s3_bucket" "terraform_course_demo" {
+    bucket = "terraform-course-demo-bucket-001"
+    force_destroy = true
+}
+```
+
+**Whenever you add any arguments or make changes to your Terraform code, you must run the `terraform apply` command**. This command updates your actual infrastructure to match the changes you've made in your configuration files.
+
+Run the `terraform apply` command, and you should see the following output (image truncated for brevity):
+
+![Terraform update output](/images/courses/terraform-for-beginners/terraform_update.jpg)
+
+In the output, notice the tilde (~) symbol. This indicates that a resource will be updated in-place. In our case, it shows that the `force_destroy` attribute is changing from `false` to `true`. This means Terraform will modify the existing resource without recreating it.
+
+At the bottom, you'll see a summary like `Plan: 0 to add, 1 to change, 0 to destroy`. This means Terraform will change one existing resource and won't add any new resources or destroy any existing ones.
+
+Finally, Terraform will ask for your confirmation to proceed. Type `yes` and press Enter to apply these changes. Once confirmed, Terraform will update the resource with the new configuration.
+
+</CourseContentLayout>

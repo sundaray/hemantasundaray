@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation"
 import { Section } from "@/lib/courses"
 import { Icons } from "@/components/icons"
 
-interface CourseContentNavigationProps {
+type CourseContentNavigationProps = {
   sections: Section[]
   courseSlug: string
   currentSectionSlug: string
@@ -18,15 +18,9 @@ export function CourseContentNavigation({
   courseSlug,
   currentSectionSlug,
 }: CourseContentNavigationProps) {
-  const pathname = usePathname()
-
   const currentSectionParts = useMemo(() => {
     return currentSectionSlug.split("/")
   }, [currentSectionSlug])
-
-  const initiallyExpandedSections = useMemo(() => {
-    return new Set(currentSectionParts.slice(0, -1))
-  }, [currentSectionParts])
 
   const [userToggledSections, setUserToggledSections] = useState<Set<string>>(
     new Set()
@@ -70,7 +64,7 @@ export function CourseContentNavigation({
                 href={`/courses/${courseSlug}/${fullSlug}`}
                 className={`block flex-grow rounded px-2 py-1 ${
                   isActive
-                    ? "bg-accent text-sm text-secondary-foreground"
+                    ? "text-sm text-secondary-foreground"
                     : "text-sm text-muted-foreground hover:text-secondary-foreground hover:underline"
                 }`}
               >
