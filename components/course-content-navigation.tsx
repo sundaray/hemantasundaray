@@ -20,9 +20,13 @@ export default function CourseContentNavigation({
 }: CourseContentNavigationProps) {
   const pathname = usePathname()
 
-  const initiallyExpandedSections = useMemo(() => {
-    return new Set(currentSectionSlug.split("/").slice(0, -1))
+  const currentSectionParts = useMemo(() => {
+    return currentSectionSlug.split("/")
   }, [currentSectionSlug])
+
+  const initiallyExpandedSections = useMemo(() => {
+    return new Set(currentSectionParts.slice(0, -1))
+  }, [currentSectionParts])
 
   const [userToggledSections, setUserToggledSections] = useState<Set<string>>(
     new Set()
@@ -41,7 +45,11 @@ export default function CourseContentNavigation({
   }
 
   const isExpanded = (slug: string) => {
-    return initiallyExpandedSections.has(slug) !== userToggledSections.has(slug)
+    const slugParts = slug.split("/")
+    const isInCurrentPath =
+      currentSectionParts.slice(0, slugParts.length).join("/") === slug
+    const isUserToggled = userToggledSections.has(slug)
+    return isInCurrentPath ? !isUserToggled : isUserToggled
   }
 
   const renderSections = (sections: Section[], parentSlug = "") => (
@@ -63,7 +71,7 @@ export default function CourseContentNavigation({
                 className={`block flex-grow rounded px-2 py-1 ${
                   isActive
                     ? "bg-accent text-sm text-secondary-foreground"
-                    : "text-sm text-muted-foreground hover:text-secondary-foreground"
+                    : "text-sm text-muted-foreground hover:text-secondary-foreground hover:underline"
                 }`}
               >
                 {section.title}
@@ -84,7 +92,7 @@ export default function CourseContentNavigation({
               )}
             </div>
             {hasSubsections && expanded && (
-              <div className="ml-4 mt-1">
+              <div className="ml-4">
                 {renderSections(section.subsections!, fullSlug)}
               </div>
             )}
@@ -94,5 +102,5 @@ export default function CourseContentNavigation({
     </ul>
   )
 
-  return <nav className="bg-accent p-4">{renderSections(sections)}</nav>
+  return <nav className="bg-accent p-4 overflow-y-auto max-h-[420px]">{renderSections(sections)}</nav>
 }

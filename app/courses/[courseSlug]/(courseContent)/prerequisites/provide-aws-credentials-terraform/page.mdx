@@ -1,0 +1,36 @@
+import { CourseContentLayout } from "@/components/course-content-layout"
+import { Note } from "@/components/note"
+
+<CourseContentLayout>
+
+# Provide AWS credentials to Terraform
+
+When you use Terraform to manage AWS resources, Terraform needs to communicate with AWS's APIs. However, to ensure that only authorized users can access and manipulate these resources, AWS requires authentication. This is where AWS credentials come into play.
+
+**AWS credentials consist of two main components: an access key ID and a secret access key**. Together, they verify your identity and grant Terraform the necessary permissions to interact with AWS on your behalf.
+
+If you've followed the instructions in the "Create an IAM user" section, you should already have an AWS IAM user with the necessary credentials. If you intend to use an existing IAM user and have saved the access key ID and secret access key, you can use those credentials. However, if you haven't saved them, you'll need to [create new access keys](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html#Using_CreateAccessKey), as the secret access key is only available at the time you create it.
+
+AWS credentials can be provided to Terraform in several ways, but using environment variables is a common and secure method. The two environment variables you need to set for AWS are:
+
+ - **AWS_ACCESS_KEY_ID**: This variable stores your AWS access key ID, which is a unique identifier for your AWS account. 
+ - **AWS_SECRET_ACCESS_KEY**: This variable holds your AWS secret access key, which is a secret key used to sign requests to AWS.
+
+The method to set these environment variables depends on your operating system. On Unix-based systems (Linux/macOS), open a terminal and use the export command to set the variables:
+
+```sh
+export AWS_ACCESS_KEY_ID=your_access_key_id
+export AWS_SECRET_ACCESS_KEY=your_secret_access_key
+```
+
+On Windows command terminal, use the `set` command to set the variables:
+
+```sh
+set AWS_ACCESS_KEY_ID=your_access_key_id
+set AWS_SECRET_ACCESS_KEY=your_secret_access_key
+```
+<Note title="Note">
+Theses variables will only be available for the current terminal session. This means they will be active and accessible as long as the terminal window remains open. However, once you close the terminal, these settings will be lost, and you'll need to set them again in a new session.
+</Note>
+
+</CourseContentLayout>
