@@ -15,6 +15,7 @@ export const courses: Course[] = [
     slug: "terraform-for-beginners",
     title: "Terraform for Beginners",
     sections: [
+      { title: "Introduction", slug: "introduction" },
       { title: "What is Terraform?", slug: "what-is-terraform" },
       {
         title: "Getting Started with Terraform",

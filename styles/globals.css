@@ -61,7 +61,8 @@
   h1,
   h2,
   h3,
-  h4, h5 {
+  h4,
+  h5 {
     @apply font-bold tracking-tight text-secondary-foreground;
   }
 
@@ -105,6 +106,10 @@
 
   .prose :where(h2, h3, h4, h5):hover > .anchor {
     @apply visible;
+  }
+
+  .prose h1 {
+    @apply mb-4;
   }
 
   .prose h2 {
