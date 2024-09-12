@@ -23,25 +23,16 @@ export const courses: Course[] = [
         slug: "prerequisites",
         subsections: [
           { title: "Choose a code editor", slug: "choose-code-editor" },
-          { title: "Create an AWS account", slug: "create-an-aws-account" },
-          { title: "Create an IAM user", slug: "create-an-iam-user" },
+          { title: "Create an AWS account", slug: "create-aws-account" },
+          { title: "Create an IAM user", slug: "create-iam-user" },
+          { title: "Create access keys", slug: "create-access-keys" },
           {
             title: "Install Terraform",
             slug: "install-terraform",
-            subsections: [
-              {
-                title: "Using a package manager",
-                slug: "using-a-package-manager",
-              },
-              {
-                title: "Using manual installation",
-                slug: "using-manual-installation",
-              },
-            ],
           },
           {
-            title: "Configure AWS for Terraform",
-            slug: "configure-aws-for-terraform",
+            title: "Provide AWS credentials to Terraform",
+            slug: "provide-aws-credentials-terraform",
           },
         ],
       },

@@ -113,7 +113,7 @@
   }
 
   .prose h2 {
-    @apply mb-4 mt-16;
+    @apply mb-4 mt-8;
   }
 
   .prose h3,

@@ -1,0 +1,52 @@
+import { CourseContentLayout } from "@/components/course-content-layout"
+import { Note } from "@/components/note"
+
+<CourseContentLayout>
+
+# Install Terraform
+
+Before you can use Terraform, you need to install it. To install Terraform, you have two options. You can either use a package manager or manually download and set up the binary package.
+
+## Using a package manager
+The easiest way to install Terraform is to use a package manager. For example, on macOS, you can install Terraform using Homebrew with two commands:
+
+```sh
+brew tap hashicorp/tap
+brew install hashicorp/tap/terraform
+```
+
+The `brew tap hashicorp/tap` command adds a new repository, or "tap" to Homebrew. A tap is essentially a collection of formulae (recipes) that Homebrew can use to install software. By running this command, you tell Homebrew to include the HashiCorp tap, a repository maintained by HashiCorp that contains the latest versions of their software, including Terraform.
+
+The `brew install hashicorp/tap/terraform` command installs Terraform from the HashiCorp tap that you added in the previous step. It downloads and installs the Terraform binary onto your macOS system. Homebrew handles the download, installation, and any necessary configuration. This command ensures that you get a signed and verified version of Terraform, which is automatically updated with every new official release.
+
+If you are on Windows and using Chocolatey, you can install Terraform using the following command: 
+
+```sh
+choco install terraform
+```
+If you are using Linux, then check the [official Terraform installation page](https://developer.hashicorp.com/terraform/install) for instructions for your specific Linux distribution.
+
+## Using manual installation
+
+To manually install Terraform, follow the steps below: 
+
+ - Go to the [official Terraform installation page](https://developer.hashicorp.com/terraform/install) and download the Terraform binary for your respective operating system. The download will usually be in the form of a ZIP archive. 
+ - After downloading, you need to unzip the archive. The extracted folder will contain the Terraform binary, which is the file named `terraform`.
+ - Move the Terraform binary to a directory that is included in your system’s PATH, so that the terraform command is accessible from anywhere in the terminal.
+
+<Note title="What is PATH?">
+The PATH is an environment variable in operating systems that tells the shell which directories to search for executable files when you type a command in the terminal. It's essentially a list of directory paths separated by colons (on Unix-based systems like macOS and Linux) or semicolons (on Windows).
+
+When you type a command in the terminal, the system searches through each directory listed in the PATH, in order, until it finds an executable file with that name. If it doesn't find the executable in any of the PATH directories, you'll get a "command not found" error.
+
+To view the directories in your PATH, run the command `echo $PATH` on Linux and macOS, and `echo %PATH%` in the Windows Command Prompt, or `echo $Env:PATH` if you are using PowerShell on Windows.
+</Note>
+
+To verify that the Terraform installation is successful, open a terminal session and run the following command:
+
+```sh
+terraform -v
+```
+This command should display the installed version of Terraform, confirming that the installation was successful.
+
+</CourseContentLayout>
