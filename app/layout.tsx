@@ -1,4 +1,5 @@
 import { Analytics } from "@vercel/analytics/react"
+import NextTopLoader from "nextjs-toploader"
 
 import { Toaster } from "@/components/ui/toaster"
 import { ThemeProvider } from "@/components/theme-provider"
@@ -25,6 +26,7 @@ export default function RootLayout({
     <html lang="en" className={`${inter.className} scroll-smooth`}>
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
         <body className={inter.className}>
+          <NextTopLoader showSpinner={false} color="#2563eb" />
           {children}
           <Analytics />
           <Toaster />

@@ -53,7 +53,7 @@ export function LoginForm() {
     toast({
       title: "Check your email",
       description:
-        "We have sent you a login link. Be sure to check your spam too.",
+        "I've sent you a login link. Be sure to check your spam too.",
     })
 
     reset()
