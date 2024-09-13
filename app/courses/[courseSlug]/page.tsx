@@ -2,6 +2,7 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 
 import { getCourseData, Section } from "@/lib/courses"
+import { cn } from "@/lib/utils"
 
 export default async function CourseOverviewPage({
   params,
@@ -16,11 +17,21 @@ export default async function CourseOverviewPage({
 
   const renderTableOfContents = (sections: Section[], level: number = 0) => {
     return (
-      <ul className={`${level > 0 ? "ml-4" : ""}`}>
+      <ul
+        className={cn(
+          level === 0 && "ml-8 list-decimal space-y-4",
+          level > 0 &&
+            "ml-4 mt-2 list-disc space-y-2 marker:text-muted-foreground"
+        )}
+      >
         {sections.map((section) => (
           <li key={section.slug}>
             <span
-              className={`${level === 0 ? "font-semibold" : "text-secondary-foreground"}`}
+              className={cn(
+                level === 0
+                  ? "text-secondary-foreground"
+                  : "text-muted-foreground"
+              )}
             >
               {section.title}
             </span>
@@ -33,18 +44,29 @@ export default async function CourseOverviewPage({
   }
 
   return (
-    <div className="container max-w-3xl">
-      <h1 className="text-3xl font-bold">{courseData.title}</h1>
-      <h2 className="text-2xl font-semibold">Course Content</h2>
+    <div className="container max-w-3xl space-y-8">
+      <h1>{courseData.title}</h1>
+      <p className="text-lg">
+        Want to learn Terraform but don't know where to start?
+      </p>
+      <p className="text-lg">You're in the right place.</p>
+      <p className="text-lg">
+        You'll go from a beginner to someone with a solid understanding of
+        Terraform fundamentals in just a matter of hours.
+      </p>
+
+      <p className="text-lg">Here's what you'll learn in the course:</p>
+
       {renderTableOfContents(courseData.sections)}
-      <div className="mt-8">
-        <Link
-          href={`/courses/${params.courseSlug}/${courseData.sections[0].slug}`}
-          className="inline-flex w-full justify-center rounded-md bg-primary px-6 py-3 text-white transition-colors hover:bg-blue-700"
-        >
-          Get Started
-        </Link>
-      </div>
+
+      <p className="text-lg">Ready to master Terraform?</p>
+
+      <Link
+        href={`/courses/${params.courseSlug}/${courseData.sections[0].slug}`}
+        className="inline-flex w-full justify-center rounded-md bg-primary px-6 py-3 text-white transition-colors hover:bg-blue-700"
+      >
+        Get Started
+      </Link>
     </div>
   )
 }
