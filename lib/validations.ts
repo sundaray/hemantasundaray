@@ -6,3 +6,10 @@ export const subscribeSchema = z.object({
     .min(1, { message: "Email is required" })
     .email({ message: "Email is invalid" }),
 });
+
+export const userAuthSchema = z.object({
+  email: z
+    .string()
+    .min(1, { message: "Email is required" })
+    .email({ message: "Invalid email address" }),
+});

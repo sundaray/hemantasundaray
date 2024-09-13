@@ -1,5 +1,5 @@
 import { homeConfig } from "@/config/home"
-import { MainNav } from "@/components/main-nav"
+import { CourseContentNav } from "@/components/course-content-nav"
 import { ScrollToTop } from "@/components/scroll-to-top"
 import { SiteFooter } from "@/components/site-footer"
 
@@ -13,7 +13,7 @@ export default async function CoursesLayout({ children }: CoursesLayoutProps) {
   return (
     <div className="relative flex min-h-screen flex-col">
       <header className="sticky top-0 z-10">
-        <MainNav items={homeConfig.mainNav} />
+        <CourseContentNav items={homeConfig.mainNav} />
       </header>
       <main className="flex-1 py-16">{children}</main>
       <SiteFooter />

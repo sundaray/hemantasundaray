@@ -2,14 +2,14 @@
 
 import { ModeToggle } from "@/components/mode-toggle";
 import { cn } from "@/lib/utils";
-import { MainNavItem } from "@/types";
+import { NavItem } from "@/types";
 import { useScroll, useMotionValueEvent } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useState } from "react";
 
 interface MainNavProps {
-  items?: MainNavItem[];
+  items?: NavItem[];
   children?: React.ReactNode;
 }
 
