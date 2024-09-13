@@ -8,6 +8,7 @@ export type Section = {
 export type Course = {
   slug: string
   title: string
+  description: string
   sections: Section[]
 }
 
@@ -15,6 +16,7 @@ export const courses: Course[] = [
   {
     slug: "terraform-for-beginners",
     title: "Terraform for Beginners",
+    description: "Master the core concepts of Terraform",
     sections: [
       { title: "Introduction", slug: "introduction" },
       { title: "What is Terraform?", slug: "what-is-terraform" },
