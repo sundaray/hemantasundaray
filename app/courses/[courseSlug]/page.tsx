@@ -44,22 +44,22 @@ export default async function CourseOverviewPage({
   }
 
   return (
-    <div className="container max-w-3xl space-y-8">
-      <h1>{courseData.title}</h1>
-      <p className="text-lg">
+    <div className="container max-w-3xl">
+      <h1 className="mb-4">{courseData.title}</h1>
+      <p className="mb-8 text-lg">
         Want to learn Terraform but don't know where to start?
       </p>
-      <p className="text-lg">You're in the right place.</p>
-      <p className="text-lg">
-        You'll go from a beginner to someone with a solid understanding of
-        Terraform fundamentals in just a matter of hours.
+      <p className="mb-8 text-lg">You're in the right place.</p>
+      <p className="mb-8 text-lg">
+        In just a few hours, you'll go from a beginner to someone with a solid
+        understanding of Terraform fundamentals.
       </p>
 
-      <p className="text-lg">Here's what you'll learn in the course:</p>
+      <p className="mb-8 text-lg">Here's what you'll learn in the course:</p>
 
       {renderTableOfContents(courseData.sections)}
 
-      <p className="text-lg">Ready to master Terraform?</p>
+      <p className="my-8 text-lg">Ready to master Terraform?</p>
 
       <Link
         href={`/courses/${params.courseSlug}/${courseData.sections[0].slug}`}

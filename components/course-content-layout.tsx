@@ -4,6 +4,7 @@ import { usePathname, useRouter } from "next/navigation"
 
 import { courses, Section } from "@/lib/courses"
 import { Button } from "@/components/ui/button"
+import { CourseContentBreadcrumb } from "@/components/course-content-breadcrumb"
 import { CourseContentNavigation } from "@/components/course-content-navigation"
 
 interface CourseContentLayoutProps {
@@ -51,33 +52,39 @@ export function CourseContentLayout({ children }: CourseContentLayoutProps) {
   const isLastSection = currentIndex === flattenedSections.length - 1
 
   return (
-    <div className="container grid max-w-4xl grid-cols-16">
-      <aside className="sticky top-24 col-start-1 col-end-5 hidden self-start lg:block">
-        <CourseContentNavigation
-          sections={course.sections}
-          courseSlug={courseSlug}
-          currentSectionSlug={currentSectionSlug}
-        />
-      </aside>
-      <div className="col-span-full col-start-1 lg:col-start-6">
-        <article className="prose">{children}</article>
-        <div className="flex justify-between">
-          <Button
-            className="hover:bg-blue-700"
-            onClick={() => handleNavigation("previous")}
-            disabled={isFirstSection}
-          >
-            Previous
-          </Button>
-          <Button
-            className="hover:bg-blue-700"
-            onClick={() => handleNavigation("next")}
-            disabled={isLastSection}
-          >
-            Next
-          </Button>
+    <>
+      <div className="container grid max-w-4xl grid-cols-16">
+        <aside className="sticky top-24 col-start-1 col-end-5 hidden self-start lg:block">
+          <CourseContentNavigation
+            sections={course.sections}
+            courseSlug={courseSlug}
+            currentSectionSlug={currentSectionSlug}
+          />
+        </aside>
+        <div className="col-span-full col-start-1 lg:col-start-6">
+          <CourseContentBreadcrumb
+            courseSlug={courseSlug}
+            currentSectionSlug={currentSectionSlug}
+          />
+          <article className="prose mt-4">{children}</article>
+          <div className="flex justify-between">
+            <Button
+              className="hover:bg-blue-700"
+              onClick={() => handleNavigation("previous")}
+              disabled={isFirstSection}
+            >
+              Previous
+            </Button>
+            <Button
+              className="hover:bg-blue-700"
+              onClick={() => handleNavigation("next")}
+              disabled={isLastSection}
+            >
+              Next
+            </Button>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }
