@@ -2,7 +2,6 @@
 
 import { useMemo, useState } from "react"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
 
 import { Section } from "@/lib/courses"
 import { Icons } from "@/components/icons"

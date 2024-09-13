@@ -40,7 +40,6 @@ export async function UserAccountNav() {
             </div>
           </div>
           <DropdownMenuSeparator />
-          <DropdownMenuSeparator />
           <DropdownMenuItem className="cursor-pointer">
             <SignOutButton />
           </DropdownMenuItem>

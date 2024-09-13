@@ -57,5 +57,5 @@ export default withAuth(
 )
 
 export const config = {
-  matcher: ["/admin", "/login", "/terraform-for-beginners/:path*"],
+  matcher: ["/admin", "/login", "/courses/terraform-for-beginners/:path+"],
 }
