@@ -1,3 +1,10 @@
 export default function HomePage() {
-  return <p className="text-2xl font-bold">Hello World!</p>;
+  return (
+    <div className="container max-w-3xl">
+      <h1 className="mb-4 text-4xl font-bold">Hello World!</h1>
+      <p className="text-lg">
+        I'm Hemanta Sundaray, a full-stack developer and technical writer.
+      </p>
+    </div>
+  )
 }
