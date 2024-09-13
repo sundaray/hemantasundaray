@@ -1,7 +1,6 @@
 import Link from "next/link"
 import { NavItem as NavItemType } from "@/types"
 
-import { cn } from "@/lib/utils"
 import { ModeToggle } from "@/components/mode-toggle"
 import { NavItem } from "@/components/nav-item"
 import { UserAccountNav } from "@/components/user-account-nav"
