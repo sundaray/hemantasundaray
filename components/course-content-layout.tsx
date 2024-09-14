@@ -1,13 +1,14 @@
 "use client"
 
-import { usePathname, useRouter } from "next/navigation"
+import { usePathname } from "next/navigation"
+import { useRouter } from 'nextjs-toploader/app'
 
 import { courses, Section } from "@/lib/courses"
 import { Button } from "@/components/ui/button"
 import { CourseContentBreadcrumb } from "@/components/course-content-breadcrumb"
 import { CourseContentNavigation } from "@/components/course-content-navigation"
 
-interface CourseContentLayoutProps {
+type CourseContentLayoutProps = {
   children: React.ReactNode
 }
 

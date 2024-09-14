@@ -26,7 +26,7 @@ export default function RootLayout({
     <html lang="en" className={`${inter.className} scroll-smooth`}>
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
         <body className={inter.className}>
-          <NextTopLoader showSpinner={false} color="#2563eb" />
+          <NextTopLoader showSpinner={false} color="#2563eb" shadow={false} />
           {children}
           <Analytics />
           <Toaster />
