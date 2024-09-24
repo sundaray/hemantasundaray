@@ -1,18 +1,29 @@
 "use client"
 
 import { usePathname } from "next/navigation"
-import { useRouter } from 'nextjs-toploader/app'
+import { useRouter } from "nextjs-toploader/app"
 
 import { courses, Section } from "@/lib/courses"
+import { formatDate } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { CourseContentBreadcrumb } from "@/components/course-content-breadcrumb"
 import { CourseContentNavigation } from "@/components/course-content-navigation"
 
 type CourseContentLayoutProps = {
   children: React.ReactNode
+  frontmatter: { updatedAt: string }
 }
 
-export function CourseContentLayout({ children }: CourseContentLayoutProps) {
+export function CourseContentLayout({
+  children,
+  frontmatter,
+}: CourseContentLayoutProps) {
+  let updatedAt
+
+  if (frontmatter) {
+    updatedAt = frontmatter.updatedAt
+  }
+
   const pathname = usePathname()
   const router = useRouter()
 
@@ -68,6 +79,11 @@ export function CourseContentLayout({ children }: CourseContentLayoutProps) {
             currentSectionSlug={currentSectionSlug}
           />
           <article className="prose mt-4">{children}</article>
+          {updatedAt && (
+            <p className="mb-8 text-sm text-green-600">
+              This chapter was last updated on {formatDate(updatedAt)}.
+            </p>
+          )}
           <div className="flex justify-between">
             <Button
               className="hover:bg-blue-700"
