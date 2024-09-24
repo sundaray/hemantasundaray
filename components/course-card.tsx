@@ -13,11 +13,9 @@ export async function CourseCard({
 }: CourseCardProps) {
   return (
     <div
-      className={cn(
-        "relative rounded-lg border bg-slate-50 p-6 shadow-sm",
-        slug === "terraform-for-beginners" &&
-          'bg-[url("/terraform.svg")] bg-[length:12rem_12rem] bg-right-bottom bg-no-repeat'
-      )}
+      className=
+        "relative rounded-lg border bg-accent p-6 shadow-sm"
+      
     >
       <span className="rounded-full bg-green-500 px-2 py-1 text-sm font-light text-white">
         Free
