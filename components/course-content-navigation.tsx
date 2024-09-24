@@ -64,8 +64,8 @@ export function CourseContentNavigation({
                 className={`block flex-grow rounded px-2 py-1 ${
                   isActive
                     ? "text-sm text-secondary-foreground"
-                    : "text-sm text-muted-foreground hover:text-secondary-foreground hover:underline"
-                }`}
+                    : "text-sm text-muted-foreground hover:text-secondary-foreground"
+                } ${parentSlug === "" ? "font-semibold" : ""}`}
               >
                 {section.title}
               </Link>

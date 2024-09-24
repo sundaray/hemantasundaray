@@ -46,8 +46,8 @@ export const courses: Course[] = [
           { title: "Configure the provider", slug: "configure-provider" },
           { title: "Define a resource", slug: "define-resource" },
           {
-            title: "Initialize the project directory",
-            slug: "initialize-project-directory",
+            title: "Initialize the Terraform working directory",
+            slug: "initialize-terraform-working-directory",
           },
           {
             title: "Format and validate Terraform code",
