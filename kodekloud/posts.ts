@@ -503,4 +503,44 @@ export const posts: Post[] = [
     href: "https://kodekloud.com/blog/how-dockerfile-works/",
     date: "2024-03-27",
   },
+  {
+    id: 63,
+    image:
+      "https://firebasestorage.googleapis.com/v0/b/hemantasundaray-auth.appspot.com/o/How%20Grafana%20Works.png?alt=media&token=38080cd3-996a-4417-96d1-7aa6f393131a",
+    category: "Grafana",
+    href: "https://kodekloud.com/blog/how-grafana-works/",
+    date: "2024-04-23",
+  },
+  {
+    id: 64,
+    image:
+      "https://firebasestorage.googleapis.com/v0/b/hemantasundaray-auth.appspot.com/o/Golang%20vs%20Rust.png?alt=media&token=2c763a87-1dc6-441f-a4fe-55aa640b7d37",
+    category: "Programming languages",
+    href: "https://kodekloud.com/blog/golang-vs-rust/",
+    date: "2024-04-29",
+  },
+  {
+    id: 65,
+    image:
+      "https://firebasestorage.googleapis.com/v0/b/hemantasundaray-auth.appspot.com/o/10%20Essential%20DevOps%20Tools%20You%20Should%20Learn%20in%202024.png?alt=media&token=7093409e-97ac-4021-bb06-d9ca7d9668e9",
+    category: "DevOps",
+    href: "https://kodekloud.com/blog/10-essential-devops-tools-you-should-learn-in-2024/",
+    date: "2024-05-29",
+  },
+  {
+    id: 66,
+    image:
+      "https://firebasestorage.googleapis.com/v0/b/hemantasundaray-auth.appspot.com/o/Learning%20Python%20for%20Beginners.png?alt=media&token=d9c2179e-7634-4cb1-a3ca-5b61747caf93",
+    category: "Programming languages",
+    href: "https://kodekloud.com/blog/learning-python-for-beginners/",
+    date: "2024-09-20",
+  },
+  {
+    id: 67,
+    image:
+      "https://firebasestorage.googleapis.com/v0/b/hemantasundaray-auth.appspot.com/o/What%20is%20Cloud%20Data%20Security_%20Risks%20and%20Best%20Practices.png?alt=media&token=051bc6d7-2937-45ad-afa2-0fcb991b5195",
+    category: "Cloud security",
+    href: "https://kodekloud.com/blog/what-is-cloud-data-security-risks-and-best-practices/",
+    date: "2024-09-21",
+  },
 ]
