@@ -1,32 +1,33 @@
-"use client";
+"use client"
 
-import { ModeToggle } from "@/components/mode-toggle";
-import { cn } from "@/lib/utils";
-import { NavItem } from "@/types";
-import { useScroll, useMotionValueEvent } from "framer-motion";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import React, { useState } from "react";
+import React, { useState } from "react"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+import { NavItem } from "@/types"
+import { useMotionValueEvent, useScroll } from "framer-motion"
+
+import { cn } from "@/lib/utils"
+import { ModeToggle } from "@/components/mode-toggle"
 
 interface MainNavProps {
-  items?: NavItem[];
-  children?: React.ReactNode;
+  items?: NavItem[]
+  children?: React.ReactNode
 }
 
 export function MainNav({ items }: MainNavProps) {
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false)
 
-  const pathname = usePathname();
+  const pathname = usePathname()
 
-  const { scrollY } = useScroll();
+  const { scrollY } = useScroll()
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     if (latest > 50 && !isScrolled) {
-      setIsScrolled(true);
+      setIsScrolled(true)
     } else if (latest <= 50 && isScrolled) {
-      setIsScrolled(false);
+      setIsScrolled(false)
     }
-  });
+  })
 
   return (
     <div
@@ -34,10 +35,11 @@ export function MainNav({ items }: MainNavProps) {
         "container flex h-16 items-center justify-between transition-all",
         isScrolled
           ? "border-b bg-background/50 backdrop-blur-xl"
-          : "bg-background/0",
+          : "bg-background/0"
       )}
     >
       <div className="flex items-center space-x-2">
+        {/* <MobileNav /> */}
         <Link
           href="/"
           className="flex items-center font-semibold text-secondary-foreground"
@@ -53,7 +55,7 @@ export function MainNav({ items }: MainNavProps) {
                 key={item.title}
                 className={cn(
                   "cursor-pointer font-medium text-muted-foreground transition-all hover:text-secondary-foreground sm:text-sm",
-                  item.href === pathname && "text-secondary-foreground",
+                  item.href === pathname && "text-secondary-foreground"
                 )}
               >
                 <Link href={item.href}>{item.title}</Link>
@@ -64,5 +66,5 @@ export function MainNav({ items }: MainNavProps) {
       ) : null}
       <ModeToggle />
     </div>
-  );
+  )
 }

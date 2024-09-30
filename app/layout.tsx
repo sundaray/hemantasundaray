@@ -31,7 +31,6 @@ export default function RootLayout({
           <Analytics />
           <Toaster />
         </body>
-        <TailwindIndicator />
       </ThemeProvider>
     </html>
   )
