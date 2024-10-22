@@ -7,6 +7,7 @@ import { NavItem } from "@/types"
 import { useMotionValueEvent, useScroll } from "framer-motion"
 
 import { cn } from "@/lib/utils"
+import { MobileNav } from "@/components/mobile-nav"
 import { ModeToggle } from "@/components/mode-toggle"
 
 interface MainNavProps {
@@ -39,7 +40,7 @@ export function MainNav({ items }: MainNavProps) {
       )}
     >
       <div className="flex items-center space-x-2">
-        {/* <MobileNav /> */}
+        <MobileNav />
         <Link
           href="/"
           className="flex items-center font-semibold text-secondary-foreground"
