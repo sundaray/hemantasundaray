@@ -85,7 +85,7 @@ function MobileNavigationDialog({
         <TransitionChild>
           <motion.div
             layoutScroll
-            className="fixed bottom-0 left-0 top-16 w-full overflow-y-auto border bg-background px-6 pb-4 pt-6 shadow-lg shadow-gray-900/10 duration-500 ease-in-out data-[closed]:-translate-x-full min-[416px]:max-w-sm sm:px-6 sm:pb-10"
+            className="fixed bottom-0 left-0 top-16 w-full max-w-[300px] overflow-y-auto border bg-background px-6 pb-4 pt-6 shadow-lg shadow-gray-900/10 duration-500 ease-in-out data-[closed]:-translate-x-full sm:px-6 sm:pb-10"
           >
             <nav>
               <motion.ul
