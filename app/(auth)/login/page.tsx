@@ -9,8 +9,8 @@ export const metadata: Metadata = {
 
 export default function LoginPage() {
   return (
-    <div className="mx-auto space-y-8 sm:w-[400px]">
-      <h1 className="text-3xl">Log in</h1>
+    <div className="w-full sm:mx-auto sm:max-w-[480px]">
+      <h1 className="mb-8 px-6 text-3xl sm:px-12">Log in</h1>
       <Suspense>
         <LoginForm />
       </Suspense>

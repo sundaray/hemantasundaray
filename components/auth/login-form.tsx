@@ -61,11 +61,11 @@ export function LoginForm() {
 
   return (
     <Suspense>
-      <div className="grid gap-6">
+      <div className="grid gap-6 bg-gray-100 px-6 py-12 shadow sm:rounded-lg sm:px-12">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid gap-6">
             <div className="grid gap-1">
-              <Label htmlFor="email" className="text-muted-foreground">
+              <Label htmlFor="email" className="text-gray-900">
                 Email
               </Label>
               <Input
@@ -99,13 +99,13 @@ export function LoginForm() {
           <div className="absolute inset-0 flex items-center">
             <span className="w-full border-t" />
           </div>
-          <div className="relative flex justify-center text-xs uppercase text-zinc-600">
-            <span className="bg-background px-2">Or</span>
+          <div className="relative flex justify-center text-xs uppercase text-gray-500">
+            <span className="bg-gray-100 px-2">Or</span>
           </div>
         </div>
         <Button
           type="submit"
-          className="text-base text-muted-foreground"
+          className="text-base text-gray-900 hover:bg-gray-100"
           variant="outline"
           onClick={() => {
             setIsGoogleLoading(true)
