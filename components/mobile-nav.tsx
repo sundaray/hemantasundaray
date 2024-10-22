@@ -70,7 +70,7 @@ function MobileNavigationDialog({
     },
   }
 
-  return (  
+  return (
     <Dialog
       open={isOpen}
       onClickCapture={onClickDialog}
@@ -79,13 +79,13 @@ function MobileNavigationDialog({
     >
       <DialogBackdrop
         transition
-        className="fixed inset-0 top-14 bg-gray-300/20 backdrop-blur-sm data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in"
+        className="fixed inset-0 top-16 bg-gray-300/20 backdrop-blur-sm data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in"
       />
       <DialogPanel>
         <TransitionChild>
           <motion.div
             layoutScroll
-            className="fixed bottom-0 left-0 top-14 w-full overflow-y-auto border bg-background px-6 pb-4 pt-6 shadow-lg shadow-gray-900/10 duration-500 ease-in-out data-[closed]:-translate-x-full min-[416px]:max-w-sm sm:px-6 sm:pb-10"
+            className="fixed bottom-0 left-0 top-16 w-full overflow-y-auto border bg-background px-6 pb-4 pt-6 shadow-lg shadow-gray-900/10 duration-500 ease-in-out data-[closed]:-translate-x-full min-[416px]:max-w-sm sm:px-6 sm:pb-10"
           >
             <nav>
               <motion.ul
