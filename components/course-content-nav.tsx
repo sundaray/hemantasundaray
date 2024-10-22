@@ -4,6 +4,7 @@ import { NavItem as NavItemType } from "@/types"
 import { ModeToggle } from "@/components/mode-toggle"
 import { NavItem } from "@/components/nav-item"
 import { UserAccountNav } from "@/components/user-account-nav"
+import { MobileNav } from "@/components/mobile-nav"
 
 type CourseContentNavProps = {
   items?: NavItemType[]
@@ -13,6 +14,7 @@ type CourseContentNavProps = {
 export function CourseContentNav({ items }: CourseContentNavProps) {
   return (
     <div className="container flex h-16 items-center justify-between border-b bg-background/50 backdrop-blur-xl">
+      <MobileNav />
       <Link
         href="/"
         className="flex items-center font-semibold text-secondary-foreground"
