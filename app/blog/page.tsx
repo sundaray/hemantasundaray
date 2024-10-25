@@ -78,7 +78,7 @@ export default function BlogPage({
             return (
               <div
                 key={post.slug}
-                className="hover:bg-input transition-all group relative rounded-md bg-accent p-4"
+                className="group relative rounded-md bg-accent p-4 transition-all hover:shadow-lg"
               >
                 <p className="mb-2 text-sm text-muted-foreground">
                   {formatDate(post.publishedAt)}
