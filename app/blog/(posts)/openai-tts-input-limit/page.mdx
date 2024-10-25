@@ -1,0 +1,28 @@
+---
+title: What is the input limit for OpenAI TTS?
+description: "Find out the input limit for OpenAI TTS."
+author: Hemanta Sundaray
+publishedAt: 2024-10-25
+tags: ["OpenAI"]
+published: true
+---
+
+import { BlogPostLayout } from "@/components/blog-post-layout"
+
+<BlogPostLayout frontmatter={frontmatter}>
+
+OpenAI's Text-to-Speech (TTS) API has a maximum input limit of **4,096 characters** per request, which is roughly equivalent to 5 minutes of audio at default speed.
+
+So, what If you want to convert longer texts into speech?
+
+You can follow a three-step process:
+
+1. Split your text into smaller segments, each under 4096 characters. When splitting, ensure that sentences aren't cut off in the middle, as this could affect the coherence of the speech.
+2. Send each text chunk as a separate request to the TTS API. The API will return an audio file for each chunk.
+3. Merge the individual audio files into one continuous file. If you’re using Python, you can use libraries like Pydub to concatenate audio files.
+
+When making multiple requests, be mindful of the API rate limit. Note that **the number of API requests you can make per minute depends on your usage tier**.
+
+To check your current usage tier and the rate limits for different TTS models, log in to your OpenAI account and navigate to Settings > Organization > Limits. On this page, you’ll find all the necessary details.
+
+</BlogPostLayout>
