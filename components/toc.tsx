@@ -16,9 +16,9 @@ export function TOC() {
   return (
     <nav className="scrollbar scrollbar-thin scrollbar-thumb-muted-foreground scrollbar-track-slate-200 h-auto max-h-96 space-y-4 overflow-y-auto">
       <p className="font-semibold text-secondary-foreground">CONTENTS</p>
-      <ul className="relative border-l">
+      <ul className="relative border-l-2">
         <motion.div
-          className="absolute left-0 top-2.5 h-4 w-0.5 bg-primary"
+          className="absolute -left-0.5 top-2.5 h-4 w-0.5 bg-primary"
           animate={{
             y: currentIndex * 36,
           }}
