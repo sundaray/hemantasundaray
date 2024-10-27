@@ -61,12 +61,18 @@ export function CourseContentNavigation({
             <div className="flex items-center justify-between">
               <Link
                 href={`/courses/${courseSlug}/${fullSlug}`}
-                className={`block flex-grow rounded px-2 py-1 ${
+                className={`relative block flex-grow py-1 ${
                   isActive
                     ? "text-sm text-secondary-foreground"
                     : "text-sm text-muted-foreground hover:text-secondary-foreground"
                 } ${parentSlug === "" ? "font-semibold" : ""}`}
               >
+                 {parentSlug !== "" && isActive && (
+                    <div
+                      className="absolute -left-5 top-1/2 size-1.5 -translate-y-1/2 rounded-full bg-secondary-foreground"
+                      aria-hidden="true"
+                    />
+                  )}
                 {section.title}
               </Link>
               {hasSubsections && (
@@ -85,7 +91,7 @@ export function CourseContentNavigation({
               )}
             </div>
             {hasSubsections && expanded && (
-              <div className="ml-4">
+              <div className="border-l-2 pl-4">
                 {renderSections(section.subsections!, fullSlug)}
               </div>
             )}
